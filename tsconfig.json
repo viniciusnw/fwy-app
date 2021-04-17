@@ -1,0 +1,58 @@
+{
+  "compilerOptions": {
+    "noImplicitAny": false,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "allowJs": true,
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+    "isolatedModules": true,
+    "jsx": "react-native",
+    "lib": ["es6"],
+    "moduleResolution": "node",
+    "noEmit": true,
+    "strict": true,
+    "target": "esnext",
+    "baseUrl": ".",
+    "resolveJsonModule": true,
+    "paths": {
+      "*": ["src/*"],
+      
+      "@Redux/*": ["./src/Redux/*"],
+      "@Redux": ["./src/Redux"],
+      
+      "@Components/*": ["./src/Components/*"],
+      "@Components": ["./src/Components"],
+      
+      "@Domains/*": ["./src/Domains/*"],
+      "@Domains": ["./src/Domains"],
+      
+      "@Stories/*": ["./src/Stories/*"],
+      "@Stories": ["./src/Stories"],
+      
+      "@Config/*": ["./src/Config/*"],
+      "@Config": ["./src/Config"],
+      
+      "@Modules/*": ["./src/Domains/Fasting/modules/*"],
+      "@Modules": ["./src/Domains/Fasting/modules"],
+      "@Navigation/*": ["./src/Domains/Fasting/navigation/*"],
+      "@Navigation": ["./src/Domains/Fasting/navigation"],
+      
+      "@ADMModules/*": ["./src/Domains/FastingAdm/modules/*"],
+      "@ADMModules": ["./src/Domains/FastingAdm/modules"],
+      "@ADMNavigation/*": ["./src/Domains/FastingAdm/navigation/*"],
+      "@ADMNavigation": ["./src/Domains/FastingAdm/navigation"]
+    },
+  },
+  "filesGlob": [	
+    "src/**/*.ts",	
+    "src/**/*.tsx"	
+  ],
+  "exclude": [
+    "node_modules",
+    "babel.config.js",
+    "metro.config.js",
+    "jest.config.js"
+  ],
+  "compileOnSave": true
+}

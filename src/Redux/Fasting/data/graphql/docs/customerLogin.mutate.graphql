@@ -1,0 +1,3 @@
+query countriesAndStates($country: String) {
+  countriesAndStates(country: $country)
+}

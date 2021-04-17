@@ -1,0 +1,18 @@
+mutation customerRegister($customer: CustomerRegisterInput!) {
+    customerRegister(customer: $customer) {
+        _id
+        name
+        email
+        phone
+        birthday
+        gender
+        weight
+        height
+        country
+        state
+        avatar
+        token
+        expirationTime
+        role
+    }
+}
