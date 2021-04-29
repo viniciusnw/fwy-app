@@ -26,8 +26,12 @@ class Root extends React.Component<ReduxPropsType, any> {
   }
 
   render() {
-    const { User: { login } } = this.props.useRedux;
-    const { success } = login
+    const { 
+      User: { login, register },
+    } = this.props.useRedux;
+    
+    const { success: loginSuccess } = login
+    const { success: registerSuccess } = register
 
     const Stack = createStackNavigator();
     return (
@@ -38,7 +42,7 @@ class Root extends React.Component<ReduxPropsType, any> {
         <NavigationContainer>
           <Stack.Navigator>
             {
-              success
+              loginSuccess || registerSuccess
                 ? <Stack.Screen name="Logged" component={Logged} options={{ header: _ => null }} />
                 : <Stack.Screen name="UnLogged" component={UnLogged} options={{ header: _ => null }} />
             }

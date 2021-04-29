@@ -43,6 +43,10 @@ class ChatProvider extends React.Component<ReduxPropsType, any> {
     this.handlerWS(prevProps)
   }
 
+  render() {
+    return <Fragment />
+  }
+
   private handlerWS(prevProps: ReduxPropsType) {
     const { User: prevUser } = prevProps.useRedux
     const { User } = this.props.useRedux
@@ -80,10 +84,6 @@ class ChatProvider extends React.Component<ReduxPropsType, any> {
 
     ws.close();
     this.props.useDispatch.saveWs(null);
-  }
-
-  render() {
-    return <Fragment />
   }
 }
 

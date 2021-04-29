@@ -1,6 +1,11 @@
 export { default as Button } from './Button';
-export { default as Input } from './Input';
 export { default as Icon } from './Icon';
+export {
+  Input,
+  InputDate,
+  InputSelect,
+  InputPhone
+} from './Input';
 
 export { default as List } from './List/List';
 export { default as Item } from './List/Item';

@@ -43,6 +43,14 @@
     <string>Ative o uso da localização para ter uma experiência completa no aplicativo Fasting.</string>
     <key>NSLocationWhenInUseUsageDescription</key>
     <string>Ative o uso da localização para ter uma experiência completa no aplicativo Fasting.</string>
+    <key>NSPhotoLibraryUsageDescription</key>
+	  <string>Ative o uso da sua biblioteca para ter uma experiência completa</string>
+    <key>NSCameraUsageDescription</key>
+	  <string>Ative o uso da sua camera para ter uma experiência completa</string>
+    <key>NSCameraUsageDescription</key>
+	  <string>Ative o uso da sua camera para ter uma experiência completa</string>
+    <key>NSMicrophoneUsageDescription</key>
+	  <string>Ative o uso do seu microfone para ter uma experiência completa</string>
     <key>UIAppFonts</key>
     <array>
       <string>AntDesign.ttf</string>

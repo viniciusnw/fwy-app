@@ -16,7 +16,7 @@ export class UserReduxType {
     success: false,
     error: false,
   }
-  error = null
+  errorMessage = null
   data: customerLogin_customerLogin | customerRegister_customerRegister | updateCustomer_updateCustomer | null = null
 }
 

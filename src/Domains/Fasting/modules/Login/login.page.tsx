@@ -2,11 +2,13 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { StackScreenProps } from '@react-navigation/stack';
 
+import { StyledText } from './login.style'
 import { Button, Icon, Logo, Input } from '@Components';
 import { View, Text, TouchableOpacity } from 'react-native';
-import { StyledBox, StyledField, StyledText } from './login.style'
 import { UnloogedStackParamList, PagePropsType } from '@Navigation';
 import { ReduxActions, ReduxPropsType, ReduxStateType } from '@Redux/Fasting';
+
+import LoginForm from './components/login-form.component';
 
 
 type RoutePropsType = StackScreenProps<UnloogedStackParamList, 'Login'>;
@@ -17,17 +19,10 @@ class Login extends React.Component<RoutePropsType & ReduxPropsType & PagePropsT
     this.props.setPageConfigs({
       pageConfig: { backgroundImage: 'tertiary' },
     });
-
-    this.state = {
-      form: {
-        email: 'viniciusnw@hotmail.com.br',
-        password: '123456',
-      }
-    }
   }
-  
+
   componentDidUpdate() {
-    console.log("Login=>componentDidUpdate: ", this.props)
+    // console.log("Login=>componentDidUpdate: ", this.props)
   }
 
   goSignUp = () => {
@@ -35,47 +30,17 @@ class Login extends React.Component<RoutePropsType & ReduxPropsType & PagePropsT
     navigation.navigate('SignUp');
   }
 
-  private formChangeField = (field, value) => this.setState({ form: { ...this.state.form, [field]: value } })
-
   render() {
     const { User: { login } } = this.props.useRedux
     const { loading } = login;
-    const { form: { email, password } } = this.state
-
-    const loginForm = {
-      email: {
-        value: email,
-        placeholder: 'E-mail',
-        onChangeText: (value) => this.formChangeField('email', value),
-        autoCompleteType: 'email',
-        placeholderTextColor: "#FFF"
-      },
-      password: {
-        value: password,
-        placeholder: 'Senha',
-        secureTextEntry: true,
-        onChangeText: (value) => this.formChangeField('password', value),
-        autoCompleteType: 'password',
-        placeholderTextColor: "#FFF"
-      },
-    }
 
     return (
       <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', paddingHorizontal: 40 }}>
-        <StyledBox>
-          <StyledField>
-            <Input {...loginForm.email} />
-          </StyledField>
-          <StyledField>
-            <Input {...loginForm.password} />
-          </StyledField>
 
-          <View style={{ width: '50%', alignSelf: 'center', marginVertical: 60 }}>
-            <Button loading={loading} color="secondary" onPress={() => this.props.useDispatch.login(this.state.form)}>
-              Login
-            </Button>
-          </View>
-        </StyledBox>
+        <LoginForm
+          loginLoading={loading}
+          dispatchLogin={this.props.useDispatch.login}
+        />
 
         {/* Social Login */}
         {/* <View style={{ flexDirection: 'row' }}>

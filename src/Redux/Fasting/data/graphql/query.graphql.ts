@@ -10,7 +10,7 @@ export class Query extends GraphqlApi {
     return this.ApolloClient.query({
       query: countriesAndStatesQuery,
       variables: params,
-      fetchPolicy: 'cache-only',
+      fetchPolicy: 'cache-first',
     }).then(response => this.mapResponse(response, 'countriesAndStates'))
       .catch(err => this.mapError(err))
   }

@@ -22,8 +22,14 @@ class FastStart extends React.Component<RoutePropsType & ReduxPropsType & PagePr
     this.props.setPageConfigs({
       topBarConfig: { title: null, menu: true, back: true, color: '#FFF' },
       pageConfig: { backgroundSolidColor: 'secondary' },
-      bottomBarConfig: { title: null, color: '#FFF' }
+      bottomBarConfig: { color: '#FFF' }
     })
+
+    this.state = {
+      form: {
+
+      }
+    }
   }
 
   goToTimer = () => {
@@ -171,7 +177,7 @@ function mapStateToProps({ }: ReduxStateType) {
 function mapDispatchToProps(dispatch) {
   return {
     useDispatch: {
-      logout: _ => dispatch(Redux.actions.logout(_))
+      logout: _ => dispatch(ReduxActions.logout())
     }
   };
 }

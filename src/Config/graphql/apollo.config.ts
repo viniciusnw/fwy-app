@@ -1,14 +1,20 @@
+import { Store } from '@Redux/Store';
 import { Container } from 'typedi';
 import Config from 'react-native-config';
-import { onError } from "@apollo/client/link/error";
-import { ApolloLink, Operation, NextLink } from '@apollo/client/link/core';
-import { createHttpLink, ApolloClient, InMemoryCache } from '@apollo/client';
 
-import { Store } from '@Redux/Store';
+// import { onError } from "@apollo/client/link/error";
+// import { ApolloLink, Operation, NextLink } from '@apollo/client/link/core';
+// import { createHttpLink, ApolloClient, InMemoryCache } from '@apollo/client';
 
-const { API_URL } = Config;
+import { onError } from 'apollo-link-error';
+import { ApolloClient } from 'apollo-client';
+import { createHttpLink } from 'apollo-link-http';
+import { InMemoryCache } from 'apollo-cache-inmemory';
+import { ApolloLink, NextLink, Operation } from 'apollo-link';
+
 
 export function configureApolloClient(APP_NAME: string) {
+  const { API_URL } = Config;
 
   const httpLink = createHttpLink({ uri: API_URL });
 
