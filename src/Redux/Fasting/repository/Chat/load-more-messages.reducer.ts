@@ -37,6 +37,7 @@ export default {
           loadMessages: {
             loading: false,
             success: false,
+            nextPagination: state.loadMessages.nextPagination,
             error: true,
             errorMessage: action.payload,
           },

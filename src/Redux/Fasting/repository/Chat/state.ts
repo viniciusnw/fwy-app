@@ -1,5 +1,4 @@
 import ReconnectingWebSocket from 'reconnecting-websocket';
-
 export interface messageQueue {
   text: string
 }
@@ -9,17 +8,33 @@ export interface message {
   text: string;
   sender: string;
 }
-
 interface chat {
   messages: Array<message>
   messageQueue: messageQueue[]
 }
 
+interface nextPagination {
+  nPerPage: number
+  pageNumber: number
+  nextPageNumber: number | null
+}
+interface loadMessages {
+  loading: boolean
+  success: boolean
+  nextPagination: nextPagination
+  error: boolean
+  errorMessage: any
+}
+
 export class ChatReduxType {
-  loadMessages = {
+  loadMessages: loadMessages = {
     loading: false,
     success: false,
-    nextPagination: null,
+    nextPagination: {
+      nPerPage: 10,
+      pageNumber: 1,
+      nextPageNumber: null
+    },
     error: false,
     errorMessage: null,
   };

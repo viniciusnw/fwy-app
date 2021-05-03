@@ -33,21 +33,39 @@ class Chat extends React.PureComponent<
   }
 
   componentDidMount() {
-    const pagination = {
-      pageNumber: 1,
-      nPerPage: 9,
-    };
-    this.props.useDispatch.getChatMessages({ pagination });
+    this.loadMessages()
   }
 
-  addQueueChatMessage = (text: string) => {
+  private addQueueChatMessage = (text: string) => {
     const message = {
       text,
     };
     this.props.useDispatch.addQueueChatMessage(message);
   };
 
+  private loadMessages = () => {
+    const pagination = {
+      pageNumber: 1,
+      nPerPage: 3,
+    };
+    this.props.useDispatch.getChatMessages({ pagination });
+  };
+
+  private loadMoreMessages = () => {
+    const { nextPagination } = this.props.useRedux.Chat.loadMessages;
+    if (!nextPagination.nextPageNumber) return;
+
+    const pagination = {
+      pageNumber: nextPagination.nextPageNumber,
+      nPerPage: nextPagination.nPerPage,
+    };
+    this.props.useDispatch.getMoreChatMessages({ pagination });
+  };
+
   render() {
+    const {
+      chat: { messages },
+    } = this.props.useRedux.Chat;
     const { svgs, backgrounds } = ASSETS.FASTING;
 
     return (
@@ -59,7 +77,11 @@ class Chat extends React.PureComponent<
             alignItems: 'center',
             marginHorizontal: 40,
             borderWidth: 1,
-          }}></View>
+          }}>
+          {messages.map((i, idx) => (
+            <Text key={idx}>{i.text}</Text>
+          ))}
+        </View>
 
         {/* === */}
         <View
@@ -77,7 +99,13 @@ class Chat extends React.PureComponent<
           <ImageBackground
             resizeMode="cover"
             style={{ flex: 1, paddingBottom: 62, paddingHorizontal: 40 }}
-            source={backgrounds['primary']}></ImageBackground>
+            source={backgrounds['primary']}>
+              <TouchableOpacity style={{borderWidth: 1, marginTop: 40}} onPress={this.loadMoreMessages}>
+                <Text>
+                  LoadMore
+                </Text>
+              </TouchableOpacity>
+            </ImageBackground>
         </View>
       </>
     );

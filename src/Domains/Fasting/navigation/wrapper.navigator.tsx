@@ -103,19 +103,19 @@ export default class Wrapper extends React.PureComponent<
 
     if (backgroundSolidColor)
       return <PageContainer color={backgroundSolidColor}>{Page}</PageContainer>;
-    else
-      return (
-        <ImageBackground
-          resizeMode="cover"
-          style={{ flex: 1 }}
-          source={
-            ASSETS.FASTING.backgrounds[
-              backgroundImage ? backgroundImage : 'primary'
-            ]
-          }>
-          {Page}
-        </ImageBackground>
-      );
+
+    return (
+      <ImageBackground
+        resizeMode="cover"
+        style={{ flex: 1 }}
+        source={
+          ASSETS.FASTING.backgrounds[
+            backgroundImage ? backgroundImage : 'primary'
+          ]
+        }>
+        {Page}
+      </ImageBackground>
+    );
   }
 
   private renderPage(
