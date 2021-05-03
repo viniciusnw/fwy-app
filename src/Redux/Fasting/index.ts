@@ -12,6 +12,7 @@ class ReduxActionsType {
   logout = User.actions.logout
   
   getChatMessages = Chat.actions.getChatMessages
+  getMoreChatMessages = Chat.actions.getMoreChatMessages
   sendChatMessage = Chat.actions.sendChatMessage
   addQueueChatMessage = Chat.actions.addQueueChatMessage
   completeQueueChatMessage = Chat.actions.completeQueueChatMessage

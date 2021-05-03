@@ -24,11 +24,12 @@ class Home extends React.Component<
   RoutePropsType & ReduxPropsType & PagePropsType,
   any
 > {
+  static setPageConfigs = {
+    topBarConfig: { title: null, menu: true, color: '#FFF' },
+  };
+
   constructor(props) {
     super(props);
-    this.props.setPageConfigs({
-      topBarConfig: { title: null, menu: true, color: '#FFF' },
-    });
   }
 
   componentDidMount() {

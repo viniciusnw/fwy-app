@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { StackScreenProps } from '@react-navigation/stack';
 
-import { StyledText } from './login.style'
+import { StyledText } from './login.style';
 import { Button, Icon, Logo, Input } from '@Components';
 import { View, Text, TouchableOpacity } from 'react-native';
 import { UnloogedStackParamList, PagePropsType } from '@Navigation';
@@ -10,15 +10,17 @@ import { ReduxActions, ReduxPropsType, ReduxStateType } from '@Redux/Fasting';
 
 import LoginForm from './components/login-form.component';
 
-
 type RoutePropsType = StackScreenProps<UnloogedStackParamList, 'Login'>;
-class Login extends React.Component<RoutePropsType & ReduxPropsType & PagePropsType, any> {
+class Login extends React.Component<
+  RoutePropsType & ReduxPropsType & PagePropsType,
+  any
+> {
+  static setPageConfigs = {
+    pageConfig: { backgroundImage: 'tertiary' },
+  };
 
   constructor(props) {
-    super(props)
-    this.props.setPageConfigs({
-      pageConfig: { backgroundImage: 'tertiary' },
-    });
+    super(props);
   }
 
   componentDidUpdate() {
@@ -28,15 +30,22 @@ class Login extends React.Component<RoutePropsType & ReduxPropsType & PagePropsT
   goSignUp = () => {
     const { navigation } = this.props;
     navigation.navigate('SignUp');
-  }
+  };
 
   render() {
-    const { User: { login } } = this.props.useRedux
+    const {
+      User: { login },
+    } = this.props.useRedux;
     const { loading } = login;
 
     return (
-      <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', paddingHorizontal: 40 }}>
-
+      <View
+        style={{
+          flex: 1,
+          alignItems: 'center',
+          justifyContent: 'center',
+          paddingHorizontal: 40,
+        }}>
         <LoginForm
           loginLoading={loading}
           dispatchLogin={this.props.useDispatch.login}
@@ -57,35 +66,32 @@ class Login extends React.Component<RoutePropsType & ReduxPropsType & PagePropsT
           </TouchableOpacity>
         </View> */}
 
-        <TouchableOpacity style={{ marginTop: 16, marginBottom: 60 }} onPress={this.goSignUp}>
-          <StyledText>
-            Cadastre-se
-          </StyledText>
+        <TouchableOpacity
+          style={{ marginTop: 16, marginBottom: 60 }}
+          onPress={this.goSignUp}>
+          <StyledText>Cadastre-se</StyledText>
         </TouchableOpacity>
 
         <Logo width={80} height={40} color={'white'} />
       </View>
-    )
+    );
   }
 }
 
 function mapStateToProps({ User }: ReduxStateType) {
   return {
     useRedux: {
-      User
-    }
+      User,
+    },
   };
 }
 
 function mapDispatchToProps(dispatch) {
   return {
     useDispatch: {
-      login: _ => dispatch(ReduxActions.login(_)),
-    }
+      login: (_) => dispatch(ReduxActions.login(_)),
+    },
   };
 }
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Login);
+export default connect(mapStateToProps, mapDispatchToProps)(Login);

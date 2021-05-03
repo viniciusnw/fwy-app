@@ -13,13 +13,13 @@ class SignUp extends React.Component<
   RoutePropsType & ReduxPropsType & PagePropsType,
   any
 > {
+  static setPageConfigs = {
+    topBarConfig: { title: null, back: true, color: '#FFF' },
+    pageConfig: { backgroundImage: 'tertiary' },
+  };
+
   constructor(props) {
     super(props);
-    this.props.setPageConfigs({
-      topBarConfig: { title: null, back: true, color: '#FFF' },
-      pageConfig: { backgroundImage: 'tertiary' },
-    });
-
     this.state = {
       form: {
         country: '',

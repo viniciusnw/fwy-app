@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { connect } from 'react-redux';
 import { StackScreenProps } from '@react-navigation/stack';
@@ -8,70 +7,88 @@ import { LoggedStackParamList, PagePropsType } from '@Navigation';
 import { View, Text, ScrollView, TouchableOpacity } from 'react-native';
 import { ReduxActions, ReduxPropsType, ReduxStateType } from '@Redux/Fasting';
 
-import { StyledField, StyledH1, StyledText, StyledText1, StyledText2 } from './profile.style'
+import {
+  StyledField,
+  StyledH1,
+  StyledText,
+  StyledText1,
+  StyledText2,
+} from './profile.style';
 
 type RoutePropsType = StackScreenProps<LoggedStackParamList, 'ProfileEdit'>;
-class ProfileEdit extends React.Component<RoutePropsType & ReduxPropsType & PagePropsType, any> {
+class ProfileEdit extends React.Component<
+  RoutePropsType & ReduxPropsType & PagePropsType,
+  any
+> {
+  static setPageConfigs = {
+    topBarConfig: { title: null, menu: true, color: '#FFF', back: true },
+    pageConfig: { backgroundImage: 'tertiary' },
+    bottomBarConfig: { color: '#FFF' },
+  };
 
   constructor(props) {
-    super(props)
-    this.props.setPageConfigs({
-      topBarConfig: { title: null, menu: true, color: '#FFF', back: true },
-      pageConfig: { backgroundImage: 'tertiary' },
-      bottomBarConfig: { color: '#FFF' }
-    })
+    super(props);
   }
 
   render() {
-
     const profileEdit = {
       name: {
         value: '',
         placeholder: 'Name',
         onChangeText: () => true,
-        placeholderTextColor: "#FFF"
+        placeholderTextColor: '#FFF',
       },
       email: {
         value: '',
         placeholder: 'E-mail',
         onChangeText: () => true,
         autoCompleteType: 'email',
-        placeholderTextColor: "#FFF"
+        placeholderTextColor: '#FFF',
       },
       birthday: {
         value: '',
         placeholder: 'Birthday',
         onChangeText: () => true,
-        placeholderTextColor: "#FFF"
+        placeholderTextColor: '#FFF',
       },
       gender: {
         value: '',
         placeholder: 'Gender',
         onChangeText: () => true,
-        placeholderTextColor: "#FFF"
+        placeholderTextColor: '#FFF',
       },
       weight: {
         value: '',
         placeholder: 'Weight',
         onChangeText: () => true,
-        placeholderTextColor: "#FFF"
+        placeholderTextColor: '#FFF',
       },
       height: {
         value: '',
         placeholder: 'Height',
         onChangeText: () => true,
-        placeholderTextColor: "#FFF"
+        placeholderTextColor: '#FFF',
       },
-    }
+    };
 
     return (
       <View style={{ flex: 1 }}>
-        <TouchableOpacity style={{ alignItems: 'center', marginHorizontal: 20 }}>
-          
-          <View style={{ flexDirection: 'row', alignItems: 'center', width: '100%', paddingHorizontal: 30, borderWidth: 1 }}>
-            
+        <TouchableOpacity
+          style={{ alignItems: 'center', marginHorizontal: 20 }}>
+          <View
+            style={{
+              flexDirection: 'row',
+              alignItems: 'center',
+              width: '100%',
+              paddingHorizontal: 30,
+              borderWidth: 1,
+            }}>
             <View style={{ borderWidth: 1 }}>
-              <Icon size={110} color={'rgba(255, 255, 255, .5)'} icon="user-circle" />
+              <Icon
+                size={110}
+                color={'rgba(255, 255, 255, .5)'}
+                icon="user-circle"
+              />
             </View>
 
             <View style={{ flex: 1, marginLeft: 24 }}>
@@ -80,18 +97,23 @@ class ProfileEdit extends React.Component<RoutePropsType & ReduxPropsType & Page
             </View>
           </View>
 
-          <View style={{ alignSelf: 'flex-start', paddingHorizontal: 30, borderWidth: 1 }}>
+          <View
+            style={{
+              alignSelf: 'flex-start',
+              paddingHorizontal: 30,
+              borderWidth: 1,
+            }}>
             <StyledText1>Change Profile Picture</StyledText1>
           </View>
         </TouchableOpacity>
 
         <View style={{ marginTop: 40, marginHorizontal: 40 }}>
-
           <StyledField>
             <Input {...profileEdit.name} />
           </StyledField>
 
-          <View style={{ marginBottom: 15, paddingHorizontal: 15, opacity: .5 }}>
+          <View
+            style={{ marginBottom: 15, paddingHorizontal: 15, opacity: 0.5 }}>
             <StyledText2> Private Information </StyledText2>
           </View>
 
@@ -124,21 +146,18 @@ class ProfileEdit extends React.Component<RoutePropsType & ReduxPropsType & Page
   }
 }
 
-function mapStateToProps({ }: ReduxStateType) {
+function mapStateToProps({}: ReduxStateType) {
   return {
-    useRedux: {}
-  }
+    useRedux: {},
+  };
 }
 
 function mapDispatchToProps(dispatch) {
   return {
     useDispatch: {
-      logout: _ => dispatch(ReduxActions.logout(_)),
-    }
+      logout: (_) => dispatch(ReduxActions.logout()),
+    },
   };
 }
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(ProfileEdit);
+export default connect(mapStateToProps, mapDispatchToProps)(ProfileEdit);

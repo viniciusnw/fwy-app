@@ -15,35 +15,29 @@ import {
 } from 'react-native';
 
 type RoutePropsType = StackScreenProps<LoggedStackParamList, 'Chat'>;
-class Chat extends React.Component<
+class Chat extends React.PureComponent<
   RoutePropsType & ReduxPropsType & PagePropsType,
   any
 > {
-
-  static setPageProps = {
+  static setPageConfigs = {
     pageConfig: { backgroundSolidColor: 'secondary' },
     topBarConfig: { title: null, menu: true, color: '#FFF', back: true },
   };
 
   constructor(props) {
     super(props);
-    this.props.setPageConfigs({
-      pageConfig: { backgroundSolidColor: 'secondary' },
-      topBarConfig: { title: null, menu: true, color: '#FFF', back: true },
-    });
   }
 
   componentDidUpdate() {
-    // console.log('Chat=>componentDidUpdate: ', this.props.useRedux.Chat);
+    console.log('Chat=>componentDidUpdate: ', this.props.useRedux.Chat);
   }
 
   componentDidMount() {
-    console.log('componentDidMount');
-    // const pagination = {
-    //   pageNumber: 1,
-    //   nPerPage: 9,
-    // };
-    // this.props.useDispatch.getChatMessages({ pagination });
+    const pagination = {
+      pageNumber: 1,
+      nPerPage: 9,
+    };
+    this.props.useDispatch.getChatMessages({ pagination });
   }
 
   addQueueChatMessage = (text: string) => {
@@ -104,6 +98,7 @@ function mapDispatchToProps(dispatch) {
       logout: (_) => dispatch(ReduxActions.logout()),
       addQueueChatMessage: (_) => dispatch(ReduxActions.addQueueChatMessage(_)),
       getChatMessages: (_) => dispatch(ReduxActions.getChatMessages(_)),
+      getMoreChatMessages: (_) => dispatch(ReduxActions.getMoreChatMessages(_)),
     },
   };
 }

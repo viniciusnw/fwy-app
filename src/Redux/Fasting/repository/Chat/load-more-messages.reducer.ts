@@ -1,8 +1,8 @@
 export default {
-  actionName: 'LOAD-MESSAGES',
+  actionName: 'LOAD-MORE-MESSAGES',
   reducer: (state, action) => {
     switch (action.type) {
-      case 'LOAD-MESSAGES_PENDING': {
+      case 'LOAD-MORE-MESSAGES_PENDING': {
         return {
           ...state,
           loadMessages: {
@@ -14,7 +14,7 @@ export default {
         };
       }
 
-      case 'LOAD-MESSAGES_FULFILLED': {
+      case 'LOAD-MORE-MESSAGES_FULFILLED': {
         return {
           ...state,
           loadMessages: {
@@ -26,12 +26,12 @@ export default {
           },
           chat: {
             ...state.chat,
-            messages: action.payload.messages,
+            messages: [...action.payload.messages, ...state.chat.messages],
           }
         };
       }
 
-      case 'LOAD-MESSAGES_REJECTED': {
+      case 'LOAD-MORE-MESSAGES_REJECTED': {
         return {
           ...state,
           loadMessages: {

@@ -80,7 +80,17 @@ export default class Wrapper extends React.PureComponent<
       topBarType = null,
       bottomBarType = null,
     } = this.props;
-    const { bottomBarConfig, topBarConfig, pageConfig } = this.state;
+    const { setPageConfigs } = PageComponent.WrappedComponent;
+    const {
+      bottomBarConfig = { color: '#FFF' },
+      topBarConfig = {
+        menu: false,
+        back: true,
+        color: '#FFF',
+        title: 'Fasting',
+      },
+      pageConfig = { backgroundImage: 'primary' },
+    } = setPageConfigs;
     const { backgroundImage, backgroundSolidColor } = pageConfig;
 
     const Page = this.renderPage(
@@ -90,8 +100,6 @@ export default class Wrapper extends React.PureComponent<
       bottomBarType,
       bottomBarConfig,
     );
-    
-    console.log(PageComponent.WrappedComponent.setPageProps)
 
     if (backgroundSolidColor)
       return <PageContainer color={backgroundSolidColor}>{Page}</PageContainer>;
