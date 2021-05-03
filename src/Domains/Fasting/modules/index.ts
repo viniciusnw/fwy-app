@@ -15,4 +15,5 @@ export { default as Profile } from './Profile/profile.page';
 export { default as ProfileEdit } from './Profile/profile-edit.page';
 export { default as Settings } from './Settings/settings.page';
 export { default as Chat } from './Chat/chat.page';
-export { default as ChatProvider } from './Chat/chat.provider';
+export { default as ChatConnectProvider } from './Chat/chat-connect.provider';
+export { default as ChatQueueProvider } from './Chat/chat-queue.provider';

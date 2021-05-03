@@ -78,7 +78,7 @@ const InputDate: React.FC<any> = (props) => {
         date={props.value ? new Date(props.value) : new Date()}
         onConfirm={(date) => {
           setVisible(false);
-          props.onChangeValue(new Date(date).toISOString());
+          props.onChangeValue(new Date(date));
         }}
       />}
     </>

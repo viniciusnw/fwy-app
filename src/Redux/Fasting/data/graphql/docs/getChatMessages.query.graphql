@@ -1,0 +1,14 @@
+query getChatMessages($pagination: Pagination!) {
+  getChatMessages(pagination: $pagination){
+    messages{
+      text
+      sender
+      date
+    }
+    nextPagination{
+      pageNumber
+      nPerPage
+      nextPageNumber
+    }
+  }
+}

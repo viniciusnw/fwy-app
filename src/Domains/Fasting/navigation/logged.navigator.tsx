@@ -105,14 +105,14 @@ type RoutePropsType = StackScreenProps<LoggedStackParamList, 'Logged'>;
 export default class Logged extends React.Component<RoutePropsType, any> {
 
   constructor(props) {
-    super(props);
+    super(props);    
   }
 
   render() {
     const Stack = createStackNavigator();
     return (
       <>
-        <Stack.Navigator initialRouteName={'Home'}>
+        <Stack.Navigator initialRouteName={'Chat'}>
           {LoggedStackList.map((StackItem, index) => (
             <Stack.Screen
               key={index}

@@ -21,7 +21,7 @@ const LoginForm: React.FC<any> = ({ loginLoading, dispatchLogin }) => {
 
   const formik = useFormik({
     initialValues: {
-      [fields.email]: 'viniciusnw@hotmail.com.br',
+      [fields.email]: 'viniciusnw@hotmail.com',
       [fields.password]: '123456',
       // [fields.email]: '',
       // [fields.password]: '',
@@ -63,7 +63,7 @@ const LoginForm: React.FC<any> = ({ loginLoading, dispatchLogin }) => {
           <Input {...loginForm.password} />
         </StyledField>
 
-        <View style={{ width: '50%', alignSelf: 'center', marginTop: 60, marginBottom: 20,  }}>
+        <View style={{ width: '50%', alignSelf: 'center', marginTop: 60, marginBottom: 20 }}>
           <Button loading={loginLoading} color="secondary" onPress={formik.handleSubmit}>
             Login
           </Button>

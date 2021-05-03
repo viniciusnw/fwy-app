@@ -4,7 +4,7 @@ import ReconnectingWebSocket from 'reconnecting-websocket';
 import { ReduxActions, ReduxPropsType, ReduxStateType } from '@Redux/Fasting';
 
 const url = 'ws://localhost:4001';
-class ChatProvider extends React.Component<ReduxPropsType, any> {
+class ChatConnectProvider extends React.Component<ReduxPropsType, any> {
 
   private createWebSocketClass(options) {
     return class extends WebSocket {
@@ -59,8 +59,8 @@ class ChatProvider extends React.Component<ReduxPropsType, any> {
   }
 
   private handlerConnectWs() {
-    const { Chat, User } = this.props.useRedux
-    const { ws } = Chat
+    const { General, User } = this.props.useRedux
+    const { ws } = General
     const token = User.data?.token
 
     if (ws) return
@@ -68,9 +68,9 @@ class ChatProvider extends React.Component<ReduxPropsType, any> {
   }
 
   private handlerReconnectWs() {
-    const { User, Chat } = this.props.useRedux
+    const { User, General } = this.props.useRedux
     const token = User.data?.token
-    const { ws } = Chat
+    const { ws } = General
     if (!ws || !token) return
 
     ws.close()
@@ -78,8 +78,8 @@ class ChatProvider extends React.Component<ReduxPropsType, any> {
   }
 
   private handlerDisconnectWs() {
-    const { Chat } = this.props.useRedux
-    const { ws } = Chat
+    const { General } = this.props.useRedux
+    const { ws } = General
     if (!ws) return
 
     ws.close();
@@ -87,11 +87,12 @@ class ChatProvider extends React.Component<ReduxPropsType, any> {
   }
 }
 
-function mapStateToProps({ User, Chat }: ReduxStateType) {
+function mapStateToProps({ User, Chat, General }: ReduxStateType) {
   return {
     useRedux: {
       Chat,
-      User
+      User,
+      General
     }
   };
 }
@@ -107,4 +108,4 @@ function mapDispatchToProps(dispatch) {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(ChatProvider);
+)(ChatConnectProvider);

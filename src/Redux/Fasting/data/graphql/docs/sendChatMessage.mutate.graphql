@@ -1,0 +1,3 @@
+mutation sendChatMessage($customerId: String, $text: String!) {
+  sendChatMessage(customerId: $customerId, text: $text)
+}

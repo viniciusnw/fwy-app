@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { StackScreenProps } from '@react-navigation/stack';
 
 import { View } from 'react-native';
+import { StyledView } from './sign-up.style';
 import SignUpForm from './components/sign-up-form.component';
 import { UnloogedStackParamList, PagePropsType } from '@Navigation';
 import { ReduxActions, ReduxPropsType, ReduxStateType } from '@Redux/Fasting';
@@ -46,13 +47,7 @@ class SignUp extends React.Component<
     const { loading: countriesLoading, data: countriesData } = countries;
 
     return (
-      <View
-        style={{
-          flex: 1,
-          alignItems: 'center',
-          justifyContent: 'center',
-          paddingHorizontal: 40,
-        }}>
+      <StyledView>
         <SignUpForm
           statesData={statesData}
           statesLoading={statesLoading}
@@ -62,7 +57,7 @@ class SignUp extends React.Component<
           formChangeField={this.formChangeField}
           dispatchRegister={this.props.useDispatch.register}
         />
-      </View>
+      </StyledView>
     );
   }
 

@@ -16,7 +16,7 @@ export default class BottomBar extends React.Component<RoutePropsType & BottomBa
 
   constructor(props) {
     super(props);
-    console.log('BottomBar=>constructor', this)
+    // console.log('BottomBar=>constructor', this)
   }
 
   render() {

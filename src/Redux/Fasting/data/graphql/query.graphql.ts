@@ -1,7 +1,12 @@
 import { Service } from 'typedi';
-import { GraphqlApi, countriesAndStatesVariables } from '@Config/graphql';
+import {
+  GraphqlApi,
+  countriesAndStatesVariables,
+  getChatMessagesVariables
+} from '@Config/graphql';
 
 import countriesAndStatesQuery from './docs/countriesAndStates.query.graphql'
+import getChatMessagesQuery from './docs/getChatMessages.query.graphql'
 
 @Service()
 export class Query extends GraphqlApi {
@@ -12,6 +17,14 @@ export class Query extends GraphqlApi {
       variables: params,
       fetchPolicy: 'cache-first',
     }).then(response => this.mapResponse(response, 'countriesAndStates'))
+      .catch(err => this.mapError(err))
+  }
+
+  public getChatMessagesQuery = (params: getChatMessagesVariables) => {
+    return this.ApolloClient.query({
+      query: getChatMessagesQuery,
+      variables: params,
+    }).then(response => this.mapResponse(response, 'getChatMessages'))
       .catch(err => this.mapError(err))
   }
 }

@@ -1,9 +1,17 @@
 import { Container } from 'typedi';
+import ReconnectingWebSocket from 'reconnecting-websocket';
 import { Mutate, Query } from '@Redux/Fasting/data/graphql'
 
 import { countriesAndStatesVariables } from '@Config/graphql'
 
 export default {
+
+  saveWs: (params: ReconnectingWebSocket | null) => {
+    return {
+      type: 'WS-CONN',
+      payload: params,
+    };
+  },
 
   getStates: (params: countriesAndStatesVariables) => {
     return {
