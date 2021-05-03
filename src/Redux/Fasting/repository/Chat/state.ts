@@ -1,8 +1,18 @@
-import ReconnectingWebSocket from 'reconnecting-websocket';
+interface loadMessages {
+  loading: boolean
+  success: boolean
+  nextPagination: {
+    nPerPage: number
+    pageNumber: number
+    nextPageNumber: number | null
+  }
+  error: boolean
+  errorMessage: any
+}
+
 export interface messageQueue {
   text: string
 }
-
 export interface message {
   date: Date
   text: string;
@@ -11,19 +21,6 @@ export interface message {
 interface chat {
   messages: Array<message>
   messageQueue: messageQueue[]
-}
-
-interface nextPagination {
-  nPerPage: number
-  pageNumber: number
-  nextPageNumber: number | null
-}
-interface loadMessages {
-  loading: boolean
-  success: boolean
-  nextPagination: nextPagination
-  error: boolean
-  errorMessage: any
 }
 
 export class ChatReduxType {

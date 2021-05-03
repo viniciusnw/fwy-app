@@ -33,7 +33,7 @@ class Chat extends React.PureComponent<
   }
 
   componentDidMount() {
-    this.loadMessages()
+    this.loadMessages();
   }
 
   private addQueueChatMessage = (text: string) => {
@@ -100,12 +100,12 @@ class Chat extends React.PureComponent<
             resizeMode="cover"
             style={{ flex: 1, paddingBottom: 62, paddingHorizontal: 40 }}
             source={backgrounds['primary']}>
-              <TouchableOpacity style={{borderWidth: 1, marginTop: 40}} onPress={this.loadMoreMessages}>
-                <Text>
-                  LoadMore
-                </Text>
-              </TouchableOpacity>
-            </ImageBackground>
+            <TouchableOpacity
+              style={{ borderWidth: 1, marginTop: 40 }}
+              onPress={this.loadMoreMessages}>
+              <Text>LoadMore</Text>
+            </TouchableOpacity>
+          </ImageBackground>
         </View>
       </>
     );
