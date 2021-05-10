@@ -133,28 +133,29 @@ class FastStart extends React.Component<
             justifyContent: 'flex-start',
             marginHorizontal: 40,
           }}>
+
           {/* === */}
           {true && (
             <View
               style={{
+                width: '100%',
+                marginBottom: 8,
                 flexDirection: 'row',
                 alignItems: 'center',
-                width: '100%',
-                marginBottom: 4,
                 paddingHorizontal: 15,
               }}>
               <StyledText>Custom Plan</StyledText>
               <Icon
                 size={12}
-                color={'#FFF'}
                 icon="info"
+                color={'#FFF'}
                 style={{ marginLeft: 4 }}
               />
             </View>
           )}
 
           {/* === */}
-          <View style={{ paddingBottom: 15, width: '100%' }}>
+          <View style={{ paddingBottom: 15, maxHeight: 48 }}>
             <Input {...inputFasting} />
           </View>
 
@@ -183,7 +184,7 @@ class FastStart extends React.Component<
                       {
                         width: 45,
                         borderRadius: 8,
-                        paddingVertical: 4,
+                        paddingVertical: 6,
                       },
                       d == 3 && { backgroundColor: '#EC5349' },
                     ]}>
@@ -205,7 +206,7 @@ class FastStart extends React.Component<
                       {
                         width: 45,
                         borderRadius: 8,
-                        paddingVertical: 4,
+                        paddingVertical: 6
                       },
                       h == 1 && { backgroundColor: '#EC5349' },
                     ]}>
@@ -321,8 +322,8 @@ class FastStart extends React.Component<
                   </View>
                 </View>
 
-                <Button small font={{ size: 10 }} color="transparent">
-                  Join to invite Friends
+                <Button small color="transparent">
+                  Invite Friends
                 </Button>
               </View>
             </TouchableOpacity>

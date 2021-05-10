@@ -4,15 +4,11 @@ import { StackScreenProps } from '@react-navigation/stack';
 
 import * as ASSETS from '@Config/assets';
 import { Icon, Button } from '@Components';
+import { message } from '@Redux/Fasting/repository/Chat/state';
 import { LoggedStackParamList, PagePropsType } from '@Navigation';
+import { View, Text, ImageBackground, TouchableOpacity } from 'react-native';
 import { ReduxActions, ReduxPropsType, ReduxStateType } from '@Redux/Fasting';
-import {
-  View,
-  Text,
-  TouchableOpacity,
-  ScrollView,
-  ImageBackground,
-} from 'react-native';
+import { ScrollMessages, Divider, MessageItem, MessageText } from './chat.style';
 
 type RoutePropsType = StackScreenProps<LoggedStackParamList, 'Chat'>;
 class Chat extends React.PureComponent<
@@ -71,28 +67,17 @@ class Chat extends React.PureComponent<
     return (
       <>
         {/* == */}
-        <View
-          style={{
-            flex: 1,
-            alignItems: 'center',
-            marginHorizontal: 40,
-            borderWidth: 1,
-          }}>
-          {messages.map((i, idx) => (
-            <Text key={idx}>{i.text}</Text>
-          ))}
-        </View>
+        <ScrollMessages
+          inverted 
+          data={messages}
+          extraData={messages}
+          keyExtractor={(item, index) => `${index}`}
+          contentContainerStyle={{ flexDirection: 'column-reverse' }}
+          renderItem={({ item }: { item: any }) => this.renderItem(item)}
+        />
 
         {/* === */}
-        <View
-          style={{
-            width: '100%',
-            height: 42,
-            bottom: -62,
-            marginTop: -62,
-            borderWidth: 1,
-          }}
-        />
+        <Divider />
 
         {/* == */}
         <View style={{ height: 300, bottom: -62, borderWidth: 1 }}>
@@ -110,6 +95,12 @@ class Chat extends React.PureComponent<
       </>
     );
   }
+
+  private renderItem = (item: message) => (
+    <MessageItem {...item}>
+      <MessageText {...item}>{item.text}</MessageText>
+    </MessageItem>
+  );
 }
 
 function mapStateToProps({ Chat }: ReduxStateType) {

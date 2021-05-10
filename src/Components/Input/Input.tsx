@@ -3,8 +3,8 @@ import styled from 'styled-components/native';
 import { TextInput, View, Text } from 'react-native';
 
 const Container = styled(View)`
-  flex-direction: row;
   flex-wrap: wrap;
+  flex-direction: row;
   flex: ${({ half }: any) => half ? '2' : '1'};
   width: ${({ half }: any) => half ? 'auto' : '100%'};
   margin-left: ${({ half }: any) => half ? '4px' : '0'};

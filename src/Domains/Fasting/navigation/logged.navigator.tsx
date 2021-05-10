@@ -112,7 +112,7 @@ export default class Logged extends React.Component<RoutePropsType, any> {
     const Stack = createStackNavigator();
     return (
       <>
-        <Stack.Navigator initialRouteName={'Chat'}>
+        <Stack.Navigator initialRouteName={'Home'}>
           {LoggedStackList.map((StackItem, index) => (
             <Stack.Screen
               key={index}

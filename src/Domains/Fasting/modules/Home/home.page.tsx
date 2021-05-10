@@ -42,8 +42,8 @@ class Home extends React.Component<
     //   password: '123456',
     // });
     // this.props.useDispatch.logout();
-    // const { navigation } = this.props;
-    // navigation.navigate('FastStart');
+    const { navigation } = this.props;
+    navigation.navigate('FastStart');
   };
 
   render() {

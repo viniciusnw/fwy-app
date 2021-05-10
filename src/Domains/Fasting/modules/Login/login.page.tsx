@@ -24,7 +24,7 @@ class Login extends React.Component<
   }
 
   componentDidUpdate() {
-    // console.log("Login=>componentDidUpdate: ", this.props)
+    console.log("Login=>componentDidUpdate: ", this.props)
   }
 
   goSignUp = () => {

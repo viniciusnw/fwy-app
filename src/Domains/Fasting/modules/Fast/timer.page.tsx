@@ -47,9 +47,9 @@ class Timer extends React.Component<
   };
 
   startFast = () => {
-    this.props.setPageConfigs({
-      topBarConfig: { title: null, back: true, menu: true, color: '#FFF' },
-    });
+    // {
+    //   topBarConfig: { title: null, back: true, menu: true, color: '#FFF' },
+    // }
     this.setState({ endTimer: true });
   };
 
@@ -146,7 +146,7 @@ class Timer extends React.Component<
             </View>
 
             <View style={{ width: '40%', alignSelf: 'center' }}>
-              <Button onPress={this.goBadgeNew}>End Fast</Button>
+              <Button onPress={() => null}>End Fast</Button>
             </View>
           </>
         )}

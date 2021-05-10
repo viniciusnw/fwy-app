@@ -3,6 +3,9 @@ import { connect } from 'react-redux';
 import { ReduxActions, ReduxPropsType, ReduxStateType } from '@Redux/Fasting';
 
 class ChatQueueProvider extends React.Component<ReduxPropsType, any> {
+
+  private messageIdCounter: number = 0
+
   constructor(props) {
     super(props);
   }
@@ -22,7 +25,7 @@ class ChatQueueProvider extends React.Component<ReduxPropsType, any> {
     } = this.props.useRedux.Chat;
 
     if (loading) return;
-    else if (error) setTimeout(() => this.handlerSendChatMessage(), 20000);
+    else if (error) setTimeout(() => this.handlerSendChatMessage(), 5000);
     else if (success) this.handlerCompleteMessage();
     else if (messageQueue.length) this.handlerSendChatMessage();
   };
@@ -33,7 +36,7 @@ class ChatQueueProvider extends React.Component<ReduxPropsType, any> {
     } = this.props.useRedux.Chat;
     this.props.useDispatch.completeQueueChatMessage({
       message: {
-        sender: 'self',
+        sender: 'customer',
         date: new Date(),
         text: messageQueue[0].text,
       },

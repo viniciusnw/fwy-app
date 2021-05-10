@@ -57,9 +57,9 @@ export const StyledText2 = styled(Text)`
 
 export const StyledText3 = styled(Text)`
   font-size: 25px;
-  margin-bottom: -8px;
   font-weight: bold;
   text-align: center;
+  margin-bottom: -4px;
   color: ${({ theme }) => theme.color.white};
   font-family: ${({ theme }) => theme.fonts.AdobeClean.bold};
 `;
@@ -71,6 +71,7 @@ export const StyledText4 = styled(Text)`
 `;
 
 export const StyledText5 = styled(Text)`
+  line-height: 18px;
   color: ${({ theme }) => theme.color.white};
   font-family: ${({ theme }) => theme.fonts.AdobeClean.regular};
 `;
@@ -83,6 +84,7 @@ export const StyledText6 = styled(Text)`
 
 export const StyledText7 = styled(Text)`
   font-size: 18px;
+  line-height: 20px;
   font-weight: bold;
   color: ${({ theme }) => theme.color.white};
   font-family: ${({ theme }) => theme.fonts.AdobeClean.bold};
@@ -90,6 +92,7 @@ export const StyledText7 = styled(Text)`
 
 export const StyledText8 = styled(Text)`
   font-size: 18px;
+  line-height: 20px;
   font-weight: bold;
   color: ${({ theme }) => theme.color.primary};
   font-family: ${({ theme }) => theme.fonts.AdobeClean.bold};

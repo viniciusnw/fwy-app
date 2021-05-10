@@ -6,6 +6,13 @@ import { sendChatMessageVariables, getChatMessagesVariables } from '@Config/grap
 
 export default {
 
+  newChatMessage: (params: message) => {
+    return {
+      type: 'NEW-MESSAGE',
+      payload: params,
+    };
+  },
+
   addQueueChatMessage: (params: messageQueue) => {
     return {
       type: 'ADD-QUEUE-MESSAGES',

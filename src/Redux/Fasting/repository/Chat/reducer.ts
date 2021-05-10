@@ -20,6 +20,7 @@ export default function reducer(
     
     case queueMessages.actionName: return queueMessages.reducer(state, action)
     case queueMessages.actionName2: return queueMessages.reducer(state, action)
+    case queueMessages.actionName3: return queueMessages.reducer(state, action)
     default: return state
   }
 }

@@ -14,6 +14,9 @@ export interface messageQueue {
   text: string
 }
 export interface message {
+  __typename?: string;
+  type?: string;
+  id?: string;
   date: Date
   text: string;
   sender: string;

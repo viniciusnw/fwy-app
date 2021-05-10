@@ -1,15 +1,30 @@
 import styled from 'styled-components/native';
-import { View, TextInput, Text } from 'react-native';
+import { message } from '@Redux/Fasting/repository/Chat/state';
+import { View, TextInput, Text, ScrollView, FlatList } from 'react-native';
 
-export const StyledTextInput = styled(TextInput)`
-  height: 80px;
-  width: 100%;
-  padding: 8px;
-  color: #fff;
-  border: none;
-  line-height: 20px;
-  border-radius: 6px;
-  padding: 30px 15px;
-  background-color: rgba(255, 255, 255, 0.2);
+export const ScrollMessages = styled(FlatList)`
+  flex: 1;
+  margin: 0 40px;
+  border-width: 1px;
   font-family: ${({ theme }) => theme.fonts.AdobeClean.regular};
 `;
+
+export const MessageItem = styled(View)<message>`
+  border: 1px solid black;
+  margin: 8px 2px;
+  display: flex;
+`;
+
+export const MessageText = styled(Text)<message>`
+  border: 1px solid black;
+  margin: 2px;
+  align-self: ${({ sender }) => sender == 'customer' ? 'flex-end' : 'flex-start'}
+`;
+
+export const Divider = styled(View)`
+  width: 100%;
+  height: 42px;
+  bottom: -62px;
+  margin-top: -62px;
+  border-width: 1px;
+`

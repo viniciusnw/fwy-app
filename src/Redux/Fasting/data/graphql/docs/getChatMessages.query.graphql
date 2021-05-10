@@ -1,6 +1,7 @@
 query getChatMessages($pagination: Pagination!) {
   getChatMessages(pagination: $pagination){
     messages{
+      _id
       text
       sender
       date

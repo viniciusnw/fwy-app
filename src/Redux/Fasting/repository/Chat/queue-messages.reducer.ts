@@ -1,6 +1,7 @@
 export default {
   actionName: 'ADD-QUEUE-MESSAGES',
   actionName2: 'COMPLETE-QUEUE-MESSAGES',
+  actionName3: 'NEW-MESSAGE',
   reducer: (state, action) => {
     switch (action.type) {
       case 'ADD-QUEUE-MESSAGES': {
@@ -23,11 +24,19 @@ export default {
             errorMessage: null,
           },
           chat: {
-            chat: {
-              ...state.chat,
-              messages: [...state.chat.menssages, action.payload.message],
-              messageQueue: state.chat.messageQueue.splice(action.payload.index, 1),
-            }
+            ...state.chat,
+            messages: [...state.chat.messages, action.payload.message],
+            messageQueue: state.chat.messageQueue.splice(action.payload.index, 1),
+          }
+        };
+      }
+
+      case 'NEW-MESSAGE': {
+        return {
+          ...state,
+          chat: {
+            ...state.chat,
+            messages: [...state.chat.messages, action.payload],
           }
         };
       }
