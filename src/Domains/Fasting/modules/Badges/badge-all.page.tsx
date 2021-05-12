@@ -14,11 +14,12 @@ import {
 type RoutePropsType = StackScreenProps<LoggedStackParamList, 'BadgeAll'>;
 class BadgeAll extends React.Component<RoutePropsType & ReduxPropsType & PagePropsType, any> {
 
+  static setPageConfigs = {
+    topBarConfig: { title: null, menu: true, color: '#FFF', back: true }
+  };
+
   constructor(props) {
     super(props)
-    this.props.setPageConfigs({
-      topBarConfig: { title: null, menu: true, color: '#FFF', back: true }
-    })
   }
 
   goToBadgeView = () => {
@@ -97,7 +98,7 @@ function mapStateToProps({ }: ReduxStateType) {
 function mapDispatchToProps(dispatch) {
   return {
     useDispatch: {
-      logout: _ => dispatch(ReduxActions.logout(_)),
+      logout: _ => dispatch(ReduxActions.logout()),
     }
   };
 }

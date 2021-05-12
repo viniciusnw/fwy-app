@@ -2,7 +2,6 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { StackScreenProps } from '@react-navigation/stack';
 
-import { View } from 'react-native';
 import { StyledView } from './sign-up.style';
 import SignUpForm from './components/sign-up-form.component';
 import { UnloogedStackParamList, PagePropsType } from '@Navigation';

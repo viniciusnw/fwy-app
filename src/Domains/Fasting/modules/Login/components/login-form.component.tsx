@@ -39,6 +39,7 @@ const LoginForm: React.FC<any> = ({ loginLoading, dispatchLogin }) => {
       autoCompleteType: 'email',
       value: formik.values.email,
       placeholderTextColor: "#FFF",
+      onBlur: formik.handleBlur(fields.email),
       onChangeText: (value) => formik.setFieldValue(fields.email, value),
       error: formik.touched.email && formik.errors.email ? formik.errors.email : null
     },
@@ -48,6 +49,7 @@ const LoginForm: React.FC<any> = ({ loginLoading, dispatchLogin }) => {
       autoCompleteType: 'password',
       value: formik.values.password,
       placeholderTextColor: "#FFF",
+      onBlur: formik.handleBlur(fields.password),
       onChangeText: (value) => formik.setFieldValue(fields.password, value),
       error: formik.touched.password && formik.errors.password ? formik.errors.password : null
     },

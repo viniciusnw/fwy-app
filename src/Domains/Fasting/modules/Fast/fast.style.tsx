@@ -1,6 +1,7 @@
 
 import styled from 'styled-components/native';
 import { View, TextInput, Text } from 'react-native';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 export const StyledTextInput = styled(TextInput)`
   height: 80px;
@@ -204,3 +205,13 @@ export const StyledText23 = styled(Text)`
   color: ${({ theme }) => theme.color.white};
   font-family: ${({ theme }) => theme.fonts.AdobeClean.bold};
 `;
+
+export const ColorPick = styled(TouchableOpacity)<any>`
+  width: 25px;
+  height: 25px;
+  margin: 0 6px;
+  border-width: 2px;
+  border-radius: 25px;
+  background-color: ${({ color }) => color ? color : '#FFF'};
+  border-color: ${({ active, theme }) => active ? theme.color.black : '#FFF'};
+`

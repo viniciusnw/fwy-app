@@ -25,7 +25,7 @@ class Timer extends React.Component<
   any
 > {
   static setPageConfigs = {
-    topBarConfig: { title: null, color: '#FFF' },
+    topBarConfig: { title: null, menu: true, back: true, color: '#FFF' },
     pageConfig: { backgroundImage: 'secondary' },
     bottomBarConfig: { color: '#FFF' },
   };

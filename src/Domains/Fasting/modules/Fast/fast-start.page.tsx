@@ -1,25 +1,15 @@
-import React from 'react';
+import { Formik } from 'formik';
 import { connect } from 'react-redux';
+import React, { createRef } from 'react';
 import { StackScreenProps } from '@react-navigation/stack';
 
 import * as ASSETS from '@Config/assets';
-
-import { Button, Icon, Input } from '@Components';
+import { Button, Icon } from '@Components';
 import { LoggedStackParamList, PagePropsType } from '@Navigation';
 import { ReduxActions, ReduxPropsType, ReduxStateType } from '@Redux/Fasting';
-import {
-  View,
-  Text,
-  TouchableOpacity,
-  ImageBackground,
-  ScrollView,
-} from 'react-native';
+import { View, TouchableOpacity, ImageBackground } from 'react-native';
 import {
   StyledText,
-  StyledH1,
-  StyledText2,
-  StyledH2,
-  StyledText3,
   StyledText4,
   StyledText5,
   StyledText6,
@@ -27,9 +17,11 @@ import {
   StyledText8,
 } from './fast.style';
 
+import FastStartForm from './components/fast-start-form.component';
+
 type RoutePropsType = StackScreenProps<LoggedStackParamList, 'FastStart'>;
 class FastStart extends React.Component<
-  RoutePropsType & ReduxPropsType & PagePropsType,
+  RoutePropsType & ReduxPropsType & PagePropsType & any,
   any
 > {
   static setPageConfigs = {
@@ -41,13 +33,37 @@ class FastStart extends React.Component<
   constructor(props) {
     super(props);
     this.state = {
-      form: {},
+      form: {
+        startDate: null,
+        endDate: null,
+      },
     };
   }
 
   goToTimer = () => {
-    const { navigation } = this.props;
-    navigation.navigate('Timer');
+    const { reset } = this.props.navigation;
+    const {
+      form: { days, hours },
+    } = this.state;
+
+    // const endDate = new Date();
+    // endDate.setDate(endDate.getDate() + days);
+    // endDate.setTime(endDate.getTime() + hours * 60 * 60 * 1000);
+    // this.setState({
+    //   form: {
+    //     startDate: new Date(),
+    //     endDate: endDate,
+    //   },
+    // });
+    // console.log(this.state.form);
+
+    console.log(this.props);
+    console.log(this.props.handleSubmit());
+
+    // reset({
+    //   index: 2,
+    //   routes: [{ name: 'Home' }, { name: 'Timer' }],
+    // });
   };
 
   goToBadgeAll = () => {
@@ -57,279 +73,108 @@ class FastStart extends React.Component<
 
   render() {
     const { RibbonFull } = ASSETS.FASTING.svgs;
-    const inputFasting = {
-      value: '',
-      onChangeText: () => true,
-      placeholder: 'Fasting name',
-      placeholderTextColor: '#FFF',
-    };
-
-    const days = [
-      1,
-      2,
-      3,
-      4,
-      5,
-      6,
-      7,
-      8,
-      9,
-      10,
-      11,
-      12,
-      13,
-      14,
-      15,
-      16,
-      17,
-      18,
-      19,
-      20,
-      21,
-      22,
-      23,
-      24,
-      25,
-      26,
-      27,
-      28,
-      29,
-      30,
-    ];
-    const hours = [
-      1,
-      2,
-      3,
-      4,
-      5,
-      6,
-      7,
-      8,
-      9,
-      10,
-      11,
-      12,
-      13,
-      14,
-      15,
-      16,
-      17,
-      18,
-      19,
-      20,
-      21,
-      22,
-      23,
-      24,
-    ];
-
     return (
-      <View style={{ flex: 1 }}>
-        {/* === */}
-        <View
-          style={{
-            flex: 1,
-            alignItems: 'center',
-            justifyContent: 'flex-start',
-            marginHorizontal: 40,
-          }}>
-
-          {/* === */}
-          {true && (
+      <Formik
+        validationSchema={{}}
+        initialValues={{}}
+        onSubmit={(values) => console.log(values)}>
+        {({ handleChange, handleBlur, handleSubmit, values }) => (
+          <View style={{ flex: 1 }}>
+            
+            {/* === */}
             <View
               style={{
-                width: '100%',
-                marginBottom: 8,
-                flexDirection: 'row',
+                flex: 1,
+                marginHorizontal: 40,
                 alignItems: 'center',
-                paddingHorizontal: 15,
+                justifyContent: 'flex-start',
               }}>
-              <StyledText>Custom Plan</StyledText>
-              <Icon
-                size={12}
-                icon="info"
-                color={'#FFF'}
-                style={{ marginLeft: 4 }}
-              />
+              {/* === */}
+              {true && (
+                <View
+                  style={{
+                    width: '100%',
+                    marginBottom: 12,
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    paddingHorizontal: 15,
+                  }}>
+                  <StyledText>Custom Plan</StyledText>
+                  <Icon
+                    size={12}
+                    icon="info"
+                    color={'#FFF'}
+                    style={{ marginLeft: 4 }}
+                  />
+                </View>
+              )}
+
+              {/* === */}
+              <FastStartForm />
+
+              {/* === */}
+              <View style={{ padding: 15 }}>
+                <StyledText4>Long 5 Fast Journal</StyledText4>
+                <StyledText5>
+                  A lot happens during a fast. Tracking your moo Will Help you
+                  understand those changes, and reflecte on How you’e feeling at
+                  different stages of your fast.
+                </StyledText5>
+              </View>
             </View>
-          )}
 
-          {/* === */}
-          <View style={{ paddingBottom: 15, maxHeight: 48 }}>
-            <Input {...inputFasting} />
-          </View>
-
-          {/* === */}
-          <View style={{ padding: 15, width: '100%' }}>
-            <StyledH1>Duration</StyledH1>
-            <StyledText2>You can save presets up to 24 hours.</StyledText2>
-          </View>
-
-          {/* === */}
-          <View style={{ width: '100%', padding: 15 }}>
+            {/* === */}
             <View
-              style={{
-                flexDirection: 'row',
-                marginBottom: 8,
-                alignItems: 'center',
-              }}>
-              <StyledH2>Days</StyledH2>
-              <ScrollView
-                showsVerticalScrollIndicator={false}
-                showsHorizontalScrollIndicator={false}
-                horizontal>
-                {days.map((d) => (
-                  <TouchableOpacity
-                    style={[
-                      {
-                        width: 45,
-                        borderRadius: 8,
-                        paddingVertical: 6,
-                      },
-                      d == 3 && { backgroundColor: '#EC5349' },
-                    ]}>
-                    <StyledText3>{d}</StyledText3>
-                  </TouchableOpacity>
-                ))}
-              </ScrollView>
-            </View>
+              style={{ width: '100%', height: 42, bottom: -62, marginTop: -62 }}
+            />
 
-            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-              <StyledH2>Hours</StyledH2>
-              <ScrollView
-                showsVerticalScrollIndicator={false}
-                showsHorizontalScrollIndicator={false}
-                horizontal>
-                {hours.map((h) => (
-                  <TouchableOpacity
-                    style={[
-                      {
-                        width: 45,
-                        borderRadius: 8,
-                        paddingVertical: 6
-                      },
-                      h == 1 && { backgroundColor: '#EC5349' },
-                    ]}>
-                    <StyledText3>{h}</StyledText3>
-                  </TouchableOpacity>
-                ))}
-              </ScrollView>
-            </View>
-          </View>
-
-          {/* === */}
-          <View style={{ width: '100%', padding: 15 }}>
-            <StyledH1>Color</StyledH1>
-            <View
-              style={{
-                flexDirection: 'row',
-                marginTop: 15,
-                marginHorizontal: -6,
-              }}>
-              <TouchableOpacity
-                style={{
-                  borderWidth: 2,
-                  borderColor: '#FFF',
-                  height: 25,
-                  width: 25,
-                  backgroundColor: '#EC5349',
-                  borderRadius: 25,
-                  marginHorizontal: 6,
-                }}
-              />
-              <TouchableOpacity
-                style={{
-                  borderWidth: 2,
-                  borderColor: '#FFF',
-                  height: 25,
-                  width: 25,
-                  backgroundColor: '#8B4F9F',
-                  borderRadius: 25,
-                  marginHorizontal: 6,
-                }}
-              />
-              <TouchableOpacity
-                style={{
-                  borderWidth: 2,
-                  borderColor: '#FFF',
-                  height: 25,
-                  width: 25,
-                  backgroundColor: '#222842',
-                  borderRadius: 25,
-                  marginHorizontal: 6,
-                }}
-              />
-              <TouchableOpacity
-                style={{
-                  borderWidth: 2,
-                  borderColor: '#FFF',
-                  height: 25,
-                  width: 25,
-                  backgroundColor: '#EB334D',
-                  borderRadius: 25,
-                  marginHorizontal: 6,
-                }}
-              />
-            </View>
-          </View>
-
-          {/* === */}
-          <View style={{ padding: 15 }}>
-            <StyledText4>Long 5 Fast Journal</StyledText4>
-            <StyledText5>
-              A lot happens during a fast. Tracking your moo Will Help you
-              understand those changes, and reflecte on How you’e feeling at
-              different stages of your fast.
-            </StyledText5>
-          </View>
-        </View>
-
-        {/* === */}
-        <View
-          style={{ width: '100%', height: 42, bottom: -62, marginTop: -62 }}
-        />
-
-        {/* === */}
-        <View style={{ height: 230, bottom: -62, right: 0, left: 0 }}>
-          <ImageBackground
-            resizeMode="cover"
-            style={{ flex: 1, paddingBottom: 62 }}
-            source={ASSETS.FASTING.backgrounds['primary']}>
-            <View style={{ marginHorizontal: '23%', top: -20 }}>
-              <Button
-                onPress={this.goToTimer}
-                color="primary"
-                icon={{ icon: 'timer', color: '#EC5349', size: 22 }}>
-                START YOUR FAST
-              </Button>
-            </View>
-
-            <TouchableOpacity
-              style={{ flex: 1, justifyContent: 'center' }}
-              onPress={this.goToBadgeAll}>
-              <View
-                style={{
-                  flexDirection: 'row',
-                  justifyContent: 'space-around',
-                  marginHorizontal: 22,
-                }}>
-                <View style={{ flexDirection: 'row' }}>
-                  <RibbonFull width={20} height={30} style={{ marginTop: 5 }} />
-                  <View style={{ marginLeft: 10 }}>
-                    <StyledText6>JOURNAL</StyledText6>
-                    <StyledText7>Long 3 entries</StyledText7>
-                    <StyledText8>7 days</StyledText8>
-                  </View>
+            {/* === */}
+            <View style={{ height: 230, bottom: -62, right: 0, left: 0 }}>
+              <ImageBackground
+                resizeMode="cover"
+                style={{ flex: 1, paddingBottom: 62 }}
+                source={ASSETS.FASTING.backgrounds['primary']}>
+                <View style={{ marginHorizontal: '23%', top: -20 }}>
+                  <Button
+                    onPress={this.goToTimer}
+                    color="primary"
+                    icon={{ icon: 'timer', color: '#EC5349', size: 22 }}>
+                    START YOUR FAST
+                  </Button>
                 </View>
 
-                <Button small color="transparent">
-                  Invite Friends
-                </Button>
-              </View>
-            </TouchableOpacity>
-          </ImageBackground>
-        </View>
-      </View>
+                <TouchableOpacity
+                  style={{ flex: 1, justifyContent: 'center' }}
+                  onPress={this.goToBadgeAll}>
+                  <View
+                    style={{
+                      flexDirection: 'row',
+                      marginHorizontal: 22,
+                      justifyContent: 'space-around',
+                    }}>
+                    <View style={{ flexDirection: 'row' }}>
+                      <RibbonFull
+                        width={20}
+                        height={30}
+                        style={{ marginTop: 5 }}
+                      />
+                      <View style={{ marginLeft: 10 }}>
+                        <StyledText6>JOURNAL</StyledText6>
+                        <StyledText7>Long 3 entries</StyledText7>
+                        <StyledText8>7 days</StyledText8>
+                      </View>
+                    </View>
+
+                    <Button small color="transparent">
+                      Invite Friends
+                    </Button>
+                  </View>
+                </TouchableOpacity>
+              </ImageBackground>
+            </View>
+          </View>
+        )}
+      </Formik>
     );
   }
 }
@@ -349,3 +194,27 @@ function mapDispatchToProps(dispatch) {
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(FastStart);
+
+
+// Formik x React Native example
+// import React from 'react';
+// import { Button, TextInput, View } from 'react-native';
+// import { Formik } from 'formik';
+
+// export const MyReactNativeForm = props => (
+//   <Formik
+//     initialValues={{ email: '' }}
+//     onSubmit={values => console.log(values)}
+//   >
+//     {({ handleChange, handleBlur, handleSubmit, values }) => (
+//       <View>
+//         <TextInput
+//           onChangeText={handleChange('email')}
+//           onBlur={handleBlur('email')}
+//           value={values.email}
+//         />
+//         <Button onPress={handleSubmit} title="Submit" />
+//       </View>
+//     )}
+//   </Formik>
+// );
