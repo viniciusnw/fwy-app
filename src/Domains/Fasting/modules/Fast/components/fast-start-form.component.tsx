@@ -1,54 +1,55 @@
 import React from 'react';
 import * as yup from 'yup';
-import { useFormik } from 'formik';
 
 import { FASTING } from '@Config/constants';
 import { Button, Input } from '@Components';
 import { View, TouchableOpacity, ScrollView } from 'react-native';
 import {
   StyledH1,
-  StyledText2,
   StyledH2,
-  StyledText3,
   ColorPick,
+  StyledText2,
+  StyledText3,
 } from './../fast.style';
 
-const FastStartForm: React.FC<any> = ({}) => {
+export const fields = {
+  name: 'name',
+  days: 'days',
+  hours: 'hours',
+  color: 'color',
+};
+
+export const FormFastSchema = yup.object().shape({
+  name: yup.string().required('Escolha um nome para seu Jejum.'),
+  hours: yup.number().min(1, 'Escolha as horas').required('Escolha as horas.'),
+});
+
+const FastStartForm: React.FC<any> = ({
+  setFieldValue,
+  handleBlur,
+  values,
+  errors,
+}) => {
   const { days, hours, fastColors } = FASTING;
-
-  const fields = {
-    name: 'name',
-    days: 'days',
-    hours: 'hours',
-    color: 'color',
-  };
-
-  const FormFastSchema = yup.object().shape({
-    name: yup.string().required('Escolha um nome.'),
-    hours: yup.number().required('Escolha as horas.'),
-  });
-
-  const formik = useFormik({
-    initialValues: {
-      [fields.name]: null,
-      [fields.days]: 0,
-      [fields.hours]: 0,
-      [fields.color]: '',
-    },
-    validationSchema: FormFastSchema,
-    onSubmit: (fast: any) => {
-      console.log(fast);
-    },
-  });
 
   const fastForm = {
     name: {
-      value: formik.values.name,
+      value: values.name,
       placeholder: 'Fasting name',
       placeholderTextColor: '#FFF',
-      onChangeText: (value) => formik.setFieldValue(fields.name, value),
+      onBlur: handleBlur(fields.name),
+      onChangeText: (value) => setFieldValue(fields.name, value),
     },
   };
+
+  console.log('FormErros: ', errors);
+
+  // Scroll to select element
+  // ref.scrollTo({
+  //   x: dataSourceCords[scrollToIndex - 1],
+  //   y: 0,
+  //   animated: true,
+  // });
 
   return (
     <>
@@ -78,14 +79,14 @@ const FastStartForm: React.FC<any> = ({}) => {
             {days.map((d, i) => (
               <TouchableOpacity
                 key={i}
-                onPress={() => formik.setFieldValue(fields.days, d)}
+                onPress={() => setFieldValue(fields.days, d)}
                 style={[
                   {
                     width: 45,
                     borderRadius: 8,
                     paddingVertical: 6,
                   },
-                  d == formik.values.days && { backgroundColor: '#EC5349' },
+                  d == values.days && { backgroundColor: '#EC5349' },
                 ]}>
                 <StyledText3>{d}</StyledText3>
               </TouchableOpacity>
@@ -102,14 +103,14 @@ const FastStartForm: React.FC<any> = ({}) => {
             {hours.map((h, i) => (
               <TouchableOpacity
                 key={i}
-                onPress={() => formik.setFieldValue(fields.hours, h)}
+                onPress={() => setFieldValue(fields.hours, h)}
                 style={[
                   {
                     width: 45,
                     borderRadius: 8,
                     paddingVertical: 6,
                   },
-                  h == formik.values.hours && { backgroundColor: '#EC5349' },
+                  h == values.hours && { backgroundColor: '#EC5349' },
                 ]}>
                 <StyledText3>{h}</StyledText3>
               </TouchableOpacity>
@@ -131,8 +132,8 @@ const FastStartForm: React.FC<any> = ({}) => {
             <ColorPick
               key={i}
               color={c}
-              active={formik.values.color == c}
-              onPress={() => formik.setFieldValue(fields.color, c)}
+              active={values.color == c}
+              onPress={() => setFieldValue(fields.color, c)}
             />
           ))}
         </View>

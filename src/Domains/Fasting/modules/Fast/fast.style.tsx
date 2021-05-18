@@ -1,4 +1,5 @@
-
+import React from 'react';
+import { Button, Icon } from '@Components';
 import styled from 'styled-components/native';
 import { View, TextInput, Text } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
@@ -7,12 +8,12 @@ export const StyledTextInput = styled(TextInput)`
   height: 80px;
   width: 100%;
   padding: 8px;
-  color: #FFF;
+  color: #fff;
   border: none;
   line-height: 20px;
   border-radius: 6px;
   padding: 30px 15px;
-  background-color: rgba(255, 255, 255, .2);
+  background-color: rgba(255, 255, 255, 0.2);
   font-family: ${({ theme }) => theme.fonts.AdobeClean.regular};
 `;
 
@@ -212,6 +213,38 @@ export const ColorPick = styled(TouchableOpacity)<any>`
   margin: 0 6px;
   border-width: 2px;
   border-radius: 25px;
-  background-color: ${({ color }) => color ? color : '#FFF'};
-  border-color: ${({ active, theme }) => active ? theme.color.black : '#FFF'};
+  background-color: ${({ color }) => (color ? color : '#FFF')};
+  border-color: ${({ active, theme }) => (active ? theme.color.black : '#FFF')};
+`;
+
+export const FormContainer = styled(View)`
+  flex: 1;
+  margin: 0 40px;
+  align-items: center;
+  justify-content: flex-start;
 `
+
+export const Footer = styled(View)`
+  height: 230px;
+  bottom: -62px;
+  right: 0px;
+  left: 0;
+`
+
+export const Divider = (props) => (
+  <View style={{ width: '100%', height: 42, bottom: -62, marginTop: -62 }} />
+);
+
+export const CustomPlanTag = (props) => (
+  <View
+    style={{
+      width: '100%',
+      marginBottom: 12,
+      flexDirection: 'row',
+      alignItems: 'center',
+      paddingHorizontal: 15,
+    }}>
+    <StyledText>Custom Plan</StyledText>
+    <Icon size={12} icon="info" color={'#FFF'} style={{ marginLeft: 4 }} />
+  </View>
+);

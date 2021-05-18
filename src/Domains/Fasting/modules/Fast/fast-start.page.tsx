@@ -1,27 +1,33 @@
+import React from 'react';
 import { Formik } from 'formik';
 import { connect } from 'react-redux';
-import React, { createRef } from 'react';
 import { StackScreenProps } from '@react-navigation/stack';
 
 import * as ASSETS from '@Config/assets';
 import { Button, Icon } from '@Components';
 import { LoggedStackParamList, PagePropsType } from '@Navigation';
-import { ReduxActions, ReduxPropsType, ReduxStateType } from '@Redux/Fasting';
 import { View, TouchableOpacity, ImageBackground } from 'react-native';
+import { ReduxActions, ReduxPropsType, ReduxStateType } from '@Redux/Fasting';
 import {
-  StyledText,
+  Footer,
+  Divider,
   StyledText4,
   StyledText5,
   StyledText6,
   StyledText7,
   StyledText8,
+  CustomPlanTag,
+  FormContainer,
 } from './fast.style';
 
-import FastStartForm from './components/fast-start-form.component';
+import FastStartForm, {
+  FormFastSchema,
+  fields as FormFields,
+} from './components/fast-start-form.component';
 
 type RoutePropsType = StackScreenProps<LoggedStackParamList, 'FastStart'>;
 class FastStart extends React.Component<
-  RoutePropsType & ReduxPropsType & PagePropsType & any,
+  RoutePropsType & ReduxPropsType & PagePropsType,
   any
 > {
   static setPageConfigs = {
@@ -32,85 +38,60 @@ class FastStart extends React.Component<
 
   constructor(props) {
     super(props);
-    this.state = {
-      form: {
-        startDate: null,
-        endDate: null,
-      },
-    };
   }
 
-  goToTimer = () => {
-    const { reset } = this.props.navigation;
-    const {
-      form: { days, hours },
-    } = this.state;
+  componentDidMount() {
+    console.log('FastStart=>componentDidMount: ', this.props);
+  }
 
-    // const endDate = new Date();
-    // endDate.setDate(endDate.getDate() + days);
-    // endDate.setTime(endDate.getTime() + hours * 60 * 60 * 1000);
-    // this.setState({
-    //   form: {
-    //     startDate: new Date(),
-    //     endDate: endDate,
-    //   },
-    // });
-    // console.log(this.state.form);
-
-    console.log(this.props);
-    console.log(this.props.handleSubmit());
-
-    // reset({
-    //   index: 2,
-    //   routes: [{ name: 'Home' }, { name: 'Timer' }],
-    // });
+  private handlerSubmitForm = (fastForm) => {
+    this.handlerCreateFasting(fastForm);
   };
 
-  goToBadgeAll = () => {
-    const { navigation } = this.props;
-    navigation.navigate('BadgeAll');
+  private handlerCreateFasting = (fastForm) => {
+    const {
+      route: { params },
+      useDispatch: { clearFasting },
+    } = this.props;
+
+    clearFasting();
+    this.goToTimer({
+      index: params.index,
+      hours: fastForm[FormFields.hours],
+      days: fastForm[FormFields.days],
+      name: fastForm[FormFields.name],
+      color: fastForm[FormFields.color],
+    });
   };
 
   render() {
     const { RibbonFull } = ASSETS.FASTING.svgs;
+
+    const FormInitialValues = {
+      [FormFields.days]: 1,
+      [FormFields.hours]: 1,
+      [FormFields.color]: '#EC5349',
+      [FormFields.name]: 'Fasting Name!',
+    };
+
     return (
       <Formik
-        validationSchema={{}}
-        initialValues={{}}
-        onSubmit={(values) => console.log(values)}>
-        {({ handleChange, handleBlur, handleSubmit, values }) => (
+        validationSchema={FormFastSchema}
+        initialValues={FormInitialValues}
+        onSubmit={this.handlerSubmitForm}>
+        {({ setFieldValue, handleBlur, handleSubmit, values, errors }) => (
           <View style={{ flex: 1 }}>
-            
-            {/* === */}
-            <View
-              style={{
-                flex: 1,
-                marginHorizontal: 40,
-                alignItems: 'center',
-                justifyContent: 'flex-start',
-              }}>
+            <FormContainer>
               {/* === */}
-              {true && (
-                <View
-                  style={{
-                    width: '100%',
-                    marginBottom: 12,
-                    flexDirection: 'row',
-                    alignItems: 'center',
-                    paddingHorizontal: 15,
-                  }}>
-                  <StyledText>Custom Plan</StyledText>
-                  <Icon
-                    size={12}
-                    icon="info"
-                    color={'#FFF'}
-                    style={{ marginLeft: 4 }}
-                  />
-                </View>
-              )}
+              {true && <CustomPlanTag />}
 
               {/* === */}
-              <FastStartForm />
+              <FastStartForm
+                errors={errors}
+                values={values}
+                handleBlur={handleBlur}
+                setFieldValue={setFieldValue}
+              />
 
               {/* === */}
               <View style={{ padding: 15 }}>
@@ -121,23 +102,21 @@ class FastStart extends React.Component<
                   different stages of your fast.
                 </StyledText5>
               </View>
-            </View>
+            </FormContainer>
 
             {/* === */}
-            <View
-              style={{ width: '100%', height: 42, bottom: -62, marginTop: -62 }}
-            />
+            <Divider />
 
             {/* === */}
-            <View style={{ height: 230, bottom: -62, right: 0, left: 0 }}>
+            <Footer>
               <ImageBackground
                 resizeMode="cover"
                 style={{ flex: 1, paddingBottom: 62 }}
                 source={ASSETS.FASTING.backgrounds['primary']}>
                 <View style={{ marginHorizontal: '23%', top: -20 }}>
                   <Button
-                    onPress={this.goToTimer}
                     color="primary"
+                    onPress={handleSubmit}
                     icon={{ icon: 'timer', color: '#EC5349', size: 22 }}>
                     START YOUR FAST
                   </Button>
@@ -171,50 +150,38 @@ class FastStart extends React.Component<
                   </View>
                 </TouchableOpacity>
               </ImageBackground>
-            </View>
+            </Footer>
           </View>
         )}
       </Formik>
     );
   }
+
+  private goToTimer = (Fasting) => {
+    const { navigate } = this.props.navigation;
+    navigate('Timer', { fasting: Fasting });
+  };
+
+  private goToBadgeAll = () => {
+    const { navigation } = this.props;
+    navigation.navigate('BadgeAll');
+  };
 }
 
-function mapStateToProps({}: ReduxStateType) {
+function mapStateToProps({ Fastings }: ReduxStateType) {
   return {
-    useRedux: {},
+    useRedux: {
+      Fastings,
+    },
   };
 }
 
 function mapDispatchToProps(dispatch) {
   return {
     useDispatch: {
-      logout: (_) => dispatch(ReduxActions.logout()),
+      clearFasting: (_) => dispatch(ReduxActions.clearFasting()),
     },
   };
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(FastStart);
-
-
-// Formik x React Native example
-// import React from 'react';
-// import { Button, TextInput, View } from 'react-native';
-// import { Formik } from 'formik';
-
-// export const MyReactNativeForm = props => (
-//   <Formik
-//     initialValues={{ email: '' }}
-//     onSubmit={values => console.log(values)}
-//   >
-//     {({ handleChange, handleBlur, handleSubmit, values }) => (
-//       <View>
-//         <TextInput
-//           onChangeText={handleChange('email')}
-//           onBlur={handleBlur('email')}
-//           value={values.email}
-//         />
-//         <Button onPress={handleSubmit} title="Submit" />
-//       </View>
-//     )}
-//   </Formik>
-// );

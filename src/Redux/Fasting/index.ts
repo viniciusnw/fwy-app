@@ -1,6 +1,7 @@
 import General, { GeneralReduxType } from './repository/General';
 import User, { UserReduxType } from './repository/User';
 import Chat, { ChatReduxType } from './repository/Chat';
+import Fastings, { FastingsReduxType } from './repository/Fastings';
 
 class ReduxActionsType {
   saveWs = General.actions.saveWs
@@ -17,11 +18,16 @@ class ReduxActionsType {
   getMoreChatMessages = Chat.actions.getMoreChatMessages
   addQueueChatMessage = Chat.actions.addQueueChatMessage
   completeQueueChatMessage = Chat.actions.completeQueueChatMessage
+
+  getFastings = Fastings.actions.getFastings
+  clearFasting = Fastings.actions.clearFasting
+  createFasting = Fastings.actions.createFasting
 }
 export type ReduxStateType = {
   General: GeneralReduxType;
   User: UserReduxType;
   Chat: ChatReduxType;
+  Fastings: FastingsReduxType;
 }
 
 // ====

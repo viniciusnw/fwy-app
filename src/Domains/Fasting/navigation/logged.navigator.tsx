@@ -11,9 +11,20 @@ export type LoggedStackParamList = {
   Wrapper: undefined;
   Logged: undefined;
   Home: undefined;
-  FastStart: undefined;
+  FastStart: {
+    index: number
+  };
+  Timer: {
+    fastingId?: string;
+    fasting?: {
+      name: string,
+      days: number,
+      hours: number,
+      color: string,
+      index: number
+    }
+  };
   FastEnd: undefined;
-  Timer: undefined;
   BadgeNew: undefined;
   BadgeList: undefined;
   BadgeAll: undefined;

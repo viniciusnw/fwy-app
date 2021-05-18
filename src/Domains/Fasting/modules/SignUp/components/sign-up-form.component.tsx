@@ -69,6 +69,7 @@ const SignUpForm: React.FC<any> = ({ countriesData, countriesLoading, statesData
       autoCompleteType: 'name',
       value: formik.values.name,
       placeholderTextColor: "#FFF",
+      onBlur: formik.handleBlur(fields.name),
       onChangeText: value => formik.setFieldValue(fields.name, value),
       error: formik.touched.name && formik.errors.name ? formik.errors.name : null
     },
@@ -77,6 +78,7 @@ const SignUpForm: React.FC<any> = ({ countriesData, countriesLoading, statesData
       autoCompleteType: 'email',
       value: formik.values.email,
       placeholderTextColor: "#FFF",
+      onBlur: formik.handleBlur(fields.email),
       onChangeText: value => formik.setFieldValue(fields.email, value),
       error: formik.touched.email && formik.errors.email ? formik.errors.email : null
     },
@@ -85,6 +87,7 @@ const SignUpForm: React.FC<any> = ({ countriesData, countriesLoading, statesData
       autoCompleteType: 'tel',
       value: formik.values.phone,
       placeholderTextColor: "#FFF",
+      onBlur: formik.handleBlur(fields.phone),
       onChangeText: value => formik.setFieldValue(fields.phone, value),
       error: formik.touched.phone && formik.errors.phone ? formik.errors.phone : null
     },
@@ -94,6 +97,7 @@ const SignUpForm: React.FC<any> = ({ countriesData, countriesLoading, statesData
       loading: countriesLoading,
       value: formik.values.country,
       placeholderTextColor: "#FFF",
+      onBlur: formik.handleBlur(fields.country),
       error: formik.touched.country && formik.errors.country ? formik.errors.country : null,
       onChangeValue: value => {
         formik.setFieldValue(fields.country, value)
@@ -104,6 +108,7 @@ const SignUpForm: React.FC<any> = ({ countriesData, countriesLoading, statesData
       placeholder: 'Estado',
       loading: statesLoading,
       value: formik.values.state,
+      onBlur: formik.handleBlur(fields.state),
       itens: formik.values.country ? statesData : [],
       error: formik.touched.state && formik.errors.state ? formik.errors.state : null,
       placeholderTextColor: "#FFF",
@@ -124,6 +129,7 @@ const SignUpForm: React.FC<any> = ({ countriesData, countriesLoading, statesData
       placeholder: 'Password',
       value: formik.values.password,
       placeholderTextColor: "#FFF",
+      onBlur: formik.handleBlur(fields.password),
       onChangeText: value => formik.setFieldValue(fields.password, value),
       error: formik.touched.password && formik.errors.password ? formik.errors.password : null,
     },

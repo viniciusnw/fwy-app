@@ -1,26 +1,26 @@
 import { Container } from 'typedi';
 import { Mutate, Query } from '@Redux/Fasting/data/graphql'
 
-import { messageQueue, message } from './state'
+import { MessageQueue, Message } from './state'
 import { sendChatMessageVariables, getChatMessagesVariables } from '@Config/graphql'
 
 export default {
 
-  newChatMessage: (params: message) => {
+  newChatMessage: (params: Message) => {
     return {
       type: 'NEW-MESSAGE',
       payload: params,
     };
   },
 
-  addQueueChatMessage: (params: messageQueue) => {
+  addQueueChatMessage: (params: MessageQueue) => {
     return {
       type: 'ADD-QUEUE-MESSAGES',
       payload: params,
     };
   },
 
-  completeQueueChatMessage: (params: { message: message, index: number }) => {
+  completeQueueChatMessage: (params: { message: Message, index: number }) => {
     return {
       type: 'COMPLETE-QUEUE-MESSAGES',
       payload: params,

@@ -36,14 +36,14 @@ class Home extends React.Component<
     console.log('Home=>componentDidMount: ', this.props);
   }
 
-  goFastStart = () => {
+  goFastStart = (index) => {
     // this.props.useDispatch.login({
     //   email: 'viniciusnw@hotmail.com',
     //   password: '123456',
     // });
     // this.props.useDispatch.logout();
     const { navigation } = this.props;
-    navigation.navigate('FastStart');
+    navigation.navigate('FastStart', { index });
   };
 
   render() {
@@ -107,7 +107,7 @@ class Home extends React.Component<
               margin: -8,
             }}>
             {[1, 2, 3].map((i, index) => (
-              <AddFastItem key={index} onPress={this.goFastStart}>
+              <AddFastItem key={index} onPress={() => this.goFastStart(index)}>
                 <Icon size={50} color={'#FFF'} icon="plus" />
               </AddFastItem>
             ))}

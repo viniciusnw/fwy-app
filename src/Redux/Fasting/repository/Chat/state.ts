@@ -1,4 +1,4 @@
-interface loadMessages {
+interface LoadMessages {
   loading: boolean
   success: boolean
   nextPagination: {
@@ -7,13 +7,13 @@ interface loadMessages {
     nextPageNumber: number | null
   }
   error: boolean
-  errorMessage: any
+  errorMessage: string | null
 }
 
-export interface messageQueue {
+export interface MessageQueue {
   text: string
 }
-export interface message {
+export interface Message {
   __typename?: string;
   type?: string;
   id?: string;
@@ -21,13 +21,13 @@ export interface message {
   text: string;
   sender: string;
 }
-interface chat {
-  messages: Array<message>
-  messageQueue: messageQueue[]
+interface Chat {
+  messages: Array<Message>
+  messageQueue: Message[]
 }
 
 export class ChatReduxType {
-  loadMessages: loadMessages = {
+  loadMessages: LoadMessages = {
     loading: false,
     success: false,
     nextPagination: {
@@ -44,7 +44,7 @@ export class ChatReduxType {
     error: false,
     errorMessage: null,
   };
-  chat: chat = {
+  chat: Chat = {
     messages: [],
     messageQueue: [],
   }
