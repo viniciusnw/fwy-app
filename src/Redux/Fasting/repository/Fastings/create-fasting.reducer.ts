@@ -37,9 +37,8 @@ export default {
             success: true,
             error: false,
             errorMessage: null,
-            data: action.payload.id
+            data: action.payload
           },
-          fasting: action.payload.fasting
         };
       }
 

@@ -21,7 +21,8 @@ export type LoggedStackParamList = {
       days: number,
       hours: number,
       color: string,
-      index: number
+      index: number,
+      finished: boolean
     }
   };
   FastEnd: undefined;

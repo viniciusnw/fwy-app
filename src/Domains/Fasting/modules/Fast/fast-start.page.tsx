@@ -56,6 +56,7 @@ class FastStart extends React.Component<
 
     clearFasting();
     this.goToTimer({
+      finished: false,
       index: params.index,
       hours: fastForm[FormFields.hours],
       days: fastForm[FormFields.days],

@@ -50,13 +50,13 @@ class Home extends React.Component<
     const fastItemPlus = [
       {
         name: 'Fasting Iniciante',
-        timeNumber: '1',
-        timeString: 'Mês',
+        timeNumber: '13',
+        timeString: 'H.',
       },
       {
         name: 'Fasting Iniciante',
-        timeNumber: '2',
-        timeString: 'Meses',
+        timeNumber: '16',
+        timeString: 'H.',
       },
       {
         name: 'Personal Fasting Star',

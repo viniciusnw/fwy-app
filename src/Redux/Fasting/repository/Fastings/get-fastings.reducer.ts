@@ -1,9 +1,9 @@
 export default {
-  actionName: 'GET-FASTS',
+  actionName: 'GET-FAST',
   reducer: (state, action) => {
     switch (action.type) {
 
-      case 'GET-FASTS_PENDING': {
+      case 'GET-FAST_PENDING': {
         return {
           ...state,
           getFastings: {
@@ -15,7 +15,7 @@ export default {
         };
       }
 
-      case 'GET-FASTS_FULFILLED': {
+      case 'GET-FAST_FULFILLED': {
         return {
           ...state,
           getFastings: {
@@ -23,13 +23,12 @@ export default {
             success: true,
             error: false,
             errorMessage: null,
-            data: action.payload
           },
-          fasting: state.fasting
+          fasting: action.payload
         };
       }
 
-      case 'GET-FASTS_REJECTED': {
+      case 'GET-FAST_REJECTED': {
         return {
           ...state,
           getFastings: {

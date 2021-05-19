@@ -1,0 +1,10 @@
+query getFasts($actives: Boolean!, $fastingId: String!) {
+  getFasts(actives: $actives, fastingId: $fastingId) {
+    name
+    startDate
+    endDate
+    color
+    index
+    finished
+  }
+}

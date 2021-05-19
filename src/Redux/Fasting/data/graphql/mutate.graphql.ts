@@ -4,16 +4,18 @@ import { APP_NAME_TYPE } from '@Config/types';
 
 import {
   GraphqlApi,
+  createFastingVariables,
   customerLoginVariables,
-  customerRegisterVariables,
   customerUpdateVariables,
-  sendChatMessageVariables
+  sendChatMessageVariables,
+  customerRegisterVariables,
 } from '@Config/graphql'
 
 import customerLoginMutate from './docs/customerLogin.mutate.graphql'
 import customerRegisterMutate from './docs/customerRegister.mutate.graphql'
 import customerUpdateMutate from './docs/customerUpdate.mutate.graphql'
 import sendChatMessageMutate from './docs/sendChatMessage.mutate.graphql'
+import createFastingMutate from './docs/createFasting.mutate.graphql'
 
 @Service()
 export class Mutate extends GraphqlApi {
@@ -55,6 +57,14 @@ export class Mutate extends GraphqlApi {
       mutation: sendChatMessageMutate,
       variables: params,
     }).then(response => this.mapResponse(response, 'sendChatMessage'))
+      .catch(err => this.mapError(err))
+  }
+
+  public createFasting = (params: createFastingVariables) => {
+    return this.ApolloClient.mutate({
+      mutation: createFastingMutate,
+      variables: params,
+    }).then(response => this.mapResponse(response, 'createFasting'))
       .catch(err => this.mapError(err))
   }
 }

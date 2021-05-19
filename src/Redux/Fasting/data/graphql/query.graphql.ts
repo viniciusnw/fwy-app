@@ -1,12 +1,14 @@
 import { Service } from 'typedi';
 import {
   GraphqlApi,
+  getFastsVariables,
+  getChatMessagesVariables,
   countriesAndStatesVariables,
-  getChatMessagesVariables
 } from '@Config/graphql';
 
 import countriesAndStatesQuery from './docs/countriesAndStates.query.graphql'
 import getChatMessagesQuery from './docs/getChatMessages.query.graphql'
+import getFastsQuery from './docs/getFasts.query.graphql'
 
 @Service()
 export class Query extends GraphqlApi {
@@ -20,11 +22,19 @@ export class Query extends GraphqlApi {
       .catch(err => this.mapError(err))
   }
 
-  public getChatMessagesQuery = (params: getChatMessagesVariables) => {
+  public getChatMessages = (params: getChatMessagesVariables) => {
     return this.ApolloClient.query({
       query: getChatMessagesQuery,
       variables: params,
     }).then(response => this.mapResponse(response, 'getChatMessages'))
+      .catch(err => this.mapError(err))
+  }
+
+  public getFasts = (params: getFastsVariables) => {
+    return this.ApolloClient.query({
+      query: getFastsQuery,
+      variables: params,
+    }).then(response => this.mapResponse(response, 'getFasts'))
       .catch(err => this.mapError(err))
   }
 }

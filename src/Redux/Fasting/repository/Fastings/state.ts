@@ -3,7 +3,8 @@ export interface Fasting {
   startDate: Date,
   endDate: Date,
   color: string,
-  index: number
+  index: number,
+  finished: boolean
 }
 
 export class FastingsReduxType {
@@ -20,7 +21,6 @@ export class FastingsReduxType {
     loading: false,
     success: false,
     error: false,
-    data: null,
     errorMessage: null,
   }
 }

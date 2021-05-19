@@ -21,6 +21,23 @@ export interface countriesAndStatesVariables {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
+// GraphQL mutation operation: createFasting
+// ====================================================
+
+export interface createFasting {
+  createFasting: string;
+}
+
+export interface createFastingVariables {
+  fasting: FastingInput;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
 // GraphQL mutation operation: customerLogin
 // ====================================================
 
@@ -148,12 +165,61 @@ export interface customerUpdateVariables {
 // GraphQL query operation: getChatMessages
 // ====================================================
 
+export interface getChatMessages_getChatMessages_messages {
+  __typename: "Message";
+  _id: string | null;
+  text: string;
+  sender: string;
+  date: any;
+}
+
+export interface getChatMessages_getChatMessages_nextPagination {
+  __typename: "NextPagination";
+  pageNumber: number;
+  nPerPage: number;
+  nextPageNumber: number | null;
+}
+
+export interface getChatMessages_getChatMessages {
+  __typename: "GetChatMessages";
+  messages: getChatMessages_getChatMessages_messages[] | null;
+  nextPagination: getChatMessages_getChatMessages_nextPagination;
+}
+
 export interface getChatMessages {
-  getChatMessages: boolean;
+  getChatMessages: getChatMessages_getChatMessages;
 }
 
 export interface getChatMessagesVariables {
   pagination: Pagination;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL query operation: getFasts
+// ====================================================
+
+export interface getFasts_getFasts {
+  __typename: "Fasting";
+  name: string;
+  startDate: any;
+  endDate: any;
+  color: string;
+  index: number;
+  finished: boolean;
+}
+
+export interface getFasts {
+  getFasts: getFasts_getFasts[];
+}
+
+export interface getFastsVariables {
+  actives: boolean;
+  fastingId: string;
 }
 
 /* tslint:disable */
@@ -219,6 +285,15 @@ export interface CustomerUpdateInput {
   height?: number | null;
   password?: string | null;
   avatar?: AvatarUpdate | null;
+}
+
+export interface FastingInput {
+  name: string;
+  startDate: any;
+  endDate: any;
+  color: string;
+  index: number;
+  finished: boolean;
 }
 
 export interface Pagination {

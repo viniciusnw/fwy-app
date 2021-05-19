@@ -1,8 +1,7 @@
 import { Container } from 'typedi';
 import { Mutate, Query } from '@Redux/Fasting/data/graphql'
 
-import { Fasting } from './state'
-import { sendChatMessageVariables, getChatMessagesVariables } from '@Config/graphql'
+import { createFastingVariables, getFastsVariables } from '@Config/graphql'
 
 export default {
 
@@ -12,20 +11,17 @@ export default {
     };
   },
 
-  getFastings: (params: string) => {
+  getFastings: (params: getFastsVariables) => {
     return {
-      type: 'GET-FASTS',
-      payload: () => Promise.resolve(params),
+      type: 'GET-FAST',
+      payload: () => Container.get(Query).getFasts(params),
     };
   },
 
-  createFasting: (params: Fasting) => {
+  createFasting: (params: createFastingVariables) => {
     return {
       type: 'CREATE-FAST',
-      payload: () => Promise.resolve({
-        id: 'stringFastingIdMock',
-        fasting: params
-      }),
+      payload: () => Container.get(Mutate).createFasting(params)
     };
   },
 };

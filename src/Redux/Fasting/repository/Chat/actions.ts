@@ -37,14 +37,14 @@ export default {
   getChatMessages: (params: getChatMessagesVariables) => {
     return {
       type: 'LOAD-MESSAGES',
-      payload: Container.get(Query).getChatMessagesQuery(params),
+      payload: Container.get(Query).getChatMessages(params),
     };
   },
 
   getMoreChatMessages: (params: getChatMessagesVariables) => {
     return {
       type: 'LOAD-MORE-MESSAGES',
-      payload: Container.get(Query).getChatMessagesQuery(params),
+      payload: Container.get(Query).getChatMessages(params),
     };
   },
 };

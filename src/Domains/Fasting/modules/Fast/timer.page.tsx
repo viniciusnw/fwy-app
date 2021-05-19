@@ -7,10 +7,10 @@ import { Button } from '@Components';
 import { View, Text, TouchableOpacity } from 'react-native';
 import { LoggedStackParamList, PagePropsType } from '@Navigation';
 import { ReduxActions, ReduxPropsType, ReduxStateType } from '@Redux/Fasting';
+import FastTimer from './components/timer.component';
 
 import {
   StyledText9,
-  StyledText10,
   StyledText11,
   StyledText12,
   StyledText13,
@@ -20,7 +20,7 @@ import {
 } from './fast.style';
 
 type RoutePropsType = StackScreenProps<LoggedStackParamList, 'Timer'>;
-class Timer extends React.Component<
+class Timer extends React.PureComponent<
   RoutePropsType & ReduxPropsType & PagePropsType,
   any
 > {
@@ -38,15 +38,13 @@ class Timer extends React.Component<
     this.state = {
       startTimer: false,
       differenceInPercentage: 0,
-      differenceInSeconds: 0,
     };
   }
 
   componentDidMount() {
-    console.log('Timer=>componentDidMount: ', this.props);
-    this.loadFasting();
-    this.handlerUpdateFastingTime();
-    this.handlerLoadFastingSeconds();
+    // console.log('Timer=>componentDidMount: ', this.props);
+    this.handlerLoadFasting();
+    this.handlerUpdateFastingTimer();
   }
 
   componentDidUpdate(prevProps) {
@@ -58,17 +56,20 @@ class Timer extends React.Component<
     clearInterval(this.interval);
   }
 
-  private loadFasting = () => {
+  private handlerLoadFasting = () => {
     const {
       params: { fastingId },
     } = this.props.route;
     if (!fastingId) return;
 
     this.setState({ startTimer: !!fastingId });
-    this.props.useDispatch.getFastings(fastingId);
+    this.props.useDispatch.getFastings({
+      actives: false,
+      fastingId,
+    });
   };
 
-  private startFasting = () => {
+  private handlerStartFasting = () => {
     const {
       params: { fasting },
     } = this.props.route;
@@ -80,9 +81,11 @@ class Timer extends React.Component<
     endDate.setTime(endDate.getTime() + fasting.hours * 60 * 60 * 1000);
 
     this.props.useDispatch.createFasting({
-      ...fasting,
-      startDate,
-      endDate,
+      fasting: {
+        ...fasting,
+        startDate,
+        endDate,
+      },
     });
   };
 
@@ -120,18 +123,6 @@ class Timer extends React.Component<
     });
   };
 
-  private handlerLoadFastingSeconds = () => {
-    const { fasting } = this.props.useRedux.Fastings;
-
-    if (!fasting) return;
-    if (!fasting.endDate) return;
-    const differenceInTime = fasting.endDate.getTime() - new Date().getTime();
-    const differenceInSeconds = differenceInTime / 1000;
-
-    this.setState({ differenceInSeconds });
-    console.log(differenceInSeconds + ' seconds');
-  };
-
   private handlerLoadFastingPercentage = () => {
     const { fasting } = this.props.useRedux.Fastings;
 
@@ -139,22 +130,24 @@ class Timer extends React.Component<
     if (!fasting.endDate) return;
     const start = fasting.startDate.getTime();
     const end = fasting.endDate.getTime();
-    const today = new Date().getTime();
+    const now = new Date().getTime();
 
-    const elapsed = today - start;
+    const elapsed = now - start;
     const differenceInPercentage = (elapsed / (end - start)) * 100;
 
     this.setState({ differenceInPercentage });
-    console.log(differenceInPercentage + '%');
   };
 
-  private handlerUpdateFastingTime = () => {
-    this.interval = setInterval(() => this.handlerLoadFastingPercentage(), 1000);
+  private handlerUpdateFastingTimer = () => {
+    this.interval = setInterval(
+      () => this.handlerLoadFastingPercentage(),
+      1000,
+    );
   };
 
   render() {
     const { goBack } = this.props.navigation;
-    const { startTimer, differenceInPercentage, differenceInSeconds } = this.state;
+    const { startTimer, differenceInPercentage } = this.state;
 
     return (
       <View
@@ -173,7 +166,6 @@ class Timer extends React.Component<
         {/* === */}
         <View style={{ marginBottom: 60 }}>
           <AnimatedCircularProgress
-            fill={differenceInPercentage}
             size={300}
             width={30}
             rotation={360}
@@ -181,22 +173,33 @@ class Timer extends React.Component<
             lineCap="round"
             backgroundWidth={30}
             tintColor="#EC5349"
-            backgroundColor="#222842">
+            backgroundColor="#222842"
+            fill={differenceInPercentage}>
             {(fill) => (
               <View
                 style={{
-                  justifyContent: 'space-around',
-                  alignItems: 'center',
+                  flex: 1,
                   paddingTop: 60,
                   paddingBottom: 40,
-                  flex: 1,
+                  alignItems: 'center',
+                  justifyContent: 'space-around',
                 }}>
-                <StyledText9>Time Since Last Fast</StyledText9>
-                <StyledText10>01:19:{fill.toFixed(0)}</StyledText10>
-                <StyledText11>
-                  Upcoming fast{`\n`}
-                  <StyledText12> 13 hours </StyledText12>
-                </StyledText11>
+                {false ? (
+                  <StyledText9>Time Since Last Fast</StyledText9>
+                ) : (
+                  <StyledText9>Upcoming fast</StyledText9>
+                )}
+
+                <FastTimer />
+
+                {false ? (
+                  <StyledText11>
+                    Upcoming fast{`\n`}
+                    <StyledText12> 13 hours </StyledText12>
+                  </StyledText11>
+                ) : (
+                  <StyledText11 />
+                )}
               </View>
             )}
           </AnimatedCircularProgress>
@@ -206,14 +209,16 @@ class Timer extends React.Component<
         {!startTimer ? (
           <>
             <View style={{ marginBottom: 80 }}>
-              <Button onPress={this.startFasting}>Start your 13h Fast</Button>
+              <Button onPress={this.handlerStartFasting}>
+                Start your 13h Fast
+              </Button>
             </View>
 
             <View
               style={{
-                flexDirection: 'row',
-                marginBottom: 20,
                 width: '100%',
+                marginBottom: 20,
+                flexDirection: 'row',
                 justifyContent: 'space-between',
               }}>
               <Button onPress={goBack} color="primary">
@@ -227,10 +232,10 @@ class Timer extends React.Component<
           <>
             <View
               style={{
-                flexDirection: 'row',
                 width: '100%',
-                justifyContent: 'space-between',
                 marginBottom: 80,
+                flexDirection: 'row',
+                justifyContent: 'space-between',
               }}>
               <TouchableOpacity style={{ alignItems: 'center' }}>
                 <StyledText13>STARTED FASTING</StyledText13>
