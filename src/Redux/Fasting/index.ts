@@ -22,6 +22,7 @@ class ReduxActionsType {
   getFasting = Fastings.actions.getFasting
   clearFasting = Fastings.actions.clearFasting
   createFasting = Fastings.actions.createFasting
+  getActivesFastings  = Fastings.actions.getActives
 }
 export type ReduxStateType = {
   General: GeneralReduxType;

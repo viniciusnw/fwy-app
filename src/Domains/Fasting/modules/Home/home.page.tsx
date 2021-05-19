@@ -33,17 +33,21 @@ class Home extends React.Component<
   }
 
   componentDidMount() {
-    console.log('Home=>componentDidMount: ', this.props);
+    this.props.useDispatch.getActivesFastings();
+  }
+
+  componentDidUpdate() {
+    console.log('Home=>componentDidUpdate: ', this.props);
   }
 
   goFastStart = (index) => {
-    // this.props.useDispatch.login({
-    //   email: 'viniciusnw@hotmail.com',
-    //   password: '123456',
-    // });
-    // this.props.useDispatch.logout();
     const { navigation } = this.props;
     navigation.navigate('FastStart', { index });
+  };
+
+  goToTimer = (fastingId) => {
+    const { navigation } = this.props;
+    navigation.navigate('Timer', { fastingId });
   };
 
   render() {
@@ -164,10 +168,11 @@ class Home extends React.Component<
   }
 }
 
-function mapStateToProps({ User }: ReduxStateType) {
+function mapStateToProps({ User, Fastings }: ReduxStateType) {
   return {
     useRedux: {
       User,
+      Fastings,
     },
   };
 }
@@ -177,6 +182,7 @@ function mapDispatchToProps(dispatch) {
     useDispatch: {
       login: (_) => dispatch(ReduxActions.login(_)),
       logout: () => dispatch(ReduxActions.logout()),
+      getActivesFastings: () => dispatch(ReduxActions.getActivesFastings()),
     },
   };
 }

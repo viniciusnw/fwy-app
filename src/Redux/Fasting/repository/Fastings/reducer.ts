@@ -1,7 +1,9 @@
 import { FastingsState } from './state'
 
+import fastingGet from './get-fasting.reducer'
+import fastingEnd from './end-fastings.reducer'
+import fastingsActive from './get-actives.reducer'
 import fastingCreate from './create-fasting.reducer'
-import fastingGet from './get-fastings.reducer'
 
 export default function reducer(
   state = FastingsState,
@@ -15,6 +17,10 @@ export default function reducer(
     case fastingCreate.actionName2: return fastingCreate.reducer(state, action)
     
     case fastingGet.actionName: return fastingGet.reducer(state, action)
+    
+    case fastingEnd.actionName: return fastingEnd.reducer(state, action)
+
+    case fastingsActive.actionName: return fastingsActive.reducer(state, action)
     default: return state
   }
 }

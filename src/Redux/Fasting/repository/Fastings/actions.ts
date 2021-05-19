@@ -18,6 +18,13 @@ export default {
     };
   },
 
+  getActives: () => {
+    return {
+      type: 'GET-ACTIVES',
+      payload: () => Container.get(Query).getFasts({ actives: true }),
+    };
+  },
+
   createFasting: (params: createFastingVariables) => {
     return {
       type: 'CREATE-FAST',
