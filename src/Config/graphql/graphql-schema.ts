@@ -218,8 +218,8 @@ export interface getFasts {
 }
 
 export interface getFastsVariables {
-  actives: boolean;
-  fastingId: string;
+  actives?: boolean | null;
+  fastingId?: string | null;
 }
 
 /* tslint:disable */

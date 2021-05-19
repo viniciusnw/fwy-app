@@ -30,7 +30,7 @@ const FastStartForm: React.FC<any> = ({
   values,
   errors,
 }) => {
-  const { days, hours, fastColors } = FASTING;
+  const { weekDays: days, hours, fastColors } = FASTING;
 
   const fastForm = {
     name: {
@@ -42,7 +42,7 @@ const FastStartForm: React.FC<any> = ({
     },
   };
 
-  console.log('FormErros: ', errors);
+  console.log('FastStartFormErros: ', errors);
 
   // Scroll to select element
   // ref.scrollTo({

@@ -1,4 +1,4 @@
-query getFasts($actives: Boolean!, $fastingId: String!) {
+query getFasts($actives: Boolean, $fastingId: String) {
   getFasts(actives: $actives, fastingId: $fastingId) {
     name
     startDate

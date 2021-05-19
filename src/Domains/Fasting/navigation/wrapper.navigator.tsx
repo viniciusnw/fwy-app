@@ -33,7 +33,7 @@ export class WrapperPropsType {
 }
 
 export class PagePropsType extends WrapperPropsType {
-  setPageConfigs = (PageConfigType: PageConfigType) => null;
+  
 }
 
 type RoutePropsType = StackScreenProps<
@@ -67,17 +67,10 @@ export default class Wrapper extends React.PureComponent<
     // console.log("Wrapper=>componentDidUpdate: ", this.props)
   }
 
-  setPageConfigs = (config: PageConfigType) => {
-    const { pageConfig, topBarConfig, bottomBarConfig } = config;
-    if (pageConfig) this.setState({ pageConfig });
-    if (topBarConfig) this.setState({ topBarConfig });
-    if (bottomBarConfig) this.setState({ bottomBarConfig });
-  };
-
   render() {
     const {
-      Page: PageComponent,
       topBarType = null,
+      Page: PageComponent,
       bottomBarType = null,
     } = this.props;
     const { setPageConfigs } = PageComponent.WrappedComponent;
@@ -129,7 +122,7 @@ export default class Wrapper extends React.PureComponent<
       <>
         {topBarType ? <TopBar {...this.props} {...topBarConfig} /> : null}
 
-        <Page {...this.props} setPageConfigs={this.setPageConfigs} />
+        <Page {...this.props} />
 
         {bottomBarType ? (
           <BottomBar {...this.props} {...bottomBarConfig} />

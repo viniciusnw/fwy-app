@@ -4,19 +4,51 @@ import { StyledText10 } from './../fast.style';
 import CountDown from 'react-native-countdown-component';
 import { ReduxPropsType, ReduxStateType } from '@Redux/Fasting';
 
-class FastTimer extends React.PureComponent<ReduxPropsType, any> {
+class FastTimer extends React.PureComponent<
+  ReduxPropsType & { differenceInHours: number },
+  any
+> {
   constructor(props) {
     super(props);
-    this.state = {
-      differenceInSeconds: 0,
-    };
+    this.state = {};
   }
 
-  componentDidMount() {
-    this.handlerLoadFastingSeconds();
+  render() {
+    const { differenceInHours } = this.props;
+    if (!this.DifferenceInSeconds)
+      return <StyledText10>{differenceInHours}:00:00</StyledText10>;
+    else
+      return (
+        <>
+          <CountDown
+            size={28}
+            disableHoursLimit
+            until={this.DifferenceInSeconds}
+            onPress={() => console.log('PressTime')}
+            onFinish={() => console.log('FinishedTime')}
+            digitStyle={{
+              fontWeight: 'bold',
+              backgroundColor: 'none',
+            }}
+            showSeparator
+            separatorStyle={{
+              fontSize: 44,
+              color: '#FFF',
+              fontFamily: 'AdobeClean-Bold',
+            }}
+            digitTxtStyle={{
+              fontSize: 44,
+              color: '#FFF',
+              fontFamily: 'AdobeClean-Bold',
+            }}
+            timeToShow={['H', 'M', 'S']}
+            timeLabels={{ h: '', m: '', s: '' }}
+          />
+        </>
+      );
   }
 
-  private handlerLoadFastingSeconds = () => {
+  private get DifferenceInSeconds() {
     const { fasting } = this.props.useRedux.Fastings;
 
     if (!fasting) return;
@@ -24,42 +56,7 @@ class FastTimer extends React.PureComponent<ReduxPropsType, any> {
     const differenceInTime = fasting.endDate.getTime() - new Date().getTime();
     const differenceInSeconds = differenceInTime / 1000;
 
-    this.setState({
-      differenceInSeconds: parseInt(differenceInSeconds.toFixed()),
-    });
-  };
-
-  render() {
-    const { differenceInSeconds } = this.state;
-    if (!differenceInSeconds) return <StyledText10>00:00:00</StyledText10>;
-    return (
-      <>
-        <CountDown
-          size={20}
-          until={differenceInSeconds}
-          onFinish={() => console.log('FinishedTime')}
-          onPress={() => console.log('PressTime')}
-          style={{}}
-          digitStyle={{
-            backgroundColor: 'none',
-            fontWeight: 'bold',
-          }}
-          showSeparator
-          separatorStyle={{
-            color: '#FFF',
-            fontFamily: 'AdobeClean-Bold',
-            fontSize: 44,
-          }}
-          digitTxtStyle={{
-            color: '#FFF',
-            fontFamily: 'AdobeClean-Bold',
-            fontSize: 44,
-          }}
-          timeToShow={['H', 'M', 'S']}
-          timeLabels={{ h: '', m: '', s: '' }}
-        />
-      </>
-    );
+    return parseInt(differenceInSeconds.toFixed());
   }
 }
 

@@ -1,12 +1,12 @@
 export default {
-  actionName: 'GET-FAST',
+  actionName: 'END-FAST',
   reducer: (state, action) => {
     switch (action.type) {
 
-      case 'GET-FAST_PENDING': {
+      case 'END-FAST_PENDING': {
         return {
           ...state,
-          getFastings: {
+          endFasting: {
             loading: true,
             success: false,
             error: false,
@@ -15,27 +15,23 @@ export default {
         };
       }
 
-      case 'GET-FAST_FULFILLED': {
+      case 'END-FAST_FULFILLED': {
         return {
           ...state,
-          getFastings: {
+          endFasting: {
             loading: false,
             success: true,
             error: false,
             errorMessage: null,
           },
-          fasting: {
-            ...action.payload[0],
-            endDate: new Date(action.payload[0].endDate),
-            startDate: new Date(action.payload[0].startDate)
-          }
+          fasting: null
         };
       }
 
-      case 'GET-FAST_REJECTED': {
+      case 'END-FAST_REJECTED': {
         return {
           ...state,
-          getFastings: {
+          endFasting: {
             loading: false,
             success: false,
             error: true,

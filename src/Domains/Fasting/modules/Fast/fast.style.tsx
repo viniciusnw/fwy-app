@@ -4,6 +4,21 @@ import styled from 'styled-components/native';
 import { View, TextInput, Text } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
+export const Container = styled(View)`
+  flex: 1;
+  align-items: center;
+  justify-content: flex-start;
+  margin: 0 40px;
+`;
+
+export const TimerContainer = styled(View)`
+  flex: 1;
+  padding-top: 60px;
+  padding-bottom: 40px;
+  align-items: center;
+  justify-content: space-around;
+`;
+
 export const StyledTextInput = styled(TextInput)`
   height: 80px;
   width: 100%;
@@ -222,14 +237,21 @@ export const FormContainer = styled(View)`
   margin: 0 40px;
   align-items: center;
   justify-content: flex-start;
-`
+`;
 
 export const Footer = styled(View)`
   height: 230px;
   bottom: -62px;
   right: 0px;
   left: 0;
-`
+`;
+
+export const ContainerButtons = styled(View)<any>`
+  width: 100%;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-bottom: ${({ marginBottom }) => (marginBottom ? marginBottom : 20)}px;
+`;
 
 export const Divider = (props) => (
   <View style={{ width: '100%', height: 42, bottom: -62, marginTop: -62 }} />

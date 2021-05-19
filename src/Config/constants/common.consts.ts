@@ -1,5 +1,5 @@
 export default {
-  days: [
+  fullDays: [
     0,
     1,
     2,
@@ -31,6 +31,16 @@ export default {
     28,
     29,
     30,
+  ],
+  weekDays: [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
   ],
   hours: [
     1,

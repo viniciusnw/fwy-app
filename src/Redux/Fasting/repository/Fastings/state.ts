@@ -23,6 +23,12 @@ export class FastingsReduxType {
     error: false,
     errorMessage: null,
   }
+  endFasting = {
+    loading: false,
+    success: false,
+    error: false,
+    errorMessage: null,
+  }
 }
 
 export const FastingsState = new FastingsReduxType

@@ -1,22 +1,22 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { StackScreenProps } from '@react-navigation/stack';
-import { AnimatedCircularProgress } from 'react-native-circular-progress';
 
 import { Button } from '@Components';
-import { View, Text, TouchableOpacity } from 'react-native';
+import { View, TouchableOpacity } from 'react-native';
 import { LoggedStackParamList, PagePropsType } from '@Navigation';
 import { ReduxActions, ReduxPropsType, ReduxStateType } from '@Redux/Fasting';
+
 import FastTimer from './components/timer.component';
+import CirgularTimer from './components/circular-timer.component';
 
 import {
-  StyledText9,
-  StyledText11,
-  StyledText12,
+  StyledH3,
+  Container,
   StyledText13,
   StyledText14,
   StyledText15,
-  StyledH3,
+  ContainerButtons
 } from './fast.style';
 
 type RoutePropsType = StackScreenProps<LoggedStackParamList, 'Timer'>;
@@ -30,42 +30,31 @@ class Timer extends React.PureComponent<
     bottomBarConfig: { color: '#FFF' },
   };
 
-  private interval;
-
   constructor(props) {
     super(props);
 
     this.state = {
-      startTimer: false,
-      differenceInPercentage: 0,
+      startFasting: false,
     };
   }
 
   componentDidMount() {
-    // console.log('Timer=>componentDidMount: ', this.props);
     this.handlerLoadFasting();
-    this.handlerUpdateFastingTimer();
   }
 
   componentDidUpdate(prevProps) {
-    // console.log('Timer=>componentDidUpdate: ', this.props);
     this.handlerCreateFasting(prevProps);
-  }
-
-  componentWillUnmount() {
-    clearInterval(this.interval);
   }
 
   private handlerLoadFasting = () => {
     const {
-      params: { fastingId },
+      params: { fastingId: fastingIdFromModel },
     } = this.props.route;
-    if (!fastingId) return;
+    if (!fastingIdFromModel) return;
 
-    this.setState({ startTimer: !!fastingId });
-    this.props.useDispatch.getFastings({
-      actives: false,
-      fastingId,
+    this.setState({ startFasting: !!fastingIdFromModel });
+    this.props.useDispatch.getFasting({
+      fastingId: fastingIdFromModel
     });
   };
 
@@ -82,32 +71,35 @@ class Timer extends React.PureComponent<
 
     this.props.useDispatch.createFasting({
       fasting: {
-        ...fasting,
-        startDate,
         endDate,
+        startDate,
+        name: fasting.name,
+        color: fasting.color,
+        index: fasting.index,
+        finished: fasting.finished,
       },
     });
   };
 
   private handlerCreateFasting = (prevProps: ReduxPropsType) => {
+    const { reset } = this.props.navigation;
+
     const {
-      createFasting: { success, loading, data },
+      createFasting: { success, loading, data: fastingIdFromModel },
     } = this.props.useRedux.Fastings;
 
     const {
-      createFasting: { data: prevData },
+      createFasting: { data: prevFastingIdFromModel },
     } = prevProps.useRedux.Fastings;
 
     const {
-      params: { fastingId },
+      params: { fastingId: fastingIdFromParam },
     } = this.props.route;
-
-    const { reset } = this.props.navigation;
 
     if (loading) return;
     if (!success) return;
-    if (fastingId) return;
-    if (prevData == data) return;
+    if (fastingIdFromParam) return;
+    if (prevFastingIdFromModel == fastingIdFromModel) return;
 
     reset({
       index: 2,
@@ -116,146 +108,101 @@ class Timer extends React.PureComponent<
         {
           name: 'Timer',
           params: {
-            fastingId: data,
+            fastingId: fastingIdFromModel,
           },
         },
       ],
     });
   };
 
-  private handlerLoadFastingPercentage = () => {
-    const { fasting } = this.props.useRedux.Fastings;
-
-    if (!fasting) return;
-    if (!fasting.endDate) return;
-    const start = fasting.startDate.getTime();
-    const end = fasting.endDate.getTime();
-    const now = new Date().getTime();
-
-    const elapsed = now - start;
-    const differenceInPercentage = (elapsed / (end - start)) * 100;
-
-    this.setState({ differenceInPercentage });
-  };
-
-  private handlerUpdateFastingTimer = () => {
-    this.interval = setInterval(
-      () => this.handlerLoadFastingPercentage(),
-      1000,
-    );
-  };
-
   render() {
+    const { startFasting } = this.state;
     const { goBack } = this.props.navigation;
-    const { startTimer, differenceInPercentage } = this.state;
 
     return (
-      <View
-        style={{
-          flex: 1,
-          alignItems: 'center',
-          justifyContent: 'flex-start',
-          marginHorizontal: 40,
-        }}>
+      <Container>
         <View style={{ marginBottom: 70 }}>
           <StyledH3>
-            {!startTimer ? 'Get ready to fast' : 'You’re Fasting!'}
+            {!startFasting ? 'Get ready to fast' : 'You’re Fasting!'}
           </StyledH3>
         </View>
 
         {/* === */}
         <View style={{ marginBottom: 60 }}>
-          <AnimatedCircularProgress
-            size={300}
-            width={30}
-            rotation={360}
-            duration={1000}
-            lineCap="round"
-            backgroundWidth={30}
-            tintColor="#EC5349"
-            backgroundColor="#222842"
-            fill={differenceInPercentage}>
-            {(fill) => (
-              <View
-                style={{
-                  flex: 1,
-                  paddingTop: 60,
-                  paddingBottom: 40,
-                  alignItems: 'center',
-                  justifyContent: 'space-around',
-                }}>
-                {false ? (
-                  <StyledText9>Time Since Last Fast</StyledText9>
-                ) : (
-                  <StyledText9>Upcoming fast</StyledText9>
-                )}
-
-                <FastTimer />
-
-                {false ? (
-                  <StyledText11>
-                    Upcoming fast{`\n`}
-                    <StyledText12> 13 hours </StyledText12>
-                  </StyledText11>
-                ) : (
-                  <StyledText11 />
-                )}
-              </View>
-            )}
-          </AnimatedCircularProgress>
+          <CirgularTimer startFasting={startFasting}>
+            <FastTimer differenceInHours={this.DifferenceInHours} />
+          </CirgularTimer>
         </View>
 
         {/* === */}
-        {!startTimer ? (
+        {!startFasting ? (
           <>
             <View style={{ marginBottom: 80 }}>
               <Button onPress={this.handlerStartFasting}>
-                Start your 13h Fast
+                Start your {this.DifferenceInHours}h Fast
               </Button>
             </View>
 
-            <View
-              style={{
-                width: '100%',
-                marginBottom: 20,
-                flexDirection: 'row',
-                justifyContent: 'space-between',
-              }}>
+            <ContainerButtons marginBottom={20}>
               <Button onPress={goBack} color="primary">
                 CHANGE FAST
               </Button>
 
               <Button color="primary">SET REMINDER</Button>
-            </View>
+            </ContainerButtons>
           </>
         ) : (
           <>
-            <View
-              style={{
-                width: '100%',
-                marginBottom: 80,
-                flexDirection: 'row',
-                justifyContent: 'space-between',
-              }}>
+            <ContainerButtons marginBottom={80}>
               <TouchableOpacity style={{ alignItems: 'center' }}>
                 <StyledText13>STARTED FASTING</StyledText13>
-                <StyledText14>Today, 12:59 PM</StyledText14>
+                <StyledText14>{this.StartDate}</StyledText14>
                 <StyledText15>Edit Start.</StyledText15>
               </TouchableOpacity>
 
               <View style={{ alignItems: 'center' }}>
                 <StyledText13>FAST ENDING</StyledText13>
-                <StyledText14>Tomorrow, 1:59 PM</StyledText14>
+                <StyledText14>{this.EndDate}</StyledText14>
               </View>
-            </View>
+            </ContainerButtons>
 
             <View style={{ width: '40%', alignSelf: 'center' }}>
               <Button onPress={() => null}>End Fast</Button>
             </View>
           </>
         )}
-      </View>
+      </Container>
     );
+  }
+
+  private get StartDate() {
+    // Today, 12:59 PM -> Format
+    const { fasting } = this.props.useRedux.Fastings;
+    if (!fasting) return;
+    return fasting.startDate.toDateString();
+  }
+
+  private get EndDate() {
+    // Tomorrow, 1:59 PM -> Format
+    const { fasting } = this.props.useRedux.Fastings;
+    if (!fasting) return;
+    return fasting.endDate.toDateString();
+  }
+
+  private get DifferenceInHours() {
+    const {
+      params: { fasting },
+    } = this.props.route;
+    if (!fasting) return;
+
+    const endDate = new Date();
+    const startDate = new Date();
+    endDate.setDate(startDate.getDate() + fasting.days);
+    endDate.setTime(endDate.getTime() + fasting.hours * 60 * 60 * 1000);
+
+    const differenceInTime = endDate.getTime() - new Date().getTime();
+    const differenceInHours = differenceInTime / 1000 / 3600;
+    return differenceInHours;
   }
 }
 
@@ -270,7 +217,7 @@ function mapStateToProps({ Fastings }: ReduxStateType) {
 function mapDispatchToProps(dispatch) {
   return {
     useDispatch: {
-      getFastings: (_) => dispatch(ReduxActions.getFastings(_)),
+      getFasting: (_) => dispatch(ReduxActions.getFasting(_)),
       createFasting: (_) => dispatch(ReduxActions.createFasting(_)),
     },
   };

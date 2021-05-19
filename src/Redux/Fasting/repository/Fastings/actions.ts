@@ -11,7 +11,7 @@ export default {
     };
   },
 
-  getFastings: (params: getFastsVariables) => {
+  getFasting: (params: getFastsVariables) => {
     return {
       type: 'GET-FAST',
       payload: () => Container.get(Query).getFasts(params),

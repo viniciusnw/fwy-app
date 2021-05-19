@@ -19,7 +19,7 @@ class ReduxActionsType {
   addQueueChatMessage = Chat.actions.addQueueChatMessage
   completeQueueChatMessage = Chat.actions.completeQueueChatMessage
 
-  getFastings = Fastings.actions.getFastings
+  getFasting = Fastings.actions.getFasting
   clearFasting = Fastings.actions.clearFasting
   createFasting = Fastings.actions.createFasting
 }
