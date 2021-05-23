@@ -1,9 +1,9 @@
 export default {
-  actionName: 'GET-ACTIVES',
+  actionName: 'GET-PRESETS',
   reducer: (state, action) => {
     switch (action.type) {
 
-      case 'GET-ACTIVES_PENDING': {
+      case 'GET-PRESETS_PENDING': {
         return {
           ...state,
           getFastings: {
@@ -15,7 +15,7 @@ export default {
         };
       }
 
-      case 'GET-ACTIVES_FULFILLED': {
+      case 'GET-PRESETS_FULFILLED': {
         return {
           ...state,
           getFastings: {
@@ -24,15 +24,11 @@ export default {
             error: false,
             errorMessage: null,
           },
-          fastings: action.payload.map(f => ({
-            ...f,
-            endDate: new Date(f.endDate),
-            startDate: new Date(f.startDate)
-          }))
+          presets: action.payload
         };
       }
 
-      case 'GET-ACTIVES_REJECTED': {
+      case 'GET-PRESETS_REJECTED': {
         return {
           ...state,
           getFastings: {

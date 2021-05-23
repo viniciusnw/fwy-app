@@ -11,6 +11,7 @@ import { ReduxActions, ReduxPropsType, ReduxStateType } from '@Redux/Fasting';
 import {
   Footer,
   Divider,
+  StyledText,
   StyledText4,
   StyledText5,
   StyledText6,
@@ -38,10 +39,13 @@ class FastStart extends React.Component<
 
   constructor(props) {
     super(props);
+    this.state = {
+      preset: null,
+    };
   }
 
   componentDidMount() {
-    console.log('FastStart=>componentDidMount: ', this.props);
+    this.handlerLoadPreset();
   }
 
   private handlerSubmitForm = (fastForm) => {
@@ -50,14 +54,12 @@ class FastStart extends React.Component<
 
   private handlerCreateFasting = (fastForm) => {
     const {
-      route: { params },
       useDispatch: { clearFasting },
     } = this.props;
 
     clearFasting();
     this.goToTimer({
-      finished: false,
-      index: params.index,
+      finished: null,
       hours: fastForm[FormFields.hours],
       days: fastForm[FormFields.days],
       name: fastForm[FormFields.name],
@@ -65,18 +67,32 @@ class FastStart extends React.Component<
     });
   };
 
+  private handlerLoadPreset = () => {
+    const {
+      route: { params },
+      useRedux: { Fastings },
+    } = this.props;
+    if (!params?.presetId) return;
+
+    this.setState({
+      preset: Fastings.presets.find((f) => f._id == params.presetId),
+    });
+  };
+
   render() {
     const { RibbonFull } = ASSETS.FASTING.svgs;
+    const { preset } = this.state;
 
     const FormInitialValues = {
-      [FormFields.days]: 1,
-      [FormFields.hours]: 1,
-      [FormFields.color]: '#EC5349',
-      [FormFields.name]: 'Fasting Name!',
+      [FormFields.days]: preset?.days || 0,
+      [FormFields.hours]: preset?.hours || 1,
+      [FormFields.color]: preset?.color || '#EC5349',
+      [FormFields.name]: preset?.name || 'Fasting Name!',
     };
 
     return (
       <Formik
+        enableReinitialize
         validationSchema={FormFastSchema}
         initialValues={FormInitialValues}
         onSubmit={this.handlerSubmitForm}>
@@ -84,7 +100,12 @@ class FastStart extends React.Component<
           <View style={{ flex: 1 }}>
             <FormContainer>
               {/* === */}
-              {true && <CustomPlanTag />}
+              <View style={{ flexDirection: 'row', paddingHorizontal: 15 }}>
+                {true && <CustomPlanTag />}
+                <TouchableOpacity>
+                  <StyledText>Save</StyledText>
+                </TouchableOpacity>
+              </View>
 
               {/* === */}
               <FastStartForm
@@ -116,6 +137,7 @@ class FastStart extends React.Component<
                 source={ASSETS.FASTING.backgrounds['primary']}>
                 <View style={{ marginHorizontal: '23%', top: -20 }}>
                   <Button
+                    style={{ zIndex: 10 }}
                     color="primary"
                     onPress={handleSubmit}
                     icon={{ icon: 'timer', color: '#EC5349', size: 22 }}>

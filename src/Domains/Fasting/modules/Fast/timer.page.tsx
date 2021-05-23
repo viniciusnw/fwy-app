@@ -75,7 +75,6 @@ class Timer extends React.PureComponent<
         startDate,
         name: fasting.name,
         color: fasting.color,
-        index: fasting.index,
         finished: fasting.finished,
       },
     });
@@ -167,7 +166,7 @@ class Timer extends React.PureComponent<
             </ContainerButtons>
 
             <View style={{ width: '40%', alignSelf: 'center' }}>
-              <Button onPress={() => null}>End Fast</Button>
+              <Button onPress={() => this.goToEndFast()}>End Fast</Button>
             </View>
           </>
         )}
@@ -175,18 +174,28 @@ class Timer extends React.PureComponent<
     );
   }
 
+  private goToEndFast = () => {
+    const { navigation } = this.props;
+    navigation.navigate('FastEnd');
+  };
+
   private get StartDate() {
     // Today, 12:59 PM -> Format
     const { fasting } = this.props.useRedux.Fastings;
     if (!fasting) return;
-    return fasting.startDate.toDateString();
+    const time = fasting.startDate.toTimeString().split('G')[0].split(':');
+    const date = fasting.startDate.toDateString().split(' ')
+
+    return `${date[0]} ${date[1]} ${date[2]}, ${time[0]}:${time[1]}`;
   }
 
   private get EndDate() {
-    // Tomorrow, 1:59 PM -> Format
     const { fasting } = this.props.useRedux.Fastings;
     if (!fasting) return;
-    return fasting.endDate.toDateString();
+    const time = fasting.endDate.toTimeString().split('G')[0].split(':');
+    const date = fasting.endDate.toDateString().split(' ')
+
+    return `${date[0]} ${date[1]} ${date[2]}, ${time[0]}:${time[1]}`;
   }
 
   private get DifferenceInHours() {

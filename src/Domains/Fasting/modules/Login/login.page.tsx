@@ -23,10 +23,6 @@ class Login extends React.Component<
     super(props);
   }
 
-  componentDidUpdate() {
-    console.log("Login=>componentDidUpdate: ", this.props)
-  }
-
   goSignUp = () => {
     const { navigation } = this.props;
     navigation.navigate('SignUp');

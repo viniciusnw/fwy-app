@@ -1,0 +1,3 @@
+mutation endFasting($fastingId: String!, $save: Boolean!) {
+  endFasting(fastingId: $fastingId, save: $save)
+}

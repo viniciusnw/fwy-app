@@ -38,6 +38,23 @@ export interface createFastingVariables {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
+// GraphQL mutation operation: createPreset
+// ====================================================
+
+export interface createPreset {
+  createPreset: boolean;
+}
+
+export interface createPresetVariables {
+  preset: PresetInput;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
 // GraphQL mutation operation: customerLogin
 // ====================================================
 
@@ -162,6 +179,24 @@ export interface customerUpdateVariables {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
+// GraphQL mutation operation: endFasting
+// ====================================================
+
+export interface endFasting {
+  endFasting: boolean;
+}
+
+export interface endFastingVariables {
+  fastingId: string;
+  save: boolean;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
 // GraphQL query operation: getChatMessages
 // ====================================================
 
@@ -205,12 +240,12 @@ export interface getChatMessagesVariables {
 
 export interface getFasts_getFasts {
   __typename: "Fasting";
+  _id: string;
   name: string;
   startDate: any;
   endDate: any;
   color: string;
-  index: number;
-  finished: boolean;
+  finished: any | null;
 }
 
 export interface getFasts {
@@ -220,6 +255,29 @@ export interface getFasts {
 export interface getFastsVariables {
   actives?: boolean | null;
   fastingId?: string | null;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL query operation: getPresets
+// ====================================================
+
+export interface getPresets_getPresets {
+  __typename: "Preset";
+  _id: string;
+  name: string;
+  hours: number;
+  days: number;
+  color: string;
+  index: number;
+}
+
+export interface getPresets {
+  getPresets: getPresets_getPresets[];
 }
 
 /* tslint:disable */
@@ -292,13 +350,20 @@ export interface FastingInput {
   startDate: any;
   endDate: any;
   color: string;
-  index: number;
-  finished: boolean;
+  finished?: any | null;
 }
 
 export interface Pagination {
   pageNumber: number;
   nPerPage: number;
+}
+
+export interface PresetInput {
+  name: string;
+  hours: number;
+  days: number;
+  color: string;
+  index: number;
 }
 
 //==============================================================

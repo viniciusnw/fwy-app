@@ -31,9 +31,8 @@ class FastEnd extends React.Component<
   RoutePropsType & ReduxPropsType & PagePropsType,
   any
 > {
-  
   static setPageConfigs = {
-    topBarConfig: { back: true, color: '#FFF' },
+    topBarConfig: { color: '#FFF' },
     pageConfig: { backgroundImage: 'tertiary' },
     bottomBarConfig: { color: '#FFF' },
   };
@@ -41,6 +40,32 @@ class FastEnd extends React.Component<
   constructor(props) {
     super(props);
   }
+
+  componentDidUpdate() {
+    this.handlerEndFasting();
+  }
+
+  private endFasting = (save: boolean) => {
+    const {
+      createFasting: { data: fastingId },
+    } = this.props.useRedux.Fastings;
+    if (fastingId) this.props.useDispatch.endFasting({ fastingId, save });
+  };
+
+  private handlerEndFasting = () => {
+    const { reset } = this.props.navigation;
+    const {
+      fasting,
+      endFasting: { success },
+    } = this.props.useRedux.Fastings;
+
+    if (!fasting && success) {
+      reset({
+        index: 1,
+        routes: [{ name: 'Home' }],
+      });
+    }
+  };
 
   render() {
     const {
@@ -51,17 +76,17 @@ class FastEnd extends React.Component<
     const endFastItens = [
       {
         title: 'STARTERED FASTING',
-        subtitle: 'Yerstarday, 12:59 PM',
+        subtitle: this.StartDate,
       },
       {
         title: 'GOAL REACHED',
-        subtitle: 'Today, 1:59 PM',
-      },
-      {
-        title: 'NIGHT EATING',
-        subtitle: 'Time zone data',
+        subtitle: this.EndDate,
       },
     ];
+
+    const {
+      endFasting: { loading },
+    } = this.props.useRedux.Fastings;
 
     return (
       <>
@@ -71,16 +96,16 @@ class FastEnd extends React.Component<
             resizeMode="cover"
             style={{
               flex: 1,
-              justifyContent: 'flex-end',
-              paddingHorizontal: 40,
               paddingVertical: 30,
+              paddingHorizontal: 40,
+              justifyContent: 'flex-end',
             }}
             source={backgrounds['tertiary']}>
             <View>
               <StyledText16>Nice effort! </StyledText16>
               <StyledText17>You completed a fast for </StyledText17>
               <StyledText17>
-                a total <StyledText18>8 hours.</StyledText18>
+                a total <StyledText18>{this.Duration}</StyledText18>
               </StyledText17>
             </View>
 
@@ -117,8 +142,9 @@ class FastEnd extends React.Component<
               <StyledText20>Share your fast breaker</StyledText20>
             </TouchableOpacity>
 
-            {endFastItens.map((item) => (
+            {endFastItens.map((item, idx) => (
               <View
+                key={idx}
                 style={{
                   flexDirection: 'row',
                   justifyContent: 'space-between',
@@ -162,23 +188,71 @@ class FastEnd extends React.Component<
               placeholder="Add a Note"
               placeholderTextColor="#FFF"
             />
+
+            <View style={{ flexDirection: 'row', marginTop: 20 }}>
+              <Button
+                loading={loading}
+                color="secondary"
+                style={{ flex: 1, marginRight: 8 }}
+                onPress={() => this.endFasting(true)}>
+                Save
+              </Button>
+              <Button
+                loading={loading}
+                color={'transparent'}
+                style={{ flex: 1, marginLeft: 8 }}
+                onPress={() => this.endFasting(false)}>
+                Delete
+              </Button>
+            </View>
           </View>
         </View>
       </>
     );
   }
+
+  private get StartDate() {
+    const { fasting } = this.props.useRedux.Fastings;
+    if (!fasting) return;
+    const time = fasting.startDate.toTimeString().split('G')[0].split(':');
+
+    return `${fasting.startDate.toDateString()}, ${time[0]}:${time[1]}`;
+  }
+
+  private get EndDate() {
+    const endDate = new Date();
+    const time = endDate.toTimeString().split('G')[0].split(':');
+
+    return `${endDate.toDateString()}, ${time[0]}:${time[1]}`;
+  }
+
+  private get Duration() {
+    const { fasting } = this.props.useRedux.Fastings;
+    if (!fasting) return;
+
+    const differenceInTime = new Date().getTime() - fasting.startDate.getTime();
+    const differenceInHours = differenceInTime / 1000 / 3600;
+    const differenceInMinutes = differenceInTime / 1000 / 60;
+
+    if (differenceInHours >= 1) return `${differenceInHours.toFixed()} hours.`;
+    else if (differenceInMinutes >= 1)
+      return `${differenceInMinutes.toFixed()} minutes.`;
+    else return `1 minute.`;
+  }
 }
 
-function mapStateToProps({}: ReduxStateType) {
+function mapStateToProps({ Fastings }: ReduxStateType) {
   return {
-    useRedux: {},
+    useRedux: {
+      Fastings,
+    },
   };
 }
 
 function mapDispatchToProps(dispatch) {
   return {
     useDispatch: {
-      logout: (_) => dispatch(ReduxActions.logout()),
+      endFasting: (_) => dispatch(ReduxActions.endFasting(_)),
     },
   };
 }

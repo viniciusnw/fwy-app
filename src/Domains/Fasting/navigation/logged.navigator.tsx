@@ -12,7 +12,7 @@ export type LoggedStackParamList = {
   Logged: undefined;
   Home: undefined;
   FastStart: {
-    index: number
+    presetId?: string
   };
   Timer: {
     fastingId?: string;
@@ -21,8 +21,7 @@ export type LoggedStackParamList = {
       days: number,
       hours: number,
       color: string,
-      index: number,
-      finished: boolean
+      finished: null | Date
     }
   };
   FastEnd: undefined;

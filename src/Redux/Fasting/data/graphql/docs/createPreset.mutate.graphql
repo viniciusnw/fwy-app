@@ -1,0 +1,3 @@
+mutation createPreset($preset: PresetInput!) {
+  createPreset(preset: $preset)
+}

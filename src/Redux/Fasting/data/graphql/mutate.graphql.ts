@@ -4,6 +4,8 @@ import { APP_NAME_TYPE } from '@Config/types';
 
 import {
   GraphqlApi,
+  endFastingVariables,
+  createPresetVariables,
   createFastingVariables,
   customerLoginVariables,
   customerUpdateVariables,
@@ -16,6 +18,8 @@ import customerRegisterMutate from './docs/customerRegister.mutate.graphql'
 import customerUpdateMutate from './docs/customerUpdate.mutate.graphql'
 import sendChatMessageMutate from './docs/sendChatMessage.mutate.graphql'
 import createFastingMutate from './docs/createFasting.mutate.graphql'
+import endFastingMutate from './docs/endFasting.mutate.graphql'
+import createPresetMutate from './docs/createPreset.mutate.graphql'
 
 @Service()
 export class Mutate extends GraphqlApi {
@@ -65,6 +69,22 @@ export class Mutate extends GraphqlApi {
       mutation: createFastingMutate,
       variables: params,
     }).then(response => this.mapResponse(response, 'createFasting'))
+      .catch(err => this.mapError(err))
+  }
+
+  public endFasting = (params: endFastingVariables) => {
+    return this.ApolloClient.mutate({
+      mutation: endFastingMutate,
+      variables: params,
+    }).then(response => this.mapResponse(response, 'endFasting'))
+      .catch(err => this.mapError(err))
+  }
+
+  public createPreset = (params: createPresetVariables) => {
+    return this.ApolloClient.mutate({
+      mutation: createPresetMutate,
+      variables: params,
+    }).then(response => this.mapResponse(response, 'createPreset'))
       .catch(err => this.mapError(err))
   }
 }

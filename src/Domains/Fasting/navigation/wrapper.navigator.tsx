@@ -46,21 +46,6 @@ export default class Wrapper extends React.PureComponent<
 > {
   constructor(props) {
     super(props);
-    this.state = {
-      pageConfig: {
-        backgroundImage: 'primary',
-        backgroundSolidColor: null,
-      },
-      bottomBarConfig: {
-        color: '#FFF',
-      },
-      topBarConfig: {
-        menu: false,
-        back: true,
-        color: '#FFF',
-        title: 'Fasting',
-      },
-    };
   }
 
   componentDidUpdate() {

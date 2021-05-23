@@ -9,6 +9,7 @@ import {
 import countriesAndStatesQuery from './docs/countriesAndStates.query.graphql'
 import getChatMessagesQuery from './docs/getChatMessages.query.graphql'
 import getFastsQuery from './docs/getFasts.query.graphql'
+import getPresetsQuery from './docs/getPresets.query.graphql'
 
 @Service()
 export class Query extends GraphqlApi {
@@ -35,6 +36,13 @@ export class Query extends GraphqlApi {
       query: getFastsQuery,
       variables: params,
     }).then(response => this.mapResponse(response, 'getFasts'))
+      .catch(err => this.mapError(err))
+  }
+
+  public getPresets = () => {
+    return this.ApolloClient.query({
+      query: getPresetsQuery
+    }).then(response => this.mapResponse(response, 'getPresets'))
       .catch(err => this.mapError(err))
   }
 }

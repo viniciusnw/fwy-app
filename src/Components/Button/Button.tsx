@@ -35,7 +35,7 @@ const Button = ({ icon, loading, color, children, font, ...props }: any) => {
   const { size: fontSize, weight: fontWeight } = font || {}
   
   return (
-    <StyledButton color={color} {...props}>
+    <StyledButton disabled={loading} color={color} {...props}>
       {loading
         ? <ActivityIndicator size='small' color={'#FFF'} />
         : icon ? (

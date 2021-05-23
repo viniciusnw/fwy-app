@@ -32,17 +32,17 @@ class Home extends React.Component<
     super(props);
   }
 
+  componentDidUpdate(prevProps) {
+    console.log(this.props);
+  }
+
   componentDidMount() {
-    this.props.useDispatch.getActivesFastings();
+    this.props.useDispatch.getPresets();
   }
 
-  componentDidUpdate() {
-    console.log('Home=>componentDidUpdate: ', this.props);
-  }
-
-  goFastStart = (index) => {
+  goFastStart = (presetId) => {
     const { navigation } = this.props;
-    navigation.navigate('FastStart', { index });
+    navigation.navigate('FastStart', { presetId });
   };
 
   goToTimer = (fastingId) => {
@@ -110,11 +110,7 @@ class Home extends React.Component<
               flexDirection: 'row',
               margin: -8,
             }}>
-            {[1, 2, 3].map((i, index) => (
-              <AddFastItem key={index} onPress={() => this.goFastStart(index)}>
-                <Icon size={50} color={'#FFF'} icon="plus" />
-              </AddFastItem>
-            ))}
+            {[1, 2, 3].map((i, index) => this.Render_FastItem(index))}
           </View>
         </View>
 
@@ -166,6 +162,50 @@ class Home extends React.Component<
       </View>
     );
   }
+
+  private Render_FastItem = (index) => {
+    const Item = this.Render_ItemFast(index);
+    if (!Item) return this.Render_EmptyFast(index);
+    else return Item;
+  };
+
+  private Render_EmptyFast = (index) => {
+    return (
+      <AddFastItem key={index} onPress={() => this.goFastStart(index)}>
+        <Icon size={50} color={'#FFF'} icon="plus" />
+      </AddFastItem>
+    );
+  };
+
+  private Render_ItemFast = (index) => {
+    const { presets } = this.props.useRedux.Fastings;
+    const preset = presets.find((f) => f.index == index);
+    if (preset)
+      return (
+        <FastItem key={index} onPress={() => this.goFastStart(preset._id)}>
+          <View style={{ width: '100%', alignItems: 'flex-start' }}>
+            <StyledText2>{preset.name}</StyledText2>
+          </View>
+
+          <View style={{ width: '100%', alignItems: 'flex-start' }}>
+            <StyledText3>
+              {this.getDuration(preset)} <StyledText4>H.</StyledText4>
+            </StyledText3>
+          </View>
+
+          <View style={{ width: '100%', alignItems: 'flex-end' }}>
+            <Icon size={12} color={'#FFF'} icon="info" />
+          </View>
+        </FastItem>
+      );
+    return null;
+  };
+
+  private getDuration(preset) {
+    if (!preset) return;
+    const differenceInHours = (preset.days * 24) + preset.hours
+    return differenceInHours.toFixed();
+  }
 }
 
 function mapStateToProps({ User, Fastings }: ReduxStateType) {
@@ -180,9 +220,7 @@ function mapStateToProps({ User, Fastings }: ReduxStateType) {
 function mapDispatchToProps(dispatch) {
   return {
     useDispatch: {
-      login: (_) => dispatch(ReduxActions.login(_)),
-      logout: () => dispatch(ReduxActions.logout()),
-      getActivesFastings: () => dispatch(ReduxActions.getActivesFastings()),
+      getPresets: () => dispatch(ReduxActions.getPresets()),
     },
   };
 }

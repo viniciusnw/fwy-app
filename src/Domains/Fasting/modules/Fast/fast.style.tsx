@@ -166,6 +166,7 @@ export const StyledText15 = styled(Text)`
 
 export const StyledText16 = styled(Text)`
   font-size: 16px;
+  line-height: 24px;
   font-weight: bold;
   color: ${({ theme }) => theme.color.white};
   font-family: ${({ theme }) => theme.fonts.AdobeClean.bold};
@@ -173,6 +174,7 @@ export const StyledText16 = styled(Text)`
 
 export const StyledText17 = styled(Text)`
   font-size: 16px;
+  line-height: 20px;
   color: ${({ theme }) => theme.color.white};
   font-family: ${({ theme }) => theme.fonts.AdobeClean.regular};
 `;
@@ -264,7 +266,6 @@ export const CustomPlanTag = (props) => (
       marginBottom: 12,
       flexDirection: 'row',
       alignItems: 'center',
-      paddingHorizontal: 15,
     }}>
     <StyledText>Custom Plan</StyledText>
     <Icon size={12} icon="info" color={'#FFF'} style={{ marginLeft: 4 }} />
