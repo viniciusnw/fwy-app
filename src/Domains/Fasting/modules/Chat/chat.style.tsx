@@ -1,6 +1,18 @@
 import styled from 'styled-components/native';
-import { View, Text, FlatList } from 'react-native';
+import { View, Text, FlatList, TextInput } from 'react-native';
 import { Message } from '@Redux/Fasting/repository/Chat/state';
+
+export const InputSendChatMessage = styled(TextInput)<any>`
+  flex: 1;
+  max-height: 74px;
+  line-height: 21px;
+  border-radius: 10px;
+  padding: 4px 12px;
+  height: ${({ height }) => Math.max(32, height)}px;
+  background-color: rgba(255, 255, 255, .2);
+  font-family: ${({ theme }) => theme.fonts.AdobeClean.regular};
+`;
+
 
 export const ScrollMessages = styled(FlatList)`
   flex: 1;

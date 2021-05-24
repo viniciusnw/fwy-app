@@ -8,6 +8,7 @@ import { Message } from '@Redux/Fasting/repository/Chat/state';
 import { LoggedStackParamList, PagePropsType } from '@Navigation';
 import { ReduxActions, ReduxPropsType, ReduxStateType } from '@Redux/Fasting';
 import {
+  InputSendChatMessage,
   MessageContainer,
   MessageDate,
   MessageTextContainer,
@@ -19,7 +20,7 @@ import {
 import {
   View,
   ImageBackground,
-  TextInput,
+  ActivityIndicator,
   KeyboardAvoidingView,
   Keyboard,
 } from 'react-native';
@@ -93,7 +94,8 @@ class Chat extends React.Component<
   };
 
   private loadMoreMessages = () => {
-    const { nextPagination } = this.props.useRedux.Chat.loadMessages;
+    const { nextPagination, loading } = this.props.useRedux.Chat.loadMessages;
+    if (loading) return;
     if (!nextPagination.nextPageNumber) return;
 
     const pagination = {
@@ -106,7 +108,8 @@ class Chat extends React.Component<
   render() {
     const {
       chat: { messages },
-      sendMessages: { loading },
+      loadMessages: { loading: loadMessagesLoading },
+      sendMessages: { loading: sendMessagesLoading },
     } = this.props.useRedux.Chat;
     const { backgrounds } = ASSETS.FASTING;
     const { openKeyboard, inputValue } = this.state;
@@ -118,9 +121,12 @@ class Chat extends React.Component<
           inverted
           data={messages}
           extraData={messages}
+          onEndReachedThreshold={0}
           keyExtractor={(item, index) => `${index}`}
+          onEndReached={(info) => this.loadMoreMessages()}
           contentContainerStyle={{ flexDirection: 'column-reverse' }}
           renderItem={({ item }: { item: any }) => this.Render_Item(item)}
+          ListHeaderComponent={() => this.Render_loading(loadMessagesLoading)}
         />
 
         {/* === */}
@@ -145,27 +151,18 @@ class Chat extends React.Component<
               },
               openKeyboard && { paddingBottom: 110 },
             ]}>
-            <TextInput
+            <InputSendChatMessage
               multiline
               value={inputValue}
+              height={this.state.inputHeight}
               onChangeText={this._onChangeText}
               onContentSizeChange={this._onResizeInput}
-              style={{
-                flex: 1,
-                maxHeight: 74,
-                lineHeight: 21,
-                borderRadius: 10,
-                paddingVertical: 4,
-                paddingHorizontal: 12,
-                height: Math.max(32, this.state.inputHeight),
-                backgroundColor: 'rgba(255, 255, 255, .2)',
-              }}
             />
 
             <Button
-              loading={loading}
               style={{ flex: 0.1 }}
               color={'fullTransparent'}
+              loading={sendMessagesLoading}
               onPress={this.addQueueChatMessage}
               icon={{ icon: 'send', color: '#FFF', size: 22 }}
             />
@@ -175,6 +172,18 @@ class Chat extends React.Component<
       </>
     );
   }
+
+  private Render_loading = (loadMessagesLoading) => {
+    if (loadMessagesLoading)
+      return (
+        <ActivityIndicator
+          style={{ marginVertical: 16 }}
+          size="small"
+          color={'#FFF'}
+        />
+      );
+    return <View />;
+  };
 
   private Render_Item = (item: Message) => (
     <MessageItem {...item}>
