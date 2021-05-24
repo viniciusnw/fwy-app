@@ -241,6 +241,11 @@ export const FormContainer = styled(View)`
   justify-content: flex-start;
 `;
 
+export const FormHeader = styled(View)`
+  flex-direction: row;
+  padding: 0 15px;
+`;
+
 export const Footer = styled(View)`
   height: 230px;
   bottom: -62px;

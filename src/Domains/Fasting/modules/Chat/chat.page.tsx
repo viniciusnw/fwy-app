@@ -122,6 +122,8 @@ class Chat extends React.Component<
           data={messages}
           extraData={messages}
           onEndReachedThreshold={0}
+          showsVerticalScrollIndicator={false}
+          showsHorizontalScrollIndicator={false}
           keyExtractor={(item, index) => `${index}`}
           onEndReached={(info) => this.loadMoreMessages()}
           contentContainerStyle={{ flexDirection: 'column-reverse' }}

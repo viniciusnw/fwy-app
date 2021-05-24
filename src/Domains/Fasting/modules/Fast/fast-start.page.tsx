@@ -19,6 +19,7 @@ import {
   StyledText8,
   CustomPlanTag,
   FormContainer,
+  FormHeader,
 } from './fast.style';
 
 import FastStartForm, {
@@ -68,15 +69,9 @@ class FastStart extends React.Component<
   };
 
   private handlerLoadPreset = () => {
-    const {
-      route: { params },
-      useRedux: { Fastings },
-    } = this.props;
-    if (!params?.presetId) return;
-
-    this.setState({
-      preset: Fastings.presets.find((f) => f._id == params.presetId),
-    });
+    const preset = this.Preset;
+    if (!preset) return;
+    this.setState({ preset });
   };
 
   render() {
@@ -90,7 +85,11 @@ class FastStart extends React.Component<
       [FormFields.name]: preset?.name || 'Fasting Name!',
     };
 
-    const isFasting = this.ActiveFastId;
+    const isAlreadyFasting = this.ActiveFastId;
+
+    const fromPreset = this.PresetId;
+
+    const fromPlan = this.PlanId;
 
     return (
       <Formik
@@ -102,12 +101,17 @@ class FastStart extends React.Component<
           <View style={{ flex: 1 }}>
             <FormContainer>
               {/* === */}
-              <View style={{ flexDirection: 'row', paddingHorizontal: 15 }}>
-                {true && <CustomPlanTag />}
-                <TouchableOpacity>
-                  <StyledText>Save</StyledText>
-                </TouchableOpacity>
-              </View>
+              <FormHeader>
+                {(fromPlan && <CustomPlanTag />) || (
+                  <View style={{ marginBottom: 12, width: '100%' }} />
+                )}
+
+                {fromPreset && (
+                  <TouchableOpacity style={{ marginBottom: 12 }}>
+                    <StyledText>Save</StyledText>
+                  </TouchableOpacity>
+                )}
+              </FormHeader>
 
               {/* === */}
               <FastStartForm
@@ -138,11 +142,11 @@ class FastStart extends React.Component<
                 style={{ flex: 1, paddingBottom: 62 }}
                 source={ASSETS.FASTING.backgrounds['primary']}>
                 <View style={{ marginHorizontal: '23%', top: -20 }}>
-                  {isFasting ? (
+                  {isAlreadyFasting ? (
                     <Button
                       style={{ zIndex: 10 }}
                       color="primary"
-                      onPress={() => this.goToTimerId(isFasting)}
+                      onPress={() => this.goToTimerId(isAlreadyFasting)}
                       icon={{ icon: 'timer', color: '#EC5349', size: 22 }}>
                       YOU’RE FASTING!
                     </Button>
@@ -191,10 +195,35 @@ class FastStart extends React.Component<
       </Formik>
     );
   }
+  
+  private get Preset() {
+    const {
+      route: { params },
+      useRedux: { Fastings },
+    } = this.props;
+    if (!params?.presetId) return false;
+    return Fastings.presets.find((f) => f._id == params.presetId);
+  }
+
+  private get PlanId() {
+    const {
+      route: { params },
+    } = this.props;
+    if (!params?.planId) return false;
+    return params.planId;
+  }
+
+  private get PresetId() {
+    const {
+      route: { params },
+    } = this.props;
+    if (!params?.presetId) return false;
+    return params.presetId;
+  }
 
   private get ActiveFastId() {
     const { fastings } = this.props.useRedux.Fastings;
-    if (!fastings.length) return;
+    if (!fastings.length) return false;
     fastings[0]._id;
     return fastings[0]._id;
   }

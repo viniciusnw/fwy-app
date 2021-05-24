@@ -4,13 +4,12 @@ import { StackScreenProps } from '@react-navigation/stack';
 
 import { Icon, Button, Input } from '@Components';
 import { LoggedStackParamList, PagePropsType } from '@Navigation';
-import { View, Text, ScrollView, TouchableOpacity } from 'react-native';
+import { View, ScrollView, TouchableOpacity, Image } from 'react-native';
 import { ReduxActions, ReduxPropsType, ReduxStateType } from '@Redux/Fasting';
 
 import {
   StyledField,
   StyledH1,
-  StyledText,
   StyledText1,
   StyledText2,
 } from './profile.style';
@@ -30,41 +29,47 @@ class ProfileEdit extends React.Component<
     super(props);
   }
 
+  componentDidMount() {
+    // console.log('ProfileEdit=>componentDidMount: ', this.props.useRedux.User);
+  }
+
   render() {
+    const User = this.User;
+
     const profileEdit = {
       name: {
-        value: '',
+        value: User?.name,
         placeholder: 'Name',
         onChangeText: () => true,
         placeholderTextColor: '#FFF',
       },
       email: {
-        value: '',
+        value: User?.email,
         placeholder: 'E-mail',
         onChangeText: () => true,
         autoCompleteType: 'email',
         placeholderTextColor: '#FFF',
       },
       birthday: {
-        value: '',
+        value: User?.birthday,
         placeholder: 'Birthday',
         onChangeText: () => true,
         placeholderTextColor: '#FFF',
       },
       gender: {
-        value: '',
+        value: User?.gender,
         placeholder: 'Gender',
         onChangeText: () => true,
         placeholderTextColor: '#FFF',
       },
       weight: {
-        value: '',
+        value: User?.weight,
         placeholder: 'Weight',
         onChangeText: () => true,
         placeholderTextColor: '#FFF',
       },
       height: {
-        value: '',
+        value: User?.weight,
         placeholder: 'Height',
         onChangeText: () => true,
         placeholderTextColor: '#FFF',
@@ -72,36 +77,30 @@ class ProfileEdit extends React.Component<
     };
 
     return (
-      <View style={{ flex: 1 }}>
+      <ScrollView
+        style={{ flex: 1 }}
+        showsVerticalScrollIndicator={false}
+        showsHorizontalScrollIndicator={false}>
         <TouchableOpacity
           style={{ alignItems: 'center', marginHorizontal: 20 }}>
           <View
             style={{
+              width: '100%',
               flexDirection: 'row',
               alignItems: 'center',
-              width: '100%',
               paddingHorizontal: 30,
-              borderWidth: 1,
             }}>
-            <View style={{ borderWidth: 1 }}>
-              <Icon
-                size={110}
-                color={'rgba(255, 255, 255, .5)'}
-                icon="user-circle"
-              />
-            </View>
+            <View>{this.Render_Avatar(User)}</View>
 
             <View style={{ flex: 1, marginLeft: 24 }}>
-              <StyledH1>Vinicius</StyledH1>
-              <StyledText>3 achievements</StyledText>
+              <StyledH1>{User?.name.split(' ')[0]}</StyledH1>
             </View>
           </View>
 
           <View
             style={{
               alignSelf: 'flex-start',
-              paddingHorizontal: 30,
-              borderWidth: 1,
+              paddingHorizontal: 40,
             }}>
             <StyledText1>Change Profile Picture</StyledText1>
           </View>
@@ -141,14 +140,43 @@ class ProfileEdit extends React.Component<
             <Button color="secondary"> Save </Button>
           </View>
         </View>
-      </View>
+      </ScrollView>
     );
   }
+
+  private get User() {
+    const { data } = this.props.useRedux.User;
+    if (!data) return;
+    return data;
+  }
+
+  private Render_Avatar = (User) => {
+    if (!User.avatar)
+      return (
+        <Icon size={110} color={'rgba(255, 255, 255, .5)'} icon="user-circle" />
+      );
+    else
+      return (
+        <Image
+          style={{
+            width: 110,
+            height: 110,
+            borderRadius: 110,
+            resizeMode: 'cover',
+          }}
+          source={{
+            uri: `data:${User.avatar.type};base64,${User.avatar.data}`,
+          }}
+        />
+      );
+  };
 }
 
-function mapStateToProps({}: ReduxStateType) {
+function mapStateToProps({ User }: ReduxStateType) {
   return {
-    useRedux: {},
+    useRedux: {
+      User,
+    },
   };
 }
 

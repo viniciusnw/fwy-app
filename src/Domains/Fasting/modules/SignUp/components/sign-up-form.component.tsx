@@ -152,7 +152,7 @@ const SignUpForm: React.FC<any> = ({ countriesData, countriesLoading, statesData
         {!dataUpload && (
           <Icon size={60} color={'rgba(255, 255, 255, .4)'} icon="user-circle" />
         ) || dataUpload && (
-          <Image style={{ borderRadius: 60, width: 61, height: 61, resizeMode: 'cover', borderWidth: 1 }} source={{ uri: `data:${dataUpload.type};base64,${dataUpload.base64}` }} />
+          <Image style={{ borderRadius: 60, width: 61, height: 61, resizeMode: 'cover' }} source={{ uri: `data:${dataUpload.type};base64,${dataUpload.base64}` }} />
         )}
 
         <StyledText>
