@@ -11,16 +11,16 @@ const StyledButton = styled.TouchableOpacity`
   align-items: center;
   justify-content: center;
   height: ${({ small }: any) => small ? '34px' : '42.5px'};
-  background-color: ${({ theme, color }: any) => theme.color[!color ? 'default' : color]};
-  ${({ color }: any) => color == 'transparent' ? 'background-color: rgba(255, 255, 255, .2)' : null};
+  background-color: ${({ theme, color, }: any) => theme.color[!color ? 'default' : color]};
 `;
 
-const StyledView = styled.View`
+const StyledView = styled.View<any>`
   width: 100%;
   height: 100%;
   flex-direction: row;
   align-items: center;
   justify-content: space-around;
+  justify-content: ${({ single }: any) => single ? 'center' : 'space-around'};
 `;
 
 const StyledText = styled.Text<any>`
@@ -33,13 +33,12 @@ const StyledText = styled.Text<any>`
 
 const Button = ({ icon, loading, color, children, font, ...props }: any) => {
   const { size: fontSize, weight: fontWeight } = font || {}
-  
   return (
     <StyledButton disabled={loading} color={color} {...props}>
       {loading
         ? <ActivityIndicator size='small' color={'#FFF'} />
         : icon ? (
-          <StyledView>
+          <StyledView single={!(children && icon)}>
             <Icon icon={icon.icon} color={icon.color} size={icon.size} />
             <StyledText fontWeight={fontWeight} fontSize={fontSize}>{children}</StyledText>
           </StyledView>

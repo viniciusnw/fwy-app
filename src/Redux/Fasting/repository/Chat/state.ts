@@ -15,8 +15,8 @@ export interface MessageQueue {
 }
 export interface Message {
   __typename?: string;
+  _id?: string;
   type?: string;
-  id?: string;
   date: Date
   text: string;
   sender: string;

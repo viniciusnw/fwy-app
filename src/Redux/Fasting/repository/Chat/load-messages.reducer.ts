@@ -26,7 +26,10 @@ export default {
           },
           chat: {
             ...state.chat,
-            messages: action.payload.messages,
+            messages: action.payload.messages.map(message => ({
+              ...message,
+              date: new Date(message.date)
+            })),
           }
         };
       }

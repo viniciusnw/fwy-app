@@ -25,7 +25,7 @@ class ChatQueueProvider extends React.Component<ReduxPropsType, any> {
     } = this.props.useRedux.Chat;
 
     if (loading) return;
-    else if (error) setTimeout(() => this.handlerSendChatMessage(), 5000);
+    else if (error) this.handlerCompleteMessage();
     else if (success) this.handlerCompleteMessage();
     else if (messageQueue.length) this.handlerSendChatMessage();
   };
@@ -34,14 +34,7 @@ class ChatQueueProvider extends React.Component<ReduxPropsType, any> {
     const {
       chat: { messageQueue },
     } = this.props.useRedux.Chat;
-    this.props.useDispatch.completeQueueChatMessage({
-      message: {
-        sender: 'customer',
-        date: new Date(),
-        text: messageQueue[0].text,
-      },
-      index: 1,
-    });
+    this.props.useDispatch.completeQueueChatMessage(1);
   };
 
   private handlerSendChatMessage = () => {

@@ -30,7 +30,7 @@ export default {
         return {
           ...state,
           sendMessages: {
-            loading: true,
+            loading: false,
             success: false,
             error: true,
             errorMessage: action.payload,

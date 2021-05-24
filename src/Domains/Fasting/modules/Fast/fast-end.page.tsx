@@ -47,8 +47,13 @@ class FastEnd extends React.Component<
 
   private endFasting = (save: boolean) => {
     const {
+      fasting,
       createFasting: { data: fastingId },
     } = this.props.useRedux.Fastings;
+
+    if (fasting?._id)
+      this.props.useDispatch.endFasting({ fastingId: fasting._id, save });
+
     if (fastingId) this.props.useDispatch.endFasting({ fastingId, save });
   };
 

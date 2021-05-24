@@ -25,8 +25,7 @@ export default {
           },
           chat: {
             ...state.chat,
-            messages: [...state.chat.messages, action.payload.message],
-            messageQueue: state.chat.messageQueue.splice(action.payload.index, 1),
+            messageQueue: state.chat.messageQueue.splice(action.payload, 1),
           }
         };
       }
@@ -36,7 +35,10 @@ export default {
           ...state,
           chat: {
             ...state.chat,
-            messages: [...state.chat.messages, action.payload],
+            messages: [...state.chat.messages, {
+              ...action.payload,
+              date: new Date(action.payload.date)
+            }],
           }
         };
       }

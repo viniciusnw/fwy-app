@@ -24,7 +24,7 @@ export default {
             error: false,
             errorMessage: null,
           },
-          fasting: null
+          fasting: null,
         };
       }
 

@@ -20,7 +20,7 @@ export default {
     };
   },
 
-  completeQueueChatMessage: (params: { message: Message, index: number }) => {
+  completeQueueChatMessage: (params: number) => {
     return {
       type: 'COMPLETE-QUEUE-MESSAGES',
       payload: params,

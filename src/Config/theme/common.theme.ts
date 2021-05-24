@@ -14,6 +14,8 @@ export default {
     success: 'green',
     danger: 'red',
     warning: 'orange',
+    transparent: 'rgba(255, 255, 255, .2)',
+    fullTransparent: 'rgba(255, 255, 255, .0)'
   },
 
   fonts: {

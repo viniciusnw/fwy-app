@@ -33,7 +33,7 @@ class Home extends React.Component<
   }
 
   componentDidUpdate(prevProps) {
-    console.log(this.props);
+    // console.log(this.props);
   }
 
   componentDidMount() {

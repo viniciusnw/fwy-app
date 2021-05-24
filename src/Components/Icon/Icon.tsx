@@ -63,6 +63,8 @@ const setIcon = (icon, props) => {
       return <Ionicons name="md-chatbubbles-outline" {...props} />;
     case 'home':
       return <Entypo name="home" {...props} />;
+    case 'send':
+      return <Feather name="send" {...props} />;
     default:
       return null;
   }

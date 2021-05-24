@@ -90,6 +90,8 @@ class FastStart extends React.Component<
       [FormFields.name]: preset?.name || 'Fasting Name!',
     };
 
+    const isFasting = this.ActiveFastId;
+
     return (
       <Formik
         enableReinitialize
@@ -136,13 +138,23 @@ class FastStart extends React.Component<
                 style={{ flex: 1, paddingBottom: 62 }}
                 source={ASSETS.FASTING.backgrounds['primary']}>
                 <View style={{ marginHorizontal: '23%', top: -20 }}>
-                  <Button
-                    style={{ zIndex: 10 }}
-                    color="primary"
-                    onPress={handleSubmit}
-                    icon={{ icon: 'timer', color: '#EC5349', size: 22 }}>
-                    START YOUR FAST
-                  </Button>
+                  {isFasting ? (
+                    <Button
+                      style={{ zIndex: 10 }}
+                      color="primary"
+                      onPress={() => this.goToTimerId(isFasting)}
+                      icon={{ icon: 'timer', color: '#EC5349', size: 22 }}>
+                      YOU’RE FASTING!
+                    </Button>
+                  ) : (
+                    <Button
+                      style={{ zIndex: 10 }}
+                      color="primary"
+                      onPress={handleSubmit}
+                      icon={{ icon: 'timer', color: '#EC5349', size: 22 }}>
+                      START YOUR FAST
+                    </Button>
+                  )}
                 </View>
 
                 <TouchableOpacity
@@ -179,6 +191,18 @@ class FastStart extends React.Component<
       </Formik>
     );
   }
+
+  private get ActiveFastId() {
+    const { fastings } = this.props.useRedux.Fastings;
+    if (!fastings.length) return;
+    fastings[0]._id;
+    return fastings[0]._id;
+  }
+
+  private goToTimerId = (fastingId) => {
+    const { navigate } = this.props.navigation;
+    navigate('Timer', { fastingId });
+  };
 
   private goToTimer = (Fasting) => {
     const { navigate } = this.props.navigation;
