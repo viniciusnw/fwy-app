@@ -42,7 +42,7 @@ const FastStartForm: React.FC<any> = ({
     },
   };
 
-  console.log('FastStartFormErros: ', errors);
+  // console.log('FastStartFormErros: ', errors);
 
   // Scroll to select element
   // ref.scrollTo({

@@ -24,8 +24,8 @@ class FastTimer extends React.PureComponent<
             size={28}
             disableHoursLimit
             until={this.DifferenceInSeconds}
-            onPress={() => console.log('PressTime')}
-            onFinish={() => console.log('FinishedTime')}
+            // onPress={() => console.log('PressTime')}
+            // onFinish={() => console.log('FinishedTime')}
             digitStyle={{
               fontWeight: 'bold',
               backgroundColor: 'none',

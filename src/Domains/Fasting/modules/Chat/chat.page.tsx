@@ -48,7 +48,7 @@ class Chat extends React.Component<
   }
 
   componentDidUpdate() {
-    console.log('Chat=>componentDidUpdate: ', this.props.useRedux.Chat);
+    // console.log('Chat=>componentDidUpdate: ', this.props.useRedux.Chat);
     this.handlerSendMessage();
   }
 

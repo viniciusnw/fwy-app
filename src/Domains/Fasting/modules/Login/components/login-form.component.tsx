@@ -21,10 +21,10 @@ const LoginForm: React.FC<any> = ({ loginLoading, dispatchLogin }) => {
 
   const formik = useFormik({
     initialValues: {
-      [fields.email]: 'viniciusnw@hotmail.com',
-      [fields.password]: '123456',
-      // [fields.email]: '',
-      // [fields.password]: '',
+      // [fields.email]: 'viniciusnw@hotmail.com',
+      // [fields.password]: '123456',
+      [fields.email]: '',
+      [fields.password]: '',
     },
     validationSchema: FormLoginSchema,
     onSubmit: (login: any) => {

@@ -81,8 +81,8 @@ class FastStart extends React.Component<
     const FormInitialValues = {
       [FormFields.days]: preset?.days || 0,
       [FormFields.hours]: preset?.hours || 1,
-      [FormFields.color]: preset?.color || '#EC5349',
-      [FormFields.name]: preset?.name || 'Fasting Name!',
+      [FormFields.color]: preset?.color || '',
+      [FormFields.name]: preset?.name || '',
     };
 
     const isAlreadyFasting = this.ActiveFastId;

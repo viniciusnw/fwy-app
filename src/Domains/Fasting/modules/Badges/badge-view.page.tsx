@@ -15,14 +15,13 @@ import {
 
 type RoutePropsType = StackScreenProps<LoggedStackParamList, 'BadgeView'>;
 class BadgeView extends React.Component<RoutePropsType & ReduxPropsType & PagePropsType, any> {
+  static setPageConfigs = {
+    pageConfig: { backgroundSolidColor: 'secondary' },
+      topBarConfig: { title: null, menu: true, color: '#FFF', back: true }
+  };
 
   constructor(props) {
     super(props)
-    this.props.setPageConfigs({
-      pageConfig: { backgroundSolidColor: 'secondary' },
-      topBarConfig: { title: null, menu: true, color: '#FFF', back: true }
-    })
-    console.log("BadgeView=>Constructor: ", this.props)
   }
 
   goToBadgeView = (item) => {

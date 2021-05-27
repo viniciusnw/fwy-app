@@ -37,14 +37,23 @@ const SignUpForm: React.FC<any> = ({ countriesData, countriesLoading, statesData
   });
 
   const formik = useFormik({
+    // initialValues: {
+    //   [fields.name]: 'Vinicius Inacio',
+    //   [fields.email]: 'viniciusnw@hotmail.com',
+    //   [fields.phone]: '(31) 98406-5335',
+    //   [fields.birthday]: '1994-03-07T10:20:55.000Z',
+    //   [fields.country]: 'Brazil',
+    //   [fields.state]: 'Sao Paulo',
+    //   [fields.password]: '123456',
+    // },
     initialValues: {
-      [fields.name]: 'Vinicius Inacio',
-      [fields.email]: 'viniciusnw@hotmail.com',
-      [fields.phone]: '(31) 98406-5335',
-      [fields.birthday]: '1994-03-07T10:20:55.000Z',
-      [fields.country]: 'Brazil',
-      [fields.state]: 'Sao Paulo',
-      [fields.password]: '123456',
+      [fields.name]: '',
+      [fields.email]: '',
+      [fields.phone]: '',
+      [fields.birthday]: '',
+      [fields.country]: '',
+      [fields.state]: '',
+      [fields.password]: '',
     },
     validationSchema: FormRegisterSchema,
     onSubmit: (customer: any) => {
