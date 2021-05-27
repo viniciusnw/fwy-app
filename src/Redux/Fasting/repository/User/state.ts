@@ -1,4 +1,4 @@
-import { customerLogin_customerLogin, customerRegister_customerRegister, updateCustomer_updateCustomer } from '@Config/graphql'
+import { customerLogin_customerLogin, customerRegister_customerRegister, customerUpdate_customerUpdate } from '@Config/graphql'
 
 export class UserReduxType {
   login = {
@@ -16,8 +16,8 @@ export class UserReduxType {
     success: false,
     error: false,
   }
-  error = null
-  data: customerLogin_customerLogin | customerRegister_customerRegister | updateCustomer_updateCustomer | null = null
+  errorMessage = null
+  data: customerLogin_customerLogin | customerRegister_customerRegister | customerUpdate_customerUpdate | null = null
 }
 
 export const UserState = new UserReduxType

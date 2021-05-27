@@ -43,9 +43,11 @@ if (data) {
   const versionNumberArray = data.CFBundleShortVersionString.split('.');
   versionNumberArray[versionNumberArrayIndex] = parseInt(versionNumberArray[versionNumberArrayIndex]) + 1;
   const nextVersion = versionNumberArray.join('.');
-  data.CFBundleShortVersionString = nextVersion;
   
-  // Set new Values
+  // 
+  // Save and Set new Values
+  data.CFBundleVersion = '1'
+  data.CFBundleShortVersionString = nextVersion;
   jsonFile.set("version", `${nextVersion}`);
   plist.writeFile(plistPatch, data, err => {
     if (err) throw err;

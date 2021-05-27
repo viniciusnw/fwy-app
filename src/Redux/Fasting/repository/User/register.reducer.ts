@@ -21,7 +21,12 @@ export default {
             success: true,
             error: false,
           },
-          error: null,
+          login: {
+            loading: false,
+            success: true,
+            error: false,
+          },
+          errorMessage: null,
           data: action.payload,
         };
       }
@@ -35,7 +40,7 @@ export default {
             error: true,
           },
           data: null,
-          error: action.payload,
+          errorMessage: action.payload,
         };
       }
 

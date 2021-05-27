@@ -1,0 +1,10 @@
+query getPresets {
+  getPresets {
+    _id
+    name
+    hours
+    days
+    color
+    index
+  }
+}

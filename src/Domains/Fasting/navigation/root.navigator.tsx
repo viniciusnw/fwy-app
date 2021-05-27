@@ -6,7 +6,7 @@ import SplashScreen from 'react-native-splash-screen';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 
-import { ChatProvider } from '@Modules';
+import { ChatConnectProvider, ChatQueueProvider } from '@Modules';
 import { APP_NAME_TYPE } from '@Config/types';
 import { configureApolloClient } from '@Config/graphql';
 import { ReduxStateType, ReduxPropsType } from '@Redux/Fasting';
@@ -26,19 +26,24 @@ class Root extends React.Component<ReduxPropsType, any> {
   }
 
   render() {
-    const { User: { login } } = this.props.useRedux;
-    const { success } = login
+    const { 
+      User: { login, register },
+    } = this.props.useRedux;
+    
+    const { success: loginSuccess } = login
+    const { success: registerSuccess } = register
 
     const Stack = createStackNavigator();
     return (
       <>
         {/* Providers */}
-        <ChatProvider />
+        <ChatConnectProvider />
+        <ChatQueueProvider />
 
         <NavigationContainer>
           <Stack.Navigator>
             {
-              success
+              loginSuccess || registerSuccess
                 ? <Stack.Screen name="Logged" component={Logged} options={{ header: _ => null }} />
                 : <Stack.Screen name="UnLogged" component={UnLogged} options={{ header: _ => null }} />
             }

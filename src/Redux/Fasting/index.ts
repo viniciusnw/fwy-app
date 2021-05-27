@@ -1,25 +1,43 @@
 import General, { GeneralReduxType } from './repository/General';
 import User, { UserReduxType } from './repository/User';
 import Chat, { ChatReduxType } from './repository/Chat';
+import Fastings, { FastingsReduxType } from './repository/Fastings';
+
 class ReduxActionsType {
-  // General
+  saveWs = General.actions.saveWs
   getStates = General.actions.getStates
   getCountries = General.actions.getCountries
-  // Chat
-  saveWs = Chat.actions.saveWs
-  // User
+  
   login = User.actions.login
-  register = User.actions.register
   logout = User.actions.logout
-}
-export const ReduxActions = new ReduxActionsType;
+  update = User.actions.update
+  register = User.actions.register
+  
+  newChatMessage = Chat.actions.newChatMessage
+  getChatMessages = Chat.actions.getChatMessages
+  sendChatMessage = Chat.actions.sendChatMessage
+  getMoreChatMessages = Chat.actions.getMoreChatMessages
+  addQueueChatMessage = Chat.actions.addQueueChatMessage
+  completeQueueChatMessage = Chat.actions.completeQueueChatMessage
 
+  getFasting = Fastings.actions.getFasting
+  endFasting = Fastings.actions.endFasting
+  getPresets = Fastings.actions.getPresets
+  createPreset = Fastings.actions.createPreset
+  clearFasting = Fastings.actions.clearFasting
+  createFasting = Fastings.actions.createFasting
+  getActivesFastings  = Fastings.actions.getActives
+}
 export type ReduxStateType = {
   General: GeneralReduxType;
   User: UserReduxType;
   Chat: ChatReduxType;
+  Fastings: FastingsReduxType;
 }
+
+// ====
 export interface ReduxPropsType {
   useRedux: ReduxStateType
   useDispatch: ReduxActionsType
 }
+export const ReduxActions = new ReduxActionsType;

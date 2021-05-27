@@ -1,18 +1,21 @@
-mutation customerRegister($customer: CustomerRegisterInput!) {
-    customerRegister(customer: $customer) {
-        _id
-        name
-        email
-        phone
-        birthday
-        gender
-        weight
-        height
-        country
-        state
-        avatar
-        token
-        expirationTime
-        role
+mutation customerUpdate($customer: CustomerUpdateInput!) {
+  customerUpdate(customer: $customer) {
+    _id
+    name
+    email
+    phone
+    birthday
+    gender
+    weight
+    height
+    country
+    state
+    avatar {
+      type
+      data
     }
+    token
+    expirationTime
+    role
+  }
 }

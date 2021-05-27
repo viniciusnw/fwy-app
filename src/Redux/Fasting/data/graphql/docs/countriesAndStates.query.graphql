@@ -1,18 +1,3 @@
-mutation customerLogin($email: String!, $password: String!) {
-    customerLogin(email: $email, password: $password) {
-        _id
-        name
-        email
-        phone
-        birthday
-        gender
-        weight
-        height
-        country
-        state
-        avatar
-        token
-        expirationTime
-        role
-    }
+query countriesAndStates($country: String) {
+  countriesAndStates(country: $country)
 }

@@ -1,25 +1,50 @@
 import React from 'react';
 import styled from 'styled-components/native';
-import { TextInput } from 'react-native';
+import { TextInput, View, Text } from 'react-native';
 
-const StyledInput = styled(TextInput)`
+const Container = styled(View)`
+  flex-wrap: wrap;
+  flex-direction: row;
   flex: ${({ half }: any) => half ? '2' : '1'};
   width: ${({ half }: any) => half ? 'auto' : '100%'};
-  height: 47px;
+  margin-left: ${({ half }: any) => half ? '4px' : '0'};
+  margin-right: ${({ half }: any) => half ? '4px' : '0'};
+`;
+
+const StyledInput = styled(TextInput)`
+  width: 100%;
   border: none;
+  height: 47px;
   font-size: 17px;
   line-height: 20px;
   border-radius: 4px;
   padding: 10px 15px;
   background-color: rgba(255, 255, 255, .2);
   color: ${({ theme }) => theme.color.white};
-  margin-right: ${({ half }: any) => half ? '4px' : '0'};
-  margin-left: ${({ half }: any) => half ? '4px' : '0'};
   font-family: ${({ theme }) => theme.fonts.AdobeClean.regular};
 `;
 
+const ErrorContainer = styled(View)`
+  height: 18px;
+  padding-top: 4px;
+  padding-left: 8px;
+`;
+
+const ErrorText = styled(Text)`
+  font-size: 12px;
+  color: ${({ theme }) => theme.color.white};
+`;
+
 const Input = (props) => {
-  return <StyledInput {...props} />;
+  return (
+    <Container {...props}>
+      <StyledInput {...props} />
+
+      <ErrorContainer>
+        {props.error && <ErrorText>* {props.error}</ErrorText>}
+      </ErrorContainer>
+    </Container>
+  )
 };
 
 export default Input;

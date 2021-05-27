@@ -11,9 +11,21 @@ export type LoggedStackParamList = {
   Wrapper: undefined;
   Logged: undefined;
   Home: undefined;
-  FastStart: undefined;
+  FastStart: {
+    presetId?: string
+    planId?: string
+  };
+  Timer: {
+    fastingId?: string;
+    fasting?: {
+      name: string,
+      days: number,
+      hours: number,
+      color: string,
+      finished: null | Date
+    }
+  };
   FastEnd: undefined;
-  Timer: undefined;
   BadgeNew: undefined;
   BadgeList: undefined;
   BadgeAll: undefined;
@@ -105,7 +117,7 @@ type RoutePropsType = StackScreenProps<LoggedStackParamList, 'Logged'>;
 export default class Logged extends React.Component<RoutePropsType, any> {
 
   constructor(props) {
-    super(props);
+    super(props);    
   }
 
   render() {

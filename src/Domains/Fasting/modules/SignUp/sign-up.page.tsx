@@ -2,148 +2,90 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { StackScreenProps } from '@react-navigation/stack';
 
-import { Button, Icon, Input } from '@Components';
-import { View, Text, TouchableOpacity } from 'react-native';
-import { StyledBox, StyledField, StyledText } from './sign-up.style'
+import { StyledView } from './sign-up.style';
+import SignUpForm from './components/sign-up-form.component';
 import { UnloogedStackParamList, PagePropsType } from '@Navigation';
 import { ReduxActions, ReduxPropsType, ReduxStateType } from '@Redux/Fasting';
 
 type RoutePropsType = StackScreenProps<UnloogedStackParamList, 'SignUp'>;
-class SignUp extends React.Component<RoutePropsType & ReduxPropsType & PagePropsType, any> {
+class SignUp extends React.Component<
+  RoutePropsType & ReduxPropsType & PagePropsType,
+  any
+> {
+  static setPageConfigs = {
+    topBarConfig: { title: null, back: true, color: '#FFF' },
+    pageConfig: { backgroundImage: 'tertiary' },
+  };
 
   constructor(props) {
-    super(props)
-    this.props.setPageConfigs({
-      topBarConfig: { title: null, back: true, color: '#FFF' },
-      pageConfig: { backgroundImage: 'tertiary' },
-    })
-
+    super(props);
     this.state = {
       form: {
-        name: null,
-        email: null,
-        phone: null,
-        birthday: null,
-        country: null,
-        state: null,
-        password: null
-      }
-    }
+        country: '',
+        state: '',
+      },
+    };
   }
 
-  private formChangeField = (field, value) => this.setState({ [field]: value })
+  componentDidMount() {
+    this.props.useDispatch.getCountries({});
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    this.handlerCountriesAndStates(prevState);
+  }
 
   render() {
-    const { User: { login } } = this.props.useRedux;
-    const { loading } = login;
-    const { form: { name, email, phone, country, state, birthday, password } } = this.state
+    const {
+      User: { register },
+      General: { countries, states },
+    } = this.props.useRedux;
 
-    const signUpForm = {
-      name: {
-        value: name,
-        onChangeText: (value) => this.formChangeField('name', value),
-        placeholder: 'Nome',
-        autoCompleteType: 'name',
-        placeholderTextColor: "#FFF"
-      },
-      email: {
-        value: email,
-        onChangeText: (value) => this.formChangeField('email', value),
-        placeholder: 'E-mail',
-        autoCompleteType: 'email',
-        placeholderTextColor: "#FFF"
-      },
-      phone: {
-        value: phone,
-        onChangeText: (value) => this.formChangeField('phone', value),
-        placeholder: 'Telefone',
-        autoCompleteType: 'tel',
-        placeholderTextColor: "#FFF"
-      },
-      country: {
-        value: country,
-        onChangeText: (value) => this.formChangeField('region', value),
-        placeholder: 'País',
-        placeholderTextColor: "#FFF"
-      },
-      state: {
-        value: state,
-        onChangeText: (value) => this.formChangeField('region', value),
-        placeholder: 'Estado',
-        placeholderTextColor: "#FFF"
-      },
-      birthday: {
-        value: birthday,
-        onChangeText: (value) => this.formChangeField('birthday', value),
-        placeholder: 'Data de Nascimento',
-        placeholderTextColor: "#FFF"
-      },
-      password: {
-        value: password,
-        onChangeText: (value) => this.formChangeField('password', value),
-        secureTextEntry: true,
-        placeholder: 'Password',
-        placeholderTextColor: "#FFF"
-      },
-    }
+    const { loading: registerLoading } = register;
+    const { loading: statesLoading, data: statesData } = states;
+    const { loading: countriesLoading, data: countriesData } = countries;
 
     return (
-      <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', paddingHorizontal: 40 }}>
-
-        <TouchableOpacity style={{ marginHorizontal: 8, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
-          <Icon size={60} color={'rgba(255, 255, 255, .4)'} icon="user-circle" />
-          <StyledText>Carregar Foto</StyledText>
-        </TouchableOpacity>
-
-        <StyledBox>
-          <StyledField>
-            <Input {...signUpForm.name} />
-          </StyledField>
-          <StyledField>
-            <Input {...signUpForm.email} />
-          </StyledField>
-          <StyledField>
-            <Input {...signUpForm.phone} />
-          </StyledField>
-          <StyledField>
-            <Input half {...signUpForm.country} />
-            <Input half {...signUpForm.state} />
-          </StyledField>
-          <StyledField>
-            <Input {...signUpForm.birthday} />
-          </StyledField>
-          <StyledField>
-            <Input {...signUpForm.password} />
-          </StyledField>
-
-          <View style={{ width: '50%', alignSelf: 'center', marginVertical: 60 }}>
-            <Button loading={loading} onPress={this.props.useDispatch.login} color="secondary">
-              Acessar
-            </Button>
-          </View>
-        </StyledBox>
-      </View>
-    )
+      <StyledView>
+        <SignUpForm
+          statesData={statesData}
+          statesLoading={statesLoading}
+          countriesData={countriesData}
+          countriesLoading={countriesLoading}
+          registerLoading={registerLoading}
+          formChangeField={this.formChangeField}
+          dispatchRegister={this.props.useDispatch.register}
+        />
+      </StyledView>
+    );
   }
+
+  private handlerCountriesAndStates = (prevState) => {
+    if (prevState.form.country != this.state.form.country)
+      this.props.useDispatch.getStates({ country: this.state.form.country });
+  };
+
+  private formChangeField = (field, value) =>
+    this.setState({ form: { ...this.state.form, [field]: value } });
 }
 
-function mapStateToProps({ User }: ReduxStateType) {
+function mapStateToProps({ User, General }: ReduxStateType) {
   return {
     useRedux: {
-      User
-    }
+      User,
+      General,
+    },
   };
 }
 
 function mapDispatchToProps(dispatch) {
   return {
     useDispatch: {
-      login: _ => dispatch(ReduxActions.login(_)),
-    }
+      register: (_) => dispatch(ReduxActions.register(_)),
+      getStates: (_) => dispatch(ReduxActions.getStates(_)),
+      getCountries: (_) => dispatch(ReduxActions.getCountries(_)),
+    },
   };
 }
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(SignUp);
+export default connect(mapStateToProps, mapDispatchToProps)(SignUp);

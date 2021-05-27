@@ -1,17 +1,34 @@
-
+import React from 'react';
+import { Button, Icon } from '@Components';
 import styled from 'styled-components/native';
 import { View, TextInput, Text } from 'react-native';
+import { TouchableOpacity } from 'react-native-gesture-handler';
+
+export const Container = styled(View)`
+  flex: 1;
+  align-items: center;
+  justify-content: flex-start;
+  margin: 0 40px;
+`;
+
+export const TimerContainer = styled(View)`
+  flex: 1;
+  padding-top: 60px;
+  padding-bottom: 40px;
+  align-items: center;
+  justify-content: space-around;
+`;
 
 export const StyledTextInput = styled(TextInput)`
   height: 80px;
   width: 100%;
   padding: 8px;
-  color: #FFF;
+  color: #fff;
   border: none;
   line-height: 20px;
   border-radius: 6px;
   padding: 30px 15px;
-  background-color: rgba(255, 255, 255, .2);
+  background-color: rgba(255, 255, 255, 0.2);
   font-family: ${({ theme }) => theme.fonts.AdobeClean.regular};
 `;
 
@@ -57,9 +74,9 @@ export const StyledText2 = styled(Text)`
 
 export const StyledText3 = styled(Text)`
   font-size: 25px;
-  margin-bottom: -8px;
   font-weight: bold;
   text-align: center;
+  margin-bottom: -4px;
   color: ${({ theme }) => theme.color.white};
   font-family: ${({ theme }) => theme.fonts.AdobeClean.bold};
 `;
@@ -71,6 +88,7 @@ export const StyledText4 = styled(Text)`
 `;
 
 export const StyledText5 = styled(Text)`
+  line-height: 18px;
   color: ${({ theme }) => theme.color.white};
   font-family: ${({ theme }) => theme.fonts.AdobeClean.regular};
 `;
@@ -83,6 +101,7 @@ export const StyledText6 = styled(Text)`
 
 export const StyledText7 = styled(Text)`
   font-size: 18px;
+  line-height: 20px;
   font-weight: bold;
   color: ${({ theme }) => theme.color.white};
   font-family: ${({ theme }) => theme.fonts.AdobeClean.bold};
@@ -90,6 +109,7 @@ export const StyledText7 = styled(Text)`
 
 export const StyledText8 = styled(Text)`
   font-size: 18px;
+  line-height: 20px;
   font-weight: bold;
   color: ${({ theme }) => theme.color.primary};
   font-family: ${({ theme }) => theme.fonts.AdobeClean.bold};
@@ -146,6 +166,7 @@ export const StyledText15 = styled(Text)`
 
 export const StyledText16 = styled(Text)`
   font-size: 16px;
+  line-height: 24px;
   font-weight: bold;
   color: ${({ theme }) => theme.color.white};
   font-family: ${({ theme }) => theme.fonts.AdobeClean.bold};
@@ -153,6 +174,7 @@ export const StyledText16 = styled(Text)`
 
 export const StyledText17 = styled(Text)`
   font-size: 16px;
+  line-height: 20px;
   color: ${({ theme }) => theme.color.white};
   font-family: ${({ theme }) => theme.fonts.AdobeClean.regular};
 `;
@@ -201,3 +223,56 @@ export const StyledText23 = styled(Text)`
   color: ${({ theme }) => theme.color.white};
   font-family: ${({ theme }) => theme.fonts.AdobeClean.bold};
 `;
+
+export const ColorPick = styled(TouchableOpacity)<any>`
+  width: 25px;
+  height: 25px;
+  margin: 0 6px;
+  border-width: 2px;
+  border-radius: 25px;
+  background-color: ${({ color }) => (color ? color : '#FFF')};
+  border-color: ${({ active, theme }) => (active ? theme.color.black : '#FFF')};
+`;
+
+export const FormContainer = styled(View)`
+  flex: 1;
+  margin: 0 40px;
+  align-items: center;
+  justify-content: flex-start;
+`;
+
+export const FormHeader = styled(View)`
+  flex-direction: row;
+  padding: 0 15px;
+`;
+
+export const Footer = styled(View)`
+  height: 230px;
+  bottom: -62px;
+  right: 0px;
+  left: 0;
+`;
+
+export const ContainerButtons = styled(View)<any>`
+  width: 100%;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-bottom: ${({ marginBottom }) => (marginBottom ? marginBottom : 20)}px;
+`;
+
+export const Divider = (props) => (
+  <View style={{ width: '100%', height: 42, bottom: -62, marginTop: -62 }} />
+);
+
+export const CustomPlanTag = (props) => (
+  <View
+    style={{
+      width: '100%',
+      marginBottom: 12,
+      flexDirection: 'row',
+      alignItems: 'center',
+    }}>
+    <StyledText>Custom Plan</StyledText>
+    <Icon size={12} icon="info" color={'#FFF'} style={{ marginLeft: 4 }} />
+  </View>
+);

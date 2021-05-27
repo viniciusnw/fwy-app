@@ -1,5 +1,6 @@
 import { GeneralState } from './state'
 
+import ws from './ws.reducer'
 import countries from './countries.reducer'
 import states from './states.reducer'
 
@@ -13,6 +14,7 @@ export default function reducer(
   switch (actionName) {
     case countries.actionName: return countries.reducer(state, action)
     case states.actionName: return states.reducer(state, action)
+    case ws.actionName: return ws.reducer(state, action)
     default: return state
   }
 }

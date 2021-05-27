@@ -2,80 +2,50 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { StackScreenProps } from '@react-navigation/stack';
 
+import { StyledText } from './login.style';
 import { Button, Icon, Logo, Input } from '@Components';
 import { View, Text, TouchableOpacity } from 'react-native';
-import { StyledBox, StyledField, StyledText } from './login.style'
 import { UnloogedStackParamList, PagePropsType } from '@Navigation';
 import { ReduxActions, ReduxPropsType, ReduxStateType } from '@Redux/Fasting';
 
+import LoginForm from './components/login-form.component';
 
 type RoutePropsType = StackScreenProps<UnloogedStackParamList, 'Login'>;
-class Login extends React.Component<RoutePropsType & ReduxPropsType & PagePropsType, any> {
+class Login extends React.Component<
+  RoutePropsType & ReduxPropsType & PagePropsType,
+  any
+> {
+  static setPageConfigs = {
+    pageConfig: { backgroundImage: 'tertiary' },
+  };
 
   constructor(props) {
-    super(props)
-    this.props.setPageConfigs({
-      pageConfig: { backgroundImage: 'tertiary' },
-    });
-
-    this.state = {
-      form: {
-        email: 'viniciusnw@hotmail.com.br',
-        password: '123456',
-      }
-    }
-  }
-  
-  componentDidUpdate() {
-    console.log("Login=>componentDidUpdate: ", this.props)
+    super(props);
   }
 
   goSignUp = () => {
     const { navigation } = this.props;
     navigation.navigate('SignUp');
-  }
-
-  private formChangeField = (field, value) => this.setState({ form: { ...this.state.form, [field]: value } })
+  };
 
   render() {
-    const { User: { login } } = this.props.useRedux
+    const {
+      User: { login },
+    } = this.props.useRedux;
     const { loading } = login;
-    const { form: { email, password } } = this.state
-
-    const loginForm = {
-      email: {
-        value: email,
-        placeholder: 'E-mail',
-        onChangeText: (value) => this.formChangeField('email', value),
-        autoCompleteType: 'email',
-        placeholderTextColor: "#FFF"
-      },
-      password: {
-        value: password,
-        placeholder: 'Senha',
-        secureTextEntry: true,
-        onChangeText: (value) => this.formChangeField('password', value),
-        autoCompleteType: 'password',
-        placeholderTextColor: "#FFF"
-      },
-    }
 
     return (
-      <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', paddingHorizontal: 40 }}>
-        <StyledBox>
-          <StyledField>
-            <Input {...loginForm.email} />
-          </StyledField>
-          <StyledField>
-            <Input {...loginForm.password} />
-          </StyledField>
-
-          <View style={{ width: '50%', alignSelf: 'center', marginVertical: 60 }}>
-            <Button loading={loading} color="secondary" onPress={() => this.props.useDispatch.login(this.state.form)}>
-              Login
-            </Button>
-          </View>
-        </StyledBox>
+      <View
+        style={{
+          flex: 1,
+          alignItems: 'center',
+          justifyContent: 'center',
+          paddingHorizontal: 40,
+        }}>
+        <LoginForm
+          loginLoading={loading}
+          dispatchLogin={this.props.useDispatch.login}
+        />
 
         {/* Social Login */}
         {/* <View style={{ flexDirection: 'row' }}>
@@ -92,35 +62,32 @@ class Login extends React.Component<RoutePropsType & ReduxPropsType & PagePropsT
           </TouchableOpacity>
         </View> */}
 
-        <TouchableOpacity style={{ marginTop: 16, marginBottom: 60 }} onPress={this.goSignUp}>
-          <StyledText>
-            Cadastre-se
-          </StyledText>
+        <TouchableOpacity
+          style={{ marginTop: 16, marginBottom: 60 }}
+          onPress={this.goSignUp}>
+          <StyledText>Cadastre-se</StyledText>
         </TouchableOpacity>
 
         <Logo width={80} height={40} color={'white'} />
       </View>
-    )
+    );
   }
 }
 
 function mapStateToProps({ User }: ReduxStateType) {
   return {
     useRedux: {
-      User
-    }
+      User,
+    },
   };
 }
 
 function mapDispatchToProps(dispatch) {
   return {
     useDispatch: {
-      login: _ => dispatch(ReduxActions.login(_)),
-    }
+      login: (_) => dispatch(ReduxActions.login(_)),
+    },
   };
 }
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Login);
+export default connect(mapStateToProps, mapDispatchToProps)(Login);

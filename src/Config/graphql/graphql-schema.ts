@@ -4,8 +4,65 @@
 // This file was automatically generated and should not be edited.
 
 // ====================================================
+// GraphQL query operation: countriesAndStates
+// ====================================================
+
+export interface countriesAndStates {
+  countriesAndStates: string[];
+}
+
+export interface countriesAndStatesVariables {
+  country?: string | null;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL mutation operation: createFasting
+// ====================================================
+
+export interface createFasting {
+  createFasting: string;
+}
+
+export interface createFastingVariables {
+  fasting: FastingInput;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL mutation operation: createPreset
+// ====================================================
+
+export interface createPreset {
+  createPreset: boolean;
+}
+
+export interface createPresetVariables {
+  preset: PresetInput;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
 // GraphQL mutation operation: customerLogin
 // ====================================================
+
+export interface customerLogin_customerLogin_avatar {
+  __typename: "Avatar";
+  type: string;
+  data: string;
+}
 
 export interface customerLogin_customerLogin {
   __typename: "CustomerLogin";
@@ -13,13 +70,13 @@ export interface customerLogin_customerLogin {
   name: string;
   email: string;
   phone: string;
-  birthday: string;
+  birthday: any;
   gender: string | null;
   weight: number | null;
   height: number | null;
   country: string;
   state: string;
-  avatar: string | null;
+  avatar: customerLogin_customerLogin_avatar | null;
   token: string;
   expirationTime: number;
   role: string;
@@ -40,60 +97,14 @@ export interface customerLoginVariables {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
-// GraphQL query operation: countriesAndStates
-// ====================================================
-
-export interface countriesAndStates {
-  countriesAndStates: string[];
-}
-
-export interface countriesAndStatesVariables {
-  country?: string | null;
-}
-
-/* tslint:disable */
-/* eslint-disable */
-// @generated
-// This file was automatically generated and should not be edited.
-
-// ====================================================
-// GraphQL mutation operation: updateCustomer
-// ====================================================
-
-export interface updateCustomer_updateCustomer {
-  __typename: "CustomerUpdate";
-  _id: string;
-  name: string;
-  email: string;
-  phone: string;
-  birthday: string;
-  gender: string | null;
-  weight: number | null;
-  height: number | null;
-  country: string;
-  state: string;
-  avatar: string | null;
-  token: string;
-  expirationTime: number;
-  role: string;
-}
-
-export interface updateCustomer {
-  updateCustomer: updateCustomer_updateCustomer;
-}
-
-export interface updateCustomerVariables {
-  customer: CustomerUpdateInput;
-}
-
-/* tslint:disable */
-/* eslint-disable */
-// @generated
-// This file was automatically generated and should not be edited.
-
-// ====================================================
 // GraphQL mutation operation: customerRegister
 // ====================================================
+
+export interface customerRegister_customerRegister_avatar {
+  __typename: "Avatar";
+  type: string;
+  data: string;
+}
 
 export interface customerRegister_customerRegister {
   __typename: "CustomerRegister";
@@ -101,13 +112,13 @@ export interface customerRegister_customerRegister {
   name: string;
   email: string;
   phone: string;
-  birthday: string;
+  birthday: any;
   gender: string | null;
   weight: number | null;
   height: number | null;
   country: string;
   state: string;
-  avatar: string | null;
+  avatar: customerRegister_customerRegister_avatar | null;
   token: string;
   expirationTime: number;
   role: string;
@@ -126,36 +137,233 @@ export interface customerRegisterVariables {
 // @generated
 // This file was automatically generated and should not be edited.
 
+// ====================================================
+// GraphQL mutation operation: customerUpdate
+// ====================================================
+
+export interface customerUpdate_customerUpdate_avatar {
+  __typename: "Avatar";
+  type: string;
+  data: string;
+}
+
+export interface customerUpdate_customerUpdate {
+  __typename: "CustomerUpdate";
+  _id: string;
+  name: string;
+  email: string;
+  phone: string;
+  birthday: any;
+  gender: string | null;
+  weight: number | null;
+  height: number | null;
+  country: string;
+  state: string;
+  avatar: customerUpdate_customerUpdate_avatar | null;
+  token: string;
+  expirationTime: number;
+  role: string;
+}
+
+export interface customerUpdate {
+  customerUpdate: customerUpdate_customerUpdate;
+}
+
+export interface customerUpdateVariables {
+  customer: CustomerUpdateInput;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL mutation operation: endFasting
+// ====================================================
+
+export interface endFasting {
+  endFasting: boolean;
+}
+
+export interface endFastingVariables {
+  fastingId: string;
+  save: boolean;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL query operation: getChatMessages
+// ====================================================
+
+export interface getChatMessages_getChatMessages_messages {
+  __typename: "Message";
+  _id: string | null;
+  text: string;
+  sender: string;
+  date: any;
+}
+
+export interface getChatMessages_getChatMessages_nextPagination {
+  __typename: "NextPagination";
+  pageNumber: number;
+  nPerPage: number;
+  nextPageNumber: number | null;
+}
+
+export interface getChatMessages_getChatMessages {
+  __typename: "GetChatMessages";
+  messages: getChatMessages_getChatMessages_messages[] | null;
+  nextPagination: getChatMessages_getChatMessages_nextPagination;
+}
+
+export interface getChatMessages {
+  getChatMessages: getChatMessages_getChatMessages;
+}
+
+export interface getChatMessagesVariables {
+  pagination: Pagination;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL query operation: getFasts
+// ====================================================
+
+export interface getFasts_getFasts {
+  __typename: "Fasting";
+  _id: string;
+  name: string;
+  startDate: any;
+  endDate: any;
+  color: string;
+  finished: any | null;
+}
+
+export interface getFasts {
+  getFasts: getFasts_getFasts[];
+}
+
+export interface getFastsVariables {
+  actives?: boolean | null;
+  fastingId?: string | null;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL query operation: getPresets
+// ====================================================
+
+export interface getPresets_getPresets {
+  __typename: "Preset";
+  _id: string;
+  name: string;
+  hours: number;
+  days: number;
+  color: string;
+  index: number;
+}
+
+export interface getPresets {
+  getPresets: getPresets_getPresets[];
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL mutation operation: sendChatMessage
+// ====================================================
+
+export interface sendChatMessage {
+  sendChatMessage: boolean;
+}
+
+export interface sendChatMessageVariables {
+  customerId?: string | null;
+  text: string;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
 //==============================================================
 // START Enums and Input Objects
 //==============================================================
+
+export interface AvatarInput {
+  type: string;
+  data: string;
+}
+
+export interface AvatarUpdate {
+  type: string;
+  data: string;
+}
 
 export interface CustomerRegisterInput {
   name: string;
   email: string;
   phone: string;
-  birthday: string;
+  birthday: any;
   country: string;
   state: string;
   password: string;
   gender?: string | null;
   weight?: number | null;
   height?: number | null;
-  avatar?: string | null;
+  avatar?: AvatarInput | null;
 }
 
 export interface CustomerUpdateInput {
   name?: string | null;
   email?: string | null;
   phone?: string | null;
-  birthday?: string | null;
+  birthday?: any | null;
   gender?: string | null;
   country?: string | null;
   state?: string | null;
   weight?: number | null;
   height?: number | null;
   password?: string | null;
-  avatar?: string | null;
+  avatar?: AvatarUpdate | null;
+}
+
+export interface FastingInput {
+  name: string;
+  startDate: any;
+  endDate: any;
+  color: string;
+  finished?: any | null;
+}
+
+export interface Pagination {
+  pageNumber: number;
+  nPerPage: number;
+}
+
+export interface PresetInput {
+  name: string;
+  hours: number;
+  days: number;
+  color: string;
+  index: number;
 }
 
 //==============================================================

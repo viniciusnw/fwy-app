@@ -143,7 +143,7 @@ function mapStateToProps({ }: ReduxStateType) {
 function mapDispatchToProps(dispatch) {
   return {
     useDispatch: {
-      logout: _ => dispatch(Redux.actions.logout(_)),
+      logout: _ => dispatch(ReduxActions.logout()),
     }
   };
 }

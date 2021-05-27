@@ -1,4 +1,6 @@
+import ReconnectingWebSocket from 'reconnecting-websocket';
 export class GeneralReduxType {
+  ws: ReconnectingWebSocket | null = null;
   countries = {
     loading: false,
     success: false,
