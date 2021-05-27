@@ -40,14 +40,14 @@ class ChatConnectProvider extends React.Component<ReduxPropsType, any> {
 
     this.WS.onopen = (e) => {
       this.props.useDispatch.saveWs(this.WS);
-      console.log('WS:onOpen: ', e);
+      // console.log('WS:onOpen: ', e);
     };
 
     this.WS.onmessage = (e) => {
       this.handlerAddNewMessage(JSON.parse(e.data));
     };
 
-    this.WS.onclose = (e) => console.log('WS:onClose: ', e, this.WS);
+    // this.WS.onclose = (e) => console.log('WS:onClose: ', e, this.WS);
   }
 
   private handlerAddNewMessage(dataMessage) {

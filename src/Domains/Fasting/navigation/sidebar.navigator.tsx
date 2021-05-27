@@ -34,7 +34,7 @@ export default class Sidebar extends React.Component<DrawerContentComponentProps
         },
       ]
     }
-    console.log('Sidebar=>constructor: ', this.props)
+    // console.log('Sidebar=>constructor: ', this.props)
   }
 
   render() {
