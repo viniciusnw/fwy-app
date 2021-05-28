@@ -67,24 +67,24 @@ const SignUpForm: React.FC<any> = ({
   });
 
   const formik = useFormik({
-    initialValues: {
-      [fields.name]: 'Vinicius Inacio',
-      [fields.email]: 'viniciusnw@hotmail.com.br',
-      [fields.phone]: '(31) 98406-5335',
-      [fields.birthday]: '1994-03-07T10:20:55.000Z',
-      [fields.country]: 'Brazil',
-      [fields.state]: 'Sao Paulo',
-      [fields.password]: '123456',
-    },
     // initialValues: {
-    //   [fields.name]: '',
-    //   [fields.email]: '',
-    //   [fields.phone]: '',
-    //   [fields.birthday]: '',
-    //   [fields.country]: '',
-    //   [fields.state]: '',
-    //   [fields.password]: '',
+    //   [fields.name]: 'Vinicius Inacio',
+    //   [fields.email]: 'viniciusnw@hotmail.com.br',
+    //   [fields.phone]: '(31) 98406-5335',
+    //   [fields.birthday]: '1994-03-07T10:20:55.000Z',
+    //   [fields.country]: 'Brazil',
+    //   [fields.state]: 'Sao Paulo',
+    //   [fields.password]: '123456',
     // },
+    initialValues: {
+      [fields.name]: '',
+      [fields.email]: '',
+      [fields.phone]: '',
+      [fields.birthday]: '',
+      [fields.country]: '',
+      [fields.state]: '',
+      [fields.password]: '',
+    },
     validationSchema: FormRegisterSchema,
     onSubmit: (customer: any) => {
       if (dataUpload?.base64 && dataUpload?.type) {
