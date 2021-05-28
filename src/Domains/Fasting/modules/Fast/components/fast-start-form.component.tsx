@@ -10,6 +10,7 @@ import {
   ColorPick,
   StyledText2,
   StyledText3,
+  StyledField,
 } from './../fast.style';
 
 export const fields = {
@@ -29,6 +30,7 @@ const FastStartForm: React.FC<any> = ({
   handleBlur,
   values,
   errors,
+  touched,
 }) => {
   const { weekDays: days, hours, fastColors } = FASTING;
 
@@ -38,6 +40,7 @@ const FastStartForm: React.FC<any> = ({
       placeholder: 'Fasting name',
       placeholderTextColor: '#FFF',
       onBlur: handleBlur(fields.name),
+      error: touched.name && errors.name ? errors.name : null,
       onChangeText: (value) => setFieldValue(fields.name, value),
     },
   };
@@ -54,9 +57,9 @@ const FastStartForm: React.FC<any> = ({
   return (
     <>
       {/* === */}
-      <View style={{ paddingBottom: 15, maxHeight: 48 }}>
+      <StyledField>
         <Input {...fastForm.name} />
-      </View>
+      </StyledField>
 
       {/* === */}
       <View style={{ padding: 15, width: '100%' }}>

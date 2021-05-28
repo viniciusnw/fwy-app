@@ -7,6 +7,7 @@ import Config from 'react-native-config';
 // import { createHttpLink, ApolloClient, InMemoryCache } from '@apollo/client';
 
 import { onError } from 'apollo-link-error';
+import Snackbar from 'react-native-snackbar';
 import { ApolloClient } from 'apollo-client';
 import { createHttpLink } from 'apollo-link-http';
 import { InMemoryCache } from 'apollo-cache-inmemory';
@@ -18,7 +19,23 @@ export function configureApolloClient(APP_NAME: string) {
 
   const httpLink = createHttpLink({ uri: API_URL });
 
-  const errorLink = onError((Error) => console.warn("[ApolloClient][Error]: ", Error));
+  const errorLink = onError((Error) => {
+    const { graphQLErrors } = Error;
+
+    graphQLErrors?.map(erro => {
+      Snackbar.show({
+        text: erro.message,
+        duration: Snackbar.LENGTH_SHORT,
+        action: {
+          text: 'Close',
+          textColor: 'red',
+          onPress: () => null,
+        },
+      });
+    })
+
+    console.warn("[ApolloClient][Error]: ", Error)
+  });
 
   const authLink = new ApolloLink((operation: Operation, forward: NextLink) => {
     const { store } = Store[APP_NAME];

@@ -14,9 +14,8 @@ class FastTimer extends React.PureComponent<
   }
 
   render() {
-    const { differenceInHours } = this.props;
     if (!this.DifferenceInSeconds)
-      return <StyledText10>{differenceInHours}:00:00</StyledText10>;
+      return <StyledText10>{this.InitialHours}:00:00</StyledText10>;
     else
       return (
         <>
@@ -57,6 +56,12 @@ class FastTimer extends React.PureComponent<
     const differenceInSeconds = differenceInTime / 1000;
 
     return parseInt(differenceInSeconds.toFixed());
+  }
+
+  private get InitialHours() {
+    const { differenceInHours } = this.props;
+    if (differenceInHours >= 10) return differenceInHours;
+    else return `0${differenceInHours}`;
   }
 }
 

@@ -242,8 +242,9 @@ export const FormContainer = styled(View)`
 `;
 
 export const FormHeader = styled(View)`
-  flex-direction: row;
   padding: 0 15px;
+  flex-direction: row;
+  justify-content: space-around;
 `;
 
 export const Footer = styled(View)`
@@ -260,6 +261,14 @@ export const ContainerButtons = styled(View)<any>`
   margin-bottom: ${({ marginBottom }) => (marginBottom ? marginBottom : 20)}px;
 `;
 
+export const StyledField = styled(View)`
+  max-height: 48px;
+  flex-direction: row;
+  padding-bottom: 15px;
+  margin-bottom: ${({ theme }) => theme.spacing.regular};
+`;
+
+
 export const Divider = (props) => (
   <View style={{ width: '100%', height: 42, bottom: -62, marginTop: -62 }} />
 );
@@ -267,7 +276,7 @@ export const Divider = (props) => (
 export const CustomPlanTag = (props) => (
   <View
     style={{
-      width: '100%',
+      flex: 1,
       marginBottom: 12,
       flexDirection: 'row',
       alignItems: 'center',
