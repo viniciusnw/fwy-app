@@ -91,30 +91,40 @@ class FastStart extends React.Component<
 
     const fromPlan = this.PlanId;
 
+    const saveOrUpdate = this.SaveOrUpdatePreset;
+
     return (
       <Formik
         enableReinitialize
         validationSchema={FormFastSchema}
         initialValues={FormInitialValues}
         onSubmit={this.handlerSubmitForm}>
-        {({ setFieldValue, handleBlur, handleSubmit, values, errors }) => (
+        {({
+          setFieldValue,
+          handleBlur,
+          handleSubmit,
+          values,
+          errors,
+          touched,
+        }) => (
           <View style={{ flex: 1 }}>
             <FormContainer>
               {/* === */}
               <FormHeader>
-                {(fromPlan && <CustomPlanTag />) || (
-                  <View style={{ marginBottom: 12, width: '100%' }} />
+                {(!fromPlan && <CustomPlanTag />) || (
+                  <View style={{ marginBottom: 12, flex: 1 }} />
                 )}
 
                 {fromPreset && (
                   <TouchableOpacity style={{ marginBottom: 12 }}>
-                    <StyledText>Save</StyledText>
+                    <StyledText>{saveOrUpdate}</StyledText>
                   </TouchableOpacity>
                 )}
               </FormHeader>
 
               {/* === */}
               <FastStartForm
+                touched={touched}
                 errors={errors}
                 values={values}
                 handleBlur={handleBlur}
@@ -195,7 +205,13 @@ class FastStart extends React.Component<
       </Formik>
     );
   }
-  
+
+  private get SaveOrUpdatePreset() {
+    const fromPreset = this.PresetId;
+    if (typeof fromPreset == 'string') return 'Update';
+    else return 'Save';
+  }
+
   private get Preset() {
     const {
       route: { params },

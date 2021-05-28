@@ -171,7 +171,7 @@ class Home extends React.Component<
 
   private Render_EmptyFast = (index) => {
     return (
-      <AddFastItem key={index} onPress={() => this.goFastStart(index)}>
+      <AddFastItem key={index} onPress={() => this.goFastStart(index + 1)}>
         <Icon size={50} color={'#FFF'} icon="plus" />
       </AddFastItem>
     );
@@ -179,7 +179,7 @@ class Home extends React.Component<
 
   private Render_ItemFast = (index) => {
     const { presets } = this.props.useRedux.Fastings;
-    const preset = presets.find((f) => f.index == index);
+    const preset = presets.find((f) => f.index - 1 == index);
     if (preset)
       return (
         <FastItem key={index} onPress={() => this.goFastStart(preset._id)}>
@@ -203,7 +203,7 @@ class Home extends React.Component<
 
   private getDuration(preset) {
     if (!preset) return;
-    const differenceInHours = (preset.days * 24) + preset.hours
+    const differenceInHours = preset.days * 24 + preset.hours;
     return differenceInHours.toFixed();
   }
 }

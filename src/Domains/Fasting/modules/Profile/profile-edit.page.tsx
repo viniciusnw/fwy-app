@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { StackScreenProps } from '@react-navigation/stack';
 
-import { Icon, Button, Input } from '@Components';
+import { Icon, Button, Input, InputDate } from '@Components';
 import { LoggedStackParamList, PagePropsType } from '@Navigation';
 import { View, ScrollView, TouchableOpacity, Image } from 'react-native';
 import { ReduxActions, ReduxPropsType, ReduxStateType } from '@Redux/Fasting';
@@ -121,7 +121,7 @@ class ProfileEdit extends React.Component<
           </StyledField>
 
           <StyledField>
-            <Input {...profileEdit.birthday} />
+            <InputDate {...profileEdit.birthday} />
           </StyledField>
 
           <StyledField>

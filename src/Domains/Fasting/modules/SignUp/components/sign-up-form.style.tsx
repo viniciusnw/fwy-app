@@ -1,6 +1,6 @@
 
 import styled from 'styled-components/native';
-import { View, Text } from 'react-native';
+import { View, Text, ScrollView } from 'react-native';
 
 export const StyledText = styled(Text)`
   font-size: 18px;
@@ -23,7 +23,7 @@ export const StyledSelect = styled(View)`
   margin-bottom: ${({ theme }) => theme.spacing.regular};
 `;
 
-export const StyledBox = styled(View)`
+export const StyledBox = styled(ScrollView)`
   width: 100%;
   margin-top: ${({ theme }) => theme.spacing.large};
 `;
