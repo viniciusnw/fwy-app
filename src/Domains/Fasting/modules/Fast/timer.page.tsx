@@ -272,7 +272,7 @@ class Timer extends React.PureComponent<
 
   private get EndDate() {
     const { fasting } = this.props.useRedux.Fastings;
-    if (!fasting) return '';
+    if (!fasting) return;
     const time = fasting.endDate.toTimeString().split('G')[0].split(':');
     const date = fasting.endDate.toDateString().split(' ');
 

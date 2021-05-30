@@ -264,6 +264,7 @@ export interface getFasts_getFasts {
   endDate: any;
   color: string;
   finished: any | null;
+  initialTotalHours: number;
 }
 
 export interface getFasts {

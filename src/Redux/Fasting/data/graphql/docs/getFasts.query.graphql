@@ -6,5 +6,6 @@ query getFasts($actives: Boolean, $fastingId: String) {
     endDate
     color
     finished
+    initialTotalHours
   }
 }

@@ -52,8 +52,9 @@ class FastTimer extends React.PureComponent<
 
     if (!fasting) return;
     if (!fasting.endDate) return;
-    const differenceInTime = fasting.endDate.getTime() - new Date().getTime();
-    const differenceInSeconds = differenceInTime / 1000;
+    const differenceInTime = fasting.endDate.getTime() - fasting.startDate.getTime();
+    const timeRemaining = (fasting.initialTotalHours * 3600) - differenceInTime / 1000;
+    const differenceInSeconds = (fasting.initialTotalHours * 3600) - timeRemaining
 
     return parseInt(differenceInSeconds.toFixed());
   }

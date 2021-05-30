@@ -1,27 +1,29 @@
 export interface Fasting {
   _id?: string;
-  name: string,
-  startDate: Date,
-  endDate: Date,
-  color: string,
-  finished: null | Date
+  name: string;
+  color: string;
+  endDate: Date;
+  startDate: Date;
+  finished: null | Date;
+  initialTotalHours: number;
+
 }
 
 interface Preset {
   _id: string;
-  name: string,
-  days: number,
-  hours: number,
-  color: string,
-  index: number,
+  name: string;
+  days: number;
+  hours: number;
+  color: string;
+  index: number;
 }
 
 interface CreateFasting {
   loading: boolean;
   success: boolean;
-  error: boolean
-  data: string | null
-  errorMessage: any
+  error: boolean;
+  data: string | null;
+  errorMessage: any;
 }
 
 export class FastingsReduxType {
