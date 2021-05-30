@@ -179,6 +179,24 @@ export interface customerUpdateVariables {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
+// GraphQL mutation operation: editFasting
+// ====================================================
+
+export interface editFasting {
+  editFasting: boolean;
+}
+
+export interface editFastingVariables {
+  id: string;
+  fasting: FastingUpdateInput;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
 // GraphQL mutation operation: endFasting
 // ====================================================
 
@@ -350,6 +368,14 @@ export interface FastingInput {
   startDate: any;
   endDate: any;
   color: string;
+  finished?: any | null;
+}
+
+export interface FastingUpdateInput {
+  name?: string | null;
+  startDate?: any | null;
+  endDate?: any | null;
+  color?: string | null;
   finished?: any | null;
 }
 

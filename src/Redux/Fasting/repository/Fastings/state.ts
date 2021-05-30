@@ -26,8 +26,8 @@ interface CreateFasting {
 
 export class FastingsReduxType {
   presets: Array<Preset> = [];
-  fastings: Array<Fasting> = []
-  fasting: Fasting | null = null
+  fastings: Array<Fasting> = [];
+  fasting: Fasting | null = null;
   createFasting: CreateFasting = {
     loading: false,
     success: false,
@@ -54,6 +54,12 @@ export class FastingsReduxType {
     errorMessage: null,
   }
   endFasting = {
+    loading: false,
+    success: false,
+    error: false,
+    errorMessage: null,
+  }
+  editFasting = {
     loading: false,
     success: false,
     error: false,

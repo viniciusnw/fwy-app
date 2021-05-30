@@ -1,0 +1,3 @@
+mutation editFasting($id: String!, $fasting: FastingUpdateInput!) {
+    editFasting(id: $id, fasting: $fasting)
+}

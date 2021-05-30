@@ -8,6 +8,16 @@ import Config from 'react-native-config';
 import App from './Domains/App';
 import StoriesApp from './Stories/App';
 
+import { NativeModules, Platform } from 'react-native';
+
+const deviceLanguage =
+          Platform.OS === 'ios'
+            ? NativeModules.SettingsManager.settings.AppleLocale ||
+              NativeModules.SettingsManager.settings.AppleLanguages[0] // iOS 13
+            : NativeModules.I18nManager.localeIdentifier;
+
+console.log( "deviceLanguage: ", deviceLanguage); //en_US
+
 YellowBox.ignoreWarnings([
   'Warning: isMounted(...) is deprecated',
   'Module RCTImageLoader requires main queue setup since it overrides `init` but doesn\'t implement `requiresMainQueueSetup`. In a future release React Native will default to initializing all native modules on a background thread unless explicitly opted-out of.',

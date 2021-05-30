@@ -1,42 +1,45 @@
 export default {
-  actionName: 'LOGIN',
+  actionName: 'EDIT-FAST',
   reducer: (state, action) => {
     switch (action.type) {
-      case 'LOGIN_PENDING': {
+
+      case 'EDIT-FAST_PENDING': {
         return {
           ...state,
-          login: {
+          editFasting: {
             loading: true,
             success: false,
             error: false,
+            errorMessage: null,
           }
         };
       }
 
-      case 'LOGIN_FULFILLED': {
+      case 'EDIT-FAST_FULFILLED': {
         return {
           ...state,
-          login: {
+          editFasting: {
             loading: false,
             success: true,
             error: false,
+            errorMessage: null,
           },
-          errorMessage: null,
-          data: action.payload.response,
-          lastUser: action.payload.lastUser
+          fasting: {
+            ...state.fasting,
+            ...action.payload
+          },
         };
       }
 
-      case 'LOGIN_REJECTED': {
+      case 'EDIT-FAST_REJECTED': {
         return {
           ...state,
-          login: {
+          editFasting: {
             loading: false,
             success: false,
             error: true,
+            errorMessage: action.payload,
           },
-          data: null,
-          errorMessage: action.payload,
         };
       }
 

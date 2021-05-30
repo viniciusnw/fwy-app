@@ -1,5 +1,6 @@
 import General, { GeneralReduxType } from './repository/General';
 import User, { UserReduxType } from './repository/User';
+import { LastUserReduxType } from './repository/LastUser';
 import Chat, { ChatReduxType } from './repository/Chat';
 import Fastings, { FastingsReduxType } from './repository/Fastings';
 
@@ -20,10 +21,12 @@ class ReduxActionsType {
   addQueueChatMessage = Chat.actions.addQueueChatMessage
   completeQueueChatMessage = Chat.actions.completeQueueChatMessage
 
-  getFasting = Fastings.actions.getFasting
-  endFasting = Fastings.actions.endFasting
   getPresets = Fastings.actions.getPresets
   createPreset = Fastings.actions.createPreset
+  
+  getFasting = Fastings.actions.getFasting
+  endFasting = Fastings.actions.endFasting
+  editFasting = Fastings.actions.editFasting
   clearFasting = Fastings.actions.clearFasting
   createFasting = Fastings.actions.createFasting
   getActivesFastings  = Fastings.actions.getActives
@@ -31,6 +34,7 @@ class ReduxActionsType {
 export type ReduxStateType = {
   General: GeneralReduxType;
   User: UserReduxType;
+  LastUser: LastUserReduxType;
   Chat: ChatReduxType;
   Fastings: FastingsReduxType;
 }

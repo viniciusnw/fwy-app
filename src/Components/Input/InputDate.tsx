@@ -53,9 +53,12 @@ const InputDate: React.FC<any> = (props) => {
   const [visible, setVisible] = useState(false);
 
   const setStyledTextInputValue = () => {
+    // new Date().toLocaleDateString('en-US')
+    // new Date().toLocaleDateString('pt-BR')
     const StringLocaleDate = new Date(props.value).toLocaleDateString()
     setValue(StringLocaleDate)
   }
+
 
   useEffect(() => {
     if (props.value) setStyledTextInputValue()

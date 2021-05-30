@@ -1,13 +1,20 @@
 import { Container } from 'typedi';
 import { Mutate, Query } from '@Redux/Fasting/data/graphql'
 
-import { createFastingVariables, getFastsVariables, endFastingVariables, createPresetVariables } from '@Config/graphql'
+import { createFastingVariables, getFastsVariables, endFastingVariables, createPresetVariables, editFastingVariables } from '@Config/graphql'
 
 export default {
 
   clearFasting: () => {
     return {
       type: 'RESET-FAST',
+    };
+  },
+
+  editFasting: (params: editFastingVariables) => {
+    return {
+      type: 'EDIT-FAST',
+      payload: () => Container.get(Mutate).editFasting(params),
     };
   },
 

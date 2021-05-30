@@ -7,7 +7,7 @@ import { Button, Input } from '@Components';
 import { StyledBox, StyledField } from './login-form.style';
 
 
-const LoginForm: React.FC<any> = ({ loginLoading, dispatchLogin }) => {
+const LoginForm: React.FC<any> = ({ loginLoading, dispatchLogin, lastUser }) => {
 
   const fields = {
     email: "email",
@@ -23,8 +23,8 @@ const LoginForm: React.FC<any> = ({ loginLoading, dispatchLogin }) => {
     initialValues: {
       // [fields.email]: 'viniciusnw@hotmail.com',
       // [fields.password]: '123456',
-      [fields.email]: '',
-      [fields.password]: '',
+      [fields.email]: lastUser?.email,
+      [fields.password]: lastUser?.password,
     },
     validationSchema: FormLoginSchema,
     onSubmit: (login: any) => {

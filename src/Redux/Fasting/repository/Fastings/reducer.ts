@@ -2,6 +2,7 @@ import { FastingsState } from './state'
 
 import fastingGet from './get-fasting.reducer'
 import fastingEnd from './end-fasting.reducer'
+import fastingEdit from './edit-fasting.reducer'
 import fastingPresets from './get-presets.reducer'
 import fastingsActive from './get-actives.reducer'
 import fastingCreate from './create-fasting.reducer'
@@ -21,6 +22,7 @@ export default function reducer(
     case fastingPresets.actionName: return fastingPresets.reducer(state, action)
     
     case fastingEnd.actionName: return fastingEnd.reducer(state, action)
+    case fastingEdit.actionName: return fastingEdit.reducer(state, action)
 
     case fastingsActive.actionName: return fastingsActive.reducer(state, action)
     default: return state

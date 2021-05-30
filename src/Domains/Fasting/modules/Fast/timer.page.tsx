@@ -1,9 +1,10 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { StackScreenProps } from '@react-navigation/stack';
+import DateTimePickerModal from 'react-native-modal-datetime-picker';
 
 import { Button } from '@Components';
-import { View, TouchableOpacity } from 'react-native';
+import { View, TouchableOpacity, ActivityIndicator } from 'react-native';
 import { LoggedStackParamList, PagePropsType } from '@Navigation';
 import { ReduxActions, ReduxPropsType, ReduxStateType } from '@Redux/Fasting';
 
@@ -16,7 +17,7 @@ import {
   StyledText13,
   StyledText14,
   StyledText15,
-  ContainerButtons
+  ContainerButtons,
 } from './fast.style';
 
 type RoutePropsType = StackScreenProps<LoggedStackParamList, 'Timer'>;
@@ -35,6 +36,7 @@ class Timer extends React.PureComponent<
 
     this.state = {
       startFasting: false,
+      visibleDateTimePickerModal: false,
     };
   }
 
@@ -43,8 +45,24 @@ class Timer extends React.PureComponent<
   }
 
   componentDidUpdate(prevProps) {
+    // console.log('Timer=>componentDidUpdate', this.props.useRedux.Fastings.fasting);
     this.handlerCreateFasting(prevProps);
+    this.handlerEditStartDate(prevProps);
   }
+
+  private editStartDate = (date: Date) => {
+    this.setVisibleDateTimePickerModal(false);
+    const fastingId = this.FastingId;
+
+    if (fastingId) {
+      this.props.useDispatch.editFasting({
+        id: fastingId,
+        fasting: {
+          startDate: date,
+        },
+      });
+    }
+  };
 
   private handlerLoadFasting = () => {
     const {
@@ -54,7 +72,7 @@ class Timer extends React.PureComponent<
 
     this.setState({ startFasting: !!fastingIdFromModel });
     this.props.useDispatch.getFasting({
-      fastingId: fastingIdFromModel
+      fastingId: fastingIdFromModel,
     });
   };
 
@@ -114,9 +132,43 @@ class Timer extends React.PureComponent<
     });
   };
 
+  private handlerEditStartDate = (prevProps: ReduxPropsType) => {
+    const { reset } = this.props.navigation;
+
+    const {
+      editFasting: { loading: loadingEditFasting, success },
+    } = this.props.useRedux.Fastings;
+
+    const {
+      editFasting: { loading: prevLoadingEditFasting },
+    } = prevProps.useRedux.Fastings;
+
+    const {
+      params: { fastingId: fastingIdFromParam },
+    } = this.props.route;
+
+    if (success && prevLoadingEditFasting != loadingEditFasting) {
+      reset({
+        index: 2,
+        routes: [
+          { name: 'Home' },
+          {
+            name: 'Timer',
+            params: {
+              fastingId: fastingIdFromParam,
+            },
+          },
+        ],
+      });
+    }
+  };
+
   render() {
-    const { startFasting } = this.state;
+    const { startFasting, visibleDateTimePickerModal } = this.state;
     const { goBack } = this.props.navigation;
+    const {
+      editFasting: { loading: loadingEditFasting },
+    } = this.props.useRedux.Fastings;
 
     return (
       <Container>
@@ -153,10 +205,22 @@ class Timer extends React.PureComponent<
         ) : (
           <>
             <ContainerButtons marginBottom={80}>
-              <TouchableOpacity style={{ alignItems: 'center' }}>
-                <StyledText13>STARTED FASTING</StyledText13>
-                <StyledText14>{this.StartDate}</StyledText14>
-                <StyledText15>Edit Start.</StyledText15>
+              <TouchableOpacity
+                style={{ alignItems: 'center' }}
+                onPress={() => this.setVisibleDateTimePickerModal(true)}>
+                {loadingEditFasting ? (
+                  <View style={{ justifyContent: 'center', width: 100 }}>
+                    <StyledText13 />
+                    <ActivityIndicator size="small" color={'#FFF'} />
+                    <StyledText13 />
+                  </View>
+                ) : (
+                  <>
+                    <StyledText13>STARTED FASTING</StyledText13>
+                    <StyledText14>{this.StartDate}</StyledText14>
+                    <StyledText15>Edit Start.</StyledText15>
+                  </>
+                )}
               </TouchableOpacity>
 
               <View style={{ alignItems: 'center' }}>
@@ -170,9 +234,26 @@ class Timer extends React.PureComponent<
             </View>
           </>
         )}
+
+        {visibleDateTimePickerModal && (
+          <DateTimePickerModal
+            mode="datetime"
+            isVisible={true}
+            date={new Date()}
+            maximumDate={new Date()}
+            onConfirm={this.editStartDate}
+            onCancel={() => this.setVisibleDateTimePickerModal(false)}
+          />
+        )}
       </Container>
     );
   }
+
+  private setVisibleDateTimePickerModal = (visible: boolean) => {
+    this.setState({
+      visibleDateTimePickerModal: visible,
+    });
+  };
 
   private goToEndFast = () => {
     const { navigation } = this.props;
@@ -184,18 +265,30 @@ class Timer extends React.PureComponent<
     const { fasting } = this.props.useRedux.Fastings;
     if (!fasting) return;
     const time = fasting.startDate.toTimeString().split('G')[0].split(':');
-    const date = fasting.startDate.toDateString().split(' ')
+    const date = fasting.startDate.toDateString().split(' ');
 
     return `${date[0]} ${date[1]} ${date[2]}, ${time[0]}:${time[1]}`;
   }
 
   private get EndDate() {
     const { fasting } = this.props.useRedux.Fastings;
-    if (!fasting) return;
+    if (!fasting) return '';
     const time = fasting.endDate.toTimeString().split('G')[0].split(':');
-    const date = fasting.endDate.toDateString().split(' ')
+    const date = fasting.endDate.toDateString().split(' ');
 
     return `${date[0]} ${date[1]} ${date[2]}, ${time[0]}:${time[1]}`;
+  }
+
+  private get MaximumDateToStart(): string {
+    const { fasting } = this.props.useRedux.Fastings;
+    if (!fasting) return '';
+    return fasting.endDate.toISOString();
+  }
+
+  private get FastingId() {
+    const { fasting } = this.props.useRedux.Fastings;
+    if (!fasting) return false;
+    return fasting._id;
   }
 
   private get DifferenceInHours() {
@@ -227,6 +320,7 @@ function mapDispatchToProps(dispatch) {
   return {
     useDispatch: {
       getFasting: (_) => dispatch(ReduxActions.getFasting(_)),
+      editFasting: (_) => dispatch(ReduxActions.editFasting(_)),
       createFasting: (_) => dispatch(ReduxActions.createFasting(_)),
     },
   };

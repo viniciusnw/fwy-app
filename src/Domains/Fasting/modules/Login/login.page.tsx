@@ -31,6 +31,7 @@ class Login extends React.Component<
   render() {
     const {
       User: { login },
+      LastUser: { user: lastUser },
     } = this.props.useRedux;
     const { loading } = login;
 
@@ -43,6 +44,7 @@ class Login extends React.Component<
           paddingHorizontal: 40,
         }}>
         <LoginForm
+          lastUser={lastUser}
           loginLoading={loading}
           dispatchLogin={this.props.useDispatch.login}
         />
@@ -74,10 +76,11 @@ class Login extends React.Component<
   }
 }
 
-function mapStateToProps({ User }: ReduxStateType) {
+function mapStateToProps({ User, LastUser }: ReduxStateType) {
   return {
     useRedux: {
       User,
+      LastUser,
     },
   };
 }

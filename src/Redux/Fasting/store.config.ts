@@ -21,7 +21,7 @@ const reducer = persistReducer(
   {
     key: 'root',
     storage: AsyncStorage,
-    whitelist: [],
+    whitelist: ['LastUser'],
   },
   rootReducer,
 );

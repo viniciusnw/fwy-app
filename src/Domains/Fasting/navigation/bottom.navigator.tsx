@@ -27,13 +27,24 @@ class BottomBar extends React.Component<
   }
 
   componentDidMount() {
-    this.props.useDispatch.getActivesFastings();
+    console.log('BottomBar=>componentDidMount', this);
+    this.handlerGetActivesFastings();
   }
+
+  handlerGetActivesFastings = () => {
+    const { name } = this.props;
+    if (
+      name == 'Home' ||
+      name == 'Timer' ||
+      name == 'FastStart' ||
+      name == 'FastEnd'
+    )
+      this.props.useDispatch.getActivesFastings();
+  };
 
   render() {
     const { navigation, bottomBarType, name } = this.props;
     const { navigate } = navigation;
-    this.ActiveFastId;
 
     const menu = [
       {
@@ -47,7 +58,7 @@ class BottomBar extends React.Component<
           if (name == 'Timer') return null;
           if (this.ActiveFastId)
             navigate('Timer', { fastingId: this.ActiveFastId });
-            else navigate('FastStart', { });
+          else navigate('FastStart', {});
         },
       },
       {
