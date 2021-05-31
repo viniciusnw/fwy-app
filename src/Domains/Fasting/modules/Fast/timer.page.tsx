@@ -222,7 +222,7 @@ class Timer extends React.PureComponent<
                 ) : (
                   <>
                     <StyledText13>STARTED FASTING</StyledText13>
-                    <StyledText14>{this.StartDate}</StyledText14>
+                    <StyledText14>{this.StartDateFormated}</StyledText14>
                     <StyledText15>Edit Start.</StyledText15>
                   </>
                 )}
@@ -230,7 +230,7 @@ class Timer extends React.PureComponent<
 
               <View style={{ alignItems: 'center' }}>
                 <StyledText13>FAST ENDING</StyledText13>
-                <StyledText14>{this.EndDate}</StyledText14>
+                <StyledText14>{this.EndDateFormated}</StyledText14>
               </View>
             </ContainerButtons>
 
@@ -244,8 +244,8 @@ class Timer extends React.PureComponent<
           <DateTimePickerModal
             mode="datetime"
             isVisible={true}
-            date={new Date()}
             maximumDate={new Date()}
+            date={this.InitialDateTimePickerModal}
             onConfirm={this.onConfirmEditStartDate}
             onCancel={() => this.setVisibleDateTimePickerModal(false)}
           />
@@ -271,8 +271,14 @@ class Timer extends React.PureComponent<
     navigation.navigate('FastEnd');
   };
 
-  private get StartDate() {
-    // Today, 12:59 PM -> Format
+  private get InitialDateTimePickerModal() {
+    const { fasting } = this.props.useRedux.Fastings;
+    if (!fasting) return new Date();
+    return fasting.startDate;
+  }
+
+  // return -> Today, 12:59 PM
+  private get StartDateFormated() {
     const { fasting } = this.props.useRedux.Fastings;
     if (!fasting) return;
     const time = fasting.startDate.toTimeString().split('G')[0].split(':');
@@ -281,7 +287,8 @@ class Timer extends React.PureComponent<
     return `${date[0]} ${date[1]} ${date[2]}, ${time[0]}:${time[1]}`;
   }
 
-  private get EndDate() {
+  // return -> Today, 12:59 AM
+  private get EndDateFormated() {
     const { fasting } = this.props.useRedux.Fastings;
     if (!fasting) return;
     const time = fasting.endDate.toTimeString().split('G')[0].split(':');
@@ -300,7 +307,7 @@ class Timer extends React.PureComponent<
     const {
       params: { fasting },
     } = this.props.route;
-    if (!fasting) return;
+    if (!fasting) return 0;
 
     const endDate = new Date();
     const startDate = new Date();

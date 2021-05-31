@@ -68,5 +68,6 @@ export default {
     23,
     24,
   ],
-  fastColors: ['#EC5349', '#8B4F9F', '#222842', '#EB334D']
+  fastColors: ['#EC5349', '#8B4F9F', '#222842', '#EB334D'],
+  ApolloClient: 'APOLLO_CLIENT'
 };

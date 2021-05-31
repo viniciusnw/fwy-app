@@ -13,6 +13,19 @@ import { createHttpLink } from 'apollo-link-http';
 import { InMemoryCache } from 'apollo-cache-inmemory';
 import { ApolloLink, NextLink, Operation } from 'apollo-link';
 
+import { FASTING } from '@Config/constants';
+
+function showSnackbarError(message, time) {
+  Snackbar.show({
+    text: message,
+    duration: time,
+    action: {
+      text: 'Close',
+      textColor: '#FF0033',
+      onPress: () => null,
+    },
+  });
+}
 
 export function configureApolloClient(APP_NAME: string) {
   const { API_URL } = Config;
@@ -23,27 +36,14 @@ export function configureApolloClient(APP_NAME: string) {
     const { graphQLErrors, networkError } = Error;
 
     if (graphQLErrors)
-      graphQLErrors?.map(erro => {
-        Snackbar.show({
-          text: erro.message,
-          duration: Snackbar.LENGTH_INDEFINITE,
-          action: {
-            text: 'Close',
-            textColor: 'red',
-            onPress: () => null,
-          },
-        });
-      })
-    if (networkError)
-      Snackbar.show({
-        text: networkError.message,
-        duration: Snackbar.LENGTH_INDEFINITE,
-        action: {
-          text: 'Close',
-          textColor: 'red',
-          onPress: () => null,
-        },
-      });
+      graphQLErrors?.map(erro => showSnackbarError(
+        erro.message,
+        Snackbar.LENGTH_INDEFINITE
+      ))
+    if (networkError) showSnackbarError(
+      networkError.message,
+      Snackbar.LENGTH_SHORT
+    )
 
     console.warn("[ApolloClient][Error]: ", Error)
   });
@@ -64,5 +64,5 @@ export function configureApolloClient(APP_NAME: string) {
     link: ApolloLink.from([authLink, errorLink, httpLink])
   });
 
-  Container.set('APOLLO_CLIENT', client);
+  Container.set(FASTING.ApolloClient, client);
 }
