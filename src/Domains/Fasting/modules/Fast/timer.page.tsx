@@ -184,7 +184,7 @@ class Timer extends React.PureComponent<
         <View style={{ marginBottom: 60 }}>
           <CirgularTimer startFasting={startFasting}>
             <FastTimer
-              onFinish={() => this.setFinishFast(false)}
+              onFinish={() => this.setFinishFast(true)}
               differenceInHours={this.DifferenceInHours}
             />
           </CirgularTimer>
@@ -254,9 +254,9 @@ class Timer extends React.PureComponent<
     );
   }
 
-  private setFinishFast = (visible: boolean) => {
+  private setFinishFast = (finish: boolean) => {
     this.setState({
-      finishFasting: visible,
+      finishFasting: finish,
     });
   };
 
