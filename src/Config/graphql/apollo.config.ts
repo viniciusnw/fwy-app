@@ -20,19 +20,30 @@ export function configureApolloClient(APP_NAME: string) {
   const httpLink = createHttpLink({ uri: API_URL });
 
   const errorLink = onError((Error) => {
-    const { graphQLErrors } = Error;
+    const { graphQLErrors, networkError } = Error;
 
-    graphQLErrors?.map(erro => {
+    if (graphQLErrors)
+      graphQLErrors?.map(erro => {
+        Snackbar.show({
+          text: erro.message,
+          duration: Snackbar.LENGTH_INDEFINITE,
+          action: {
+            text: 'Close',
+            textColor: 'red',
+            onPress: () => null,
+          },
+        });
+      })
+    if (networkError)
       Snackbar.show({
-        text: erro.message,
-        duration: Snackbar.LENGTH_SHORT,
+        text: networkError.message,
+        duration: Snackbar.LENGTH_INDEFINITE,
         action: {
           text: 'Close',
           textColor: 'red',
           onPress: () => null,
         },
       });
-    })
 
     console.warn("[ApolloClient][Error]: ", Error)
   });

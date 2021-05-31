@@ -1,7 +1,13 @@
 import { Container } from 'typedi';
 import { Mutate, Query } from '@Redux/Fasting/data/graphql'
 
-import { createFastingVariables, getFastsVariables, endFastingVariables, createPresetVariables, editFastingVariables } from '@Config/graphql'
+import {
+  getFastsVariables,
+  endFastingVariables,
+  editFastingVariables,
+  createPresetVariables,
+  createFastingVariables,
+} from '@Config/graphql'
 
 export default {
 
@@ -11,10 +17,12 @@ export default {
     };
   },
 
-  editFasting: (params: editFastingVariables) => {
+  editFasting: (params: editFastingVariables & { editStartEnd?: boolean }) => {
     return {
       type: 'EDIT-FAST',
-      payload: () => Container.get(Mutate).editFasting(params),
+      payload: () => params.editStartEnd
+        ? Container.get(Mutate).editStartEndFasting(params)
+        : Container.get(Mutate).editFasting(params),
     };
   },
 

@@ -1,3 +1,11 @@
 mutation editFasting($id: String!, $fasting: FastingUpdateInput!) {
-    editFasting(id: $id, fasting: $fasting)
+  editFasting(id: $id, fasting: $fasting) {
+    _id
+    name
+    startDate
+    endDate
+    color
+    initialTotalHours
+    finished
+  }
 }

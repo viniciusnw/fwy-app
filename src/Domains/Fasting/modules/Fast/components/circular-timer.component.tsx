@@ -9,9 +9,8 @@ import {
   StyledText12,
 } from './../fast.style';
 
-
 class CirgularTimer extends React.PureComponent<
-  ReduxPropsType & { startFasting: boolean },
+  ReduxPropsType & { startFasting: boolean; finishFasting: boolean },
   any
 > {
   private interval;
@@ -26,16 +25,13 @@ class CirgularTimer extends React.PureComponent<
   componentWillUnmount() {
     clearInterval(this.interval);
   }
-  
+
   componentDidMount() {
     this.handlerUpdateFastingTimer();
   }
 
   private handlerUpdateFastingTimer = () => {
-    this.interval = setInterval(
-      () => this.getDifferenceInPercentage(),
-      1000,
-    );
+    this.interval = setInterval(() => this.getDifferenceInPercentage(), 1000);
   };
 
   private getDifferenceInPercentage = () => {
@@ -50,13 +46,18 @@ class CirgularTimer extends React.PureComponent<
     const elapsed = now - start;
     const differenceInPercentage = (elapsed / (end - start)) * 100;
 
-    this.setState({ differenceInPercentage });
+    this.setState({ differenceInPercentage }, () => {
+      const { differenceInPercentage } = this.state;
+      const remainingTime = 100 - differenceInPercentage;
+      if (remainingTime < 0) clearInterval(this.interval);
+    });
   };
 
   render() {
     const { startFasting } = this.props;
     const { differenceInPercentage } = this.state;
     const remainingTime = 100 - differenceInPercentage;
+    const remainingTimeToShow = remainingTime < 0 ? 0 : remainingTime;
 
     return (
       <>
@@ -64,7 +65,7 @@ class CirgularTimer extends React.PureComponent<
           size={300}
           width={30}
           rotation={360}
-          duration={1000}
+          duration={1450}
           lineCap="round"
           backgroundWidth={30}
           tintColor="#EC5349"
@@ -76,7 +77,7 @@ class CirgularTimer extends React.PureComponent<
                 <StyledText9>Time Since Last Fast</StyledText9>
               ) : startFasting ? (
                 <StyledText9>
-                  Remaining ({remainingTime.toFixed(1)}%)
+                  Remaining ({remainingTimeToShow.toFixed(1)}%)
                 </StyledText9>
               ) : (
                 <StyledText9>Upcoming fast</StyledText9>

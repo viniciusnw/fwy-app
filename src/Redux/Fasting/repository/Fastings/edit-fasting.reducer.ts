@@ -24,10 +24,7 @@ export default {
             error: false,
             errorMessage: null,
           },
-          fasting: {
-            ...state.fasting,
-            ...action.payload
-          },
+          fasting: mapEditFast(state.fasting, action.payload)
         };
       }
 
@@ -46,4 +43,22 @@ export default {
       default: return state;
     }
   }
+}
+
+function mapEditFast(oldFasting: any, responsePayload: any) {
+
+  let fasting
+  if (responsePayload?.startDate)
+    fasting = {
+      ...oldFasting,
+      startDate: new Date(responsePayload.startDate)
+    }
+
+  if (responsePayload?.endDate)
+    fasting = {
+      ...oldFasting,
+      endDate: new Date(responsePayload.endDate)
+    }
+
+  return fasting
 }

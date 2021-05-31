@@ -5,7 +5,7 @@ import CountDown from 'react-native-countdown-component';
 import { ReduxPropsType, ReduxStateType } from '@Redux/Fasting';
 
 class FastTimer extends React.PureComponent<
-  ReduxPropsType & { differenceInHours: number },
+  ReduxPropsType & { differenceInHours: number, onFinish: () => void },
   any
 > {
   constructor(props) {
@@ -24,7 +24,7 @@ class FastTimer extends React.PureComponent<
             disableHoursLimit
             until={this.DifferenceInSeconds}
             // onPress={() => console.log('PressTime')}
-            onFinish={() => console.log('Finished Time!!')}
+            onFinish={this.props.onFinish}
             digitStyle={{
               fontWeight: 'bold',
               backgroundColor: 'none',
@@ -52,10 +52,13 @@ class FastTimer extends React.PureComponent<
 
     if (!fasting) return;
     if (!fasting.endDate) return;
-    const differenceInTime = fasting.endDate.getTime() - fasting.startDate.getTime();
+    
+    const differenceInTime = fasting.endDate.getTime() - new Date().getTime();
+    
     const timeRemaining = (fasting.initialTotalHours * 3600) - differenceInTime / 1000;
-    const differenceInSeconds = (fasting.initialTotalHours * 3600) - timeRemaining
-
+    
+    const differenceInSeconds = (fasting.initialTotalHours * 3600) - timeRemaining;
+    
     return parseInt(differenceInSeconds.toFixed());
   }
 

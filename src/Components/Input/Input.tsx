@@ -5,10 +5,10 @@ import { TextInput, View, Text } from 'react-native';
 const Container = styled(View)`
   flex-wrap: wrap;
   flex-direction: row;
-  flex: ${({ half }: any) => half ? '2' : '1'};
-  width: ${({ half }: any) => half ? 'auto' : '100%'};
-  margin-left: ${({ half }: any) => half ? '4px' : '0'};
-  margin-right: ${({ half }: any) => half ? '4px' : '0'};
+  flex: ${({ half }: any) => (half ? '2' : '1')};
+  width: ${({ half }: any) => (half ? 'auto' : '100%')};
+  margin-left: ${({ half }: any) => (half ? '4px' : '0')};
+  margin-right: ${({ half }: any) => (half ? '4px' : '0')};
 `;
 
 const StyledInput = styled(TextInput)`
@@ -19,7 +19,7 @@ const StyledInput = styled(TextInput)`
   line-height: 20px;
   border-radius: 4px;
   padding: 10px 15px;
-  background-color: rgba(255, 255, 255, .2);
+  background-color: rgba(255, 255, 255, 0.2);
   color: ${({ theme }) => theme.color.white};
   font-family: ${({ theme }) => theme.fonts.AdobeClean.regular};
 `;
@@ -32,7 +32,7 @@ const ErrorContainer = styled(View)`
 
 const ErrorText = styled(Text)`
   font-size: 12px;
-  color: ${({ theme }) => theme.color.white};
+  color: ${({ theme }) => theme.color.danger};
 `;
 
 const Input = (props) => {
@@ -41,10 +41,19 @@ const Input = (props) => {
       <StyledInput {...props} />
 
       <ErrorContainer>
-        {props.error && <ErrorText>* {props.error}</ErrorText>}
+        {props.error && (
+          <ErrorText
+            style={{
+              textShadowColor: 'rgba(150, 150, 150, 1)',
+              textShadowOffset: { width: -1, height: -1 },
+              textShadowRadius: 7,
+            }}>
+            * {props.error}
+          </ErrorText>
+        )}
       </ErrorContainer>
     </Container>
-  )
+  );
 };
 
 export default Input;

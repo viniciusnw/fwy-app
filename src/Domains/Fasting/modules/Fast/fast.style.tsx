@@ -142,8 +142,8 @@ export const StyledText12 = styled(Text)`
 
 export const StyledText13 = styled(Text)`
   font-size: 15px;
-  padding-bottom: 4px;
   font-weight: bold;
+  padding-bottom: 4px;
   color: ${({ theme }) => theme.color.primary};
   font-family: ${({ theme }) => theme.fonts.AdobeClean.bold};
 `;

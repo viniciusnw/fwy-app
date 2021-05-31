@@ -2,6 +2,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { StackScreenProps } from '@react-navigation/stack';
 
+const packageJson = require('../../../../../package.json');
+
 import { Icon, Button } from '@Components';
 import { LoggedStackParamList, PagePropsType } from '@Navigation';
 import { View, Text, ScrollView, TouchableOpacity } from 'react-native';
@@ -191,7 +193,7 @@ class Settings extends React.Component<
         {/* === */}
         <View style={{ paddingVertical: 60 }}>
           <Text style={{ color: '#FFF', textAlign: 'center' }}>
-            <Text style={{ fontSize: 18 }}>Version 1.0.0</Text>
+            <Text style={{ fontSize: 18 }}>Version {packageJson.version} beta</Text>
             {`\n`}
             <Text style={{ fontSize: 14 }}>
               Design by <Text style={{ fontWeight: 'bold' }}>eview</Text> design

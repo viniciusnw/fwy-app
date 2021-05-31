@@ -1,0 +1,11 @@
+mutation editStartEndFasting($id: String!, $fasting: FastingUpdateInput!) {
+  editStartEndFasting(id: $id, fasting: $fasting) {
+    _id
+    name
+    startDate
+    endDate
+    color
+    initialTotalHours
+    finished
+  }
+}
