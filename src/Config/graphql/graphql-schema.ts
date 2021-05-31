@@ -182,11 +182,51 @@ export interface customerUpdateVariables {
 // GraphQL mutation operation: editFasting
 // ====================================================
 
+export interface editFasting_editFasting {
+  __typename: "Fasting";
+  _id: string;
+  name: string;
+  startDate: any;
+  endDate: any;
+  color: string;
+  initialTotalHours: number;
+  finished: any | null;
+}
+
 export interface editFasting {
-  editFasting: boolean;
+  editFasting: editFasting_editFasting;
 }
 
 export interface editFastingVariables {
+  id: string;
+  fasting: FastingUpdateInput;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL mutation operation: editStartEndFasting
+// ====================================================
+
+export interface editStartEndFasting_editStartEndFasting {
+  __typename: "Fasting";
+  _id: string;
+  name: string;
+  startDate: any;
+  endDate: any;
+  color: string;
+  initialTotalHours: number;
+  finished: any | null;
+}
+
+export interface editStartEndFasting {
+  editStartEndFasting: editStartEndFasting_editStartEndFasting;
+}
+
+export interface editStartEndFastingVariables {
   id: string;
   fasting: FastingUpdateInput;
 }
@@ -264,6 +304,7 @@ export interface getFasts_getFasts {
   endDate: any;
   color: string;
   finished: any | null;
+  initialTotalHours: number;
 }
 
 export interface getFasts {

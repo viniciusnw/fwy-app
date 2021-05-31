@@ -12,7 +12,7 @@ export default {
     grayDark: '#353535',
     border: '#DDD',
     success: 'green',
-    danger: 'red',
+    danger: '#FFD700',
     warning: 'orange',
     transparent: 'rgba(255, 255, 255, .2)',
     fullTransparent: 'rgba(255, 255, 255, .0)'

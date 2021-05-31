@@ -21,6 +21,7 @@ import sendChatMessageMutate from './docs/sendChatMessage.mutate.graphql'
 import createFastingMutate from './docs/createFasting.mutate.graphql'
 import endFastingMutate from './docs/endFasting.mutate.graphql'
 import editFastingMutate from './docs/editFasting.mutate.graphql'
+import editStartEndFastingMutate from './docs/editStartEndFasting.mutate.graphql'
 import createPresetMutate from './docs/createPreset.mutate.graphql'
 
 @Service()
@@ -88,10 +89,15 @@ export class Mutate extends GraphqlApi {
     return this.ApolloClient.mutate({
       mutation: editFastingMutate,
       variables: params,
-    }).then(response => {
-      const editResponse = this.mapResponse(response, 'editFasting')
-      if (editResponse) return params
-    })
+    }).then(response => this.mapResponse(response, 'editFasting'))
+      .catch(err => this.mapError(err))
+  }
+
+  public editStartEndFasting = (params: editFastingVariables) => {
+    return this.ApolloClient.mutate({
+      mutation: editStartEndFastingMutate,
+      variables: params,
+    }).then(response => this.mapResponse(response, 'editStartEndFasting'))
       .catch(err => this.mapError(err))
   }
 

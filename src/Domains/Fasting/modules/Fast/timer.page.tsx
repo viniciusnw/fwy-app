@@ -35,6 +35,7 @@ class Timer extends React.PureComponent<
     super(props);
 
     this.state = {
+      finishFasting: false,
       startFasting: false,
       visibleDateTimePickerModal: false,
     };
@@ -50,13 +51,14 @@ class Timer extends React.PureComponent<
     this.handlerEditStartDate(prevProps);
   }
 
-  private editStartDate = (date: Date) => {
+  private onConfirmEditStartDate = (date: Date) => {
     this.setVisibleDateTimePickerModal(false);
     const fastingId = this.FastingId;
 
     if (fastingId) {
       this.props.useDispatch.editFasting({
         id: fastingId,
+        editStartEnd: true,
         fasting: {
           startDate: date,
         },
@@ -181,7 +183,10 @@ class Timer extends React.PureComponent<
         {/* === */}
         <View style={{ marginBottom: 60 }}>
           <CirgularTimer startFasting={startFasting}>
-            <FastTimer differenceInHours={this.DifferenceInHours} />
+            <FastTimer
+              onFinish={() => this.setFinishFast(true)}
+              differenceInHours={this.DifferenceInHours}
+            />
           </CirgularTimer>
         </View>
 
@@ -241,13 +246,19 @@ class Timer extends React.PureComponent<
             isVisible={true}
             date={new Date()}
             maximumDate={new Date()}
-            onConfirm={this.editStartDate}
+            onConfirm={this.onConfirmEditStartDate}
             onCancel={() => this.setVisibleDateTimePickerModal(false)}
           />
         )}
       </Container>
     );
   }
+
+  private setFinishFast = (finish: boolean) => {
+    this.setState({
+      finishFasting: finish,
+    });
+  };
 
   private setVisibleDateTimePickerModal = (visible: boolean) => {
     this.setState({
@@ -272,17 +283,11 @@ class Timer extends React.PureComponent<
 
   private get EndDate() {
     const { fasting } = this.props.useRedux.Fastings;
-    if (!fasting) return '';
+    if (!fasting) return;
     const time = fasting.endDate.toTimeString().split('G')[0].split(':');
     const date = fasting.endDate.toDateString().split(' ');
 
     return `${date[0]} ${date[1]} ${date[2]}, ${time[0]}:${time[1]}`;
-  }
-
-  private get MaximumDateToStart(): string {
-    const { fasting } = this.props.useRedux.Fastings;
-    if (!fasting) return '';
-    return fasting.endDate.toISOString();
   }
 
   private get FastingId() {
