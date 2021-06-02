@@ -832,7 +832,7 @@
 					"-lc++",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.fastingwithyara;
-				PRODUCT_NAME = Fasting;
+				PRODUCT_NAME = FWY;
 				PROVISIONING_PROFILE_SPECIFIER = fastingwithyara.development.profile;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
@@ -861,7 +861,7 @@
 					"-lc++",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.fastingwithyara;
-				PRODUCT_NAME = Fasting;
+				PRODUCT_NAME = FWY;
 				PROVISIONING_PROFILE_SPECIFIER = fastingwithyara.appstore.profile;
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -889,7 +889,7 @@
 					"-lc++",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.fastingwithyara.adm;
-				PRODUCT_NAME = "Fasting Adm";
+				PRODUCT_NAME = "FWY/Adm";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -912,7 +912,7 @@
 					"-lc++",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.fastingwithyara.adm;
-				PRODUCT_NAME = "Fasting Adm";
+				PRODUCT_NAME = "FWY/Adm";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
