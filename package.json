@@ -1,6 +1,6 @@
 {
   "name": "@fasting/app",
-  "version": "2.1.2",
+  "version": "2.1.4",
   "homepage": "https://www.fastingwithyara.com/",
   "private": true,
   "scripts": {
@@ -40,7 +40,7 @@
     "ios:fas:create:file": "xcodebuild -workspace ios/App.xcworkspace -scheme Fasting -sdk iphoneos -configuration Release archive -archivePath ios/build/Fasting-Release.xcarchive",
     "ios:fas:build:file": "xcodebuild -exportArchive -archivePath ios/build/Fasting-Release.xcarchive -exportOptionsPlist ios/App/Fasting.release.plist -exportPath ios/build/Fasting-Release",
     "ios:fas:build": "yarn ios:fas:clean:build && yarn ios:fas:create:file && yarn ios:fas:build:file",
-    "ios:fas:upload:build": "xcrun altool --upload-app -f ios/build/Fasting-Release/Fasting.ipa -u viniciusnw@hotmail.com -p vwgj-mojs-ndwj-kgkg",
+    "ios:fas:upload:build": "xcrun altool --upload-app -f ios/build/Fasting-Release/FWY.ipa -u fastingwithyara@hotmail.com -p nhtt-skki-gqaz-nser",
     "ios:fas:build:publish": "yarn ios:fas:build && yarn ios:fas:upload:build",
     "==": "==BUILD-PUBLISH/ios",
     "ios:fas:bump:patch:publish": "yarn ios:fas:up:version:patch && yarn pause && yarn ios:fas:build:publish",

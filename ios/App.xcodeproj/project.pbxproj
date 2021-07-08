@@ -58,8 +58,8 @@
 		6B152536A128A4A6E15CDE9A /* libPods-Storybook.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Storybook.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		76081E852A5C4972BFEABBD4 /* MaterialCommunityIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = MaterialCommunityIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/MaterialCommunityIcons.ttf"; sourceTree = "<group>"; };
 		7674B3D010AE4AC5BF914125 /* FontAwesome5_Brands.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome5_Brands.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome5_Brands.ttf"; sourceTree = "<group>"; };
-		8111B7B2247C42460075DF0C /* Fasting.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Fasting.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		8111B7C4247C45A30075DF0C /* Fasting Adm.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Fasting Adm.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		8111B7B2247C42460075DF0C /* FWY.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FWY.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		8111B7C4247C45A30075DF0C /* FWY/Adm.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FWY/Adm.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		81147BF82475F88000632D15 /* FastingAdm.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = FastingAdm.plist; path = /Users/vinicius/Develop/www/Fasting/App/ios/App/FastingAdm.plist; sourceTree = "<absolute>"; };
 		81147C07247680B300632D15 /* Fasting.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Fasting.plist; path = /Users/vinicius/Develop/www/Fasting/App/ios/App/Fasting.plist; sourceTree = "<absolute>"; };
 		811B3584247A1D6200DFD0AC /* Config.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = Config.xcconfig; path = App/Config.xcconfig; sourceTree = "<group>"; };
@@ -238,8 +238,8 @@
 			isa = PBXGroup;
 			children = (
 				815436E2247C27A2007DC080 /* Storybook.app */,
-				8111B7B2247C42460075DF0C /* Fasting.app */,
-				8111B7C4247C45A30075DF0C /* Fasting Adm.app */,
+				8111B7B2247C42460075DF0C /* FWY.app */,
+				8111B7C4247C45A30075DF0C /* FWY/Adm.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -278,7 +278,7 @@
 			);
 			name = Fasting;
 			productName = App;
-			productReference = 8111B7B2247C42460075DF0C /* Fasting.app */;
+			productReference = 8111B7B2247C42460075DF0C /* FWY.app */;
 			productType = "com.apple.product-type.application";
 		};
 		8111B7B4247C45A30075DF0C /* FastingAdm */ = {
@@ -299,7 +299,7 @@
 			);
 			name = FastingAdm;
 			productName = App;
-			productReference = 8111B7C4247C45A30075DF0C /* Fasting Adm.app */;
+			productReference = 8111B7C4247C45A30075DF0C /* FWY/Adm.app */;
 			productType = "com.apple.product-type.application";
 		};
 		815436D3247C27A2007DC080 /* Storybook */ = {
@@ -332,7 +332,10 @@
 				LastUpgradeCheck = 1240;
 				TargetAttributes = {
 					8111B7A2247C42460075DF0C = {
-						DevelopmentTeam = PWLSDYB3UZ;
+						DevelopmentTeam = 9XYA4NB2DM;
+						ProvisioningStyle = Manual;
+					};
+					8111B7B4247C45A30075DF0C = {
 						ProvisioningStyle = Manual;
 					};
 				};
@@ -770,7 +773,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 3;
-				DEVELOPMENT_TEAM = PWLSDYB3UZ;
+				DEVELOPMENT_TEAM = 9XYA4NB2DM;
 				ENABLE_BITCODE = NO;
 				ENV_FILE = .fasting.env.dev;
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -831,9 +834,9 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.fastingwithyara;
+				PRODUCT_BUNDLE_IDENTIFIER = com.fwy;
 				PRODUCT_NAME = FWY;
-				PROVISIONING_PROFILE_SPECIFIER = fastingwithyara.development.profile;
+				PROVISIONING_PROFILE_SPECIFIER = fwy.develop.profile;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -851,7 +854,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 3;
-				DEVELOPMENT_TEAM = PWLSDYB3UZ;
+				DEVELOPMENT_TEAM = 9XYA4NB2DM;
 				ENV_FILE = .fasting.env;
 				INFOPLIST_FILE = App/Fasting.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -860,9 +863,9 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.fastingwithyara;
+				PRODUCT_BUNDLE_IDENTIFIER = com.fwy;
 				PRODUCT_NAME = FWY;
-				PROVISIONING_PROFILE_SPECIFIER = fastingwithyara.appstore.profile;
+				PROVISIONING_PROFILE_SPECIFIER = fwy.appstore.profile;
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
@@ -874,7 +877,9 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 3;
+				DEVELOPMENT_TEAM = "";
 				ENABLE_BITCODE = NO;
 				ENV_FILE = .fasting.adm.env.dev;
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -888,8 +893,9 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.fastingwithyara.adm;
-				PRODUCT_NAME = "FWY/Adm";
+				PRODUCT_BUNDLE_IDENTIFIER = com.fwy.adm;
+				PRODUCT_NAME = FWY/Adm;
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -902,7 +908,9 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 3;
+				DEVELOPMENT_TEAM = "";
 				ENV_FILE = .fasting.adm.env;
 				INFOPLIST_FILE = App/FastingAdm.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -911,8 +919,9 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.fastingwithyara.adm;
-				PRODUCT_NAME = "FWY/Adm";
+				PRODUCT_BUNDLE_IDENTIFIER = com.fwy.adm;
+				PRODUCT_NAME = FWY/Adm;
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
