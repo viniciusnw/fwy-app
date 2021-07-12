@@ -4,8 +4,8 @@
 <dict>
     <key>provisioningProfiles</key>
     <dict>
-        <key>com.fastingwithyara</key>
-        <string>fastingwithyara.appstore.profile</string>
+        <key>com.fwy</key>
+        <string>fwy.appstore.profile</string>
     </dict>
     <key>method</key>
     <string>app-store</string>

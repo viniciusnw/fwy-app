@@ -1,0 +1,44 @@
+{
+  "SignUp": {
+    "form": {
+      "avatar": "Load picture",
+      "avatarRemove": "Change picture",
+      "name": "Name",
+      "email": "E-mail",
+      "phone": "Phone",
+      "country": "Country",
+      "state": "State",
+      "birthday": "Birthday date",
+      "password": "Password",
+      "submit": "Access"
+    },
+    "formErros": {
+      "name": "Fill in your name.",
+      "email": "Email must be a valid email address.",
+      "emailNull": "Fill in your email.",
+      "phone": "Incomplete number.",
+      "phoneNull": "Fill your phone.",
+      "country": "Fill in your country.",
+      "state": "Fill in your status.",
+      "birthday": "Fill in your birthday date.",
+      "password": "Fill in your password."
+    }
+  },
+  "Login": {
+    "form": {
+      "email": "E-mail",
+      "password": "Password",
+      "submit": "Login"
+    },
+    "formErros": {
+      "email": "Email must be a valid address.",
+      "emailNull": "Fill in your email.",
+      "password": "Fill in your password."
+    },
+    "signup": "Register"
+  },
+  "language": {
+    "english": "English",
+    "portuguese": "Portuguese"
+  }
+}

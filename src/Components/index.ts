@@ -15,6 +15,7 @@ export { default as StatusItem } from './List/StatusItem';
 export { default as AccountItem } from './List/AccountItem';
 export { default as BoxItem } from './List/BoxItem';
 export { default as ServiceItem } from './List/ServiceItem';
+export { default as DismissKeyboard } from './DismissKeyboardView';
 
 export { default as StorybookWrapper } from './StorybookWrapper';
 export { default as Header } from './Header';

@@ -193,7 +193,7 @@ class Settings extends React.Component<
         {/* === */}
         <View style={{ paddingVertical: 60 }}>
           <Text style={{ color: '#FFF', textAlign: 'center' }}>
-            <Text style={{ fontSize: 18 }}>Version {packageJson.version} beta</Text>
+            <Text style={{ fontSize: 18 }}>Version {packageJson.version}</Text>
             {`\n`}
             <Text style={{ fontSize: 14 }}>
               Design by <Text style={{ fontWeight: 'bold' }}>eview</Text> design

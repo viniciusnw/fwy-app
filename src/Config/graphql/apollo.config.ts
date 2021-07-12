@@ -13,6 +13,35 @@ import { createHttpLink } from 'apollo-link-http';
 import { InMemoryCache } from 'apollo-cache-inmemory';
 import { ApolloLink, NextLink, Operation } from 'apollo-link';
 
+import { FASTING } from '@Config/constants';
+
+const getSnackbarDuration = (time: 's' | 'l' | 'i') => {
+  switch (time) {
+    case 's': return Snackbar.LENGTH_SHORT
+    case 'l': return Snackbar.LENGTH_LONG
+    case 'i': return Snackbar.LENGTH_INDEFINITE
+  }
+}
+
+export function showSnackbar(
+  message,
+  type: 'error' | 'success',
+  time: 's' | 'l' | 'i',
+  onPress?: Function
+) {
+  const duration = getSnackbarDuration(time)
+  const textColor = type == 'error' ? '#FF0033' : '#28A745'
+
+  Snackbar.show({
+    text: message,
+    duration,
+    action: {
+      textColor,
+      text: 'Close',
+      onPress: () => onPress && onPress(),
+    },
+  });
+}
 
 export function configureApolloClient(APP_NAME: string) {
   const { API_URL } = Config;
@@ -23,27 +52,16 @@ export function configureApolloClient(APP_NAME: string) {
     const { graphQLErrors, networkError } = Error;
 
     if (graphQLErrors)
-      graphQLErrors?.map(erro => {
-        Snackbar.show({
-          text: erro.message,
-          duration: Snackbar.LENGTH_INDEFINITE,
-          action: {
-            text: 'Close',
-            textColor: 'red',
-            onPress: () => null,
-          },
-        });
-      })
-    if (networkError)
-      Snackbar.show({
-        text: networkError.message,
-        duration: Snackbar.LENGTH_INDEFINITE,
-        action: {
-          text: 'Close',
-          textColor: 'red',
-          onPress: () => null,
-        },
-      });
+      graphQLErrors?.map(erro => showSnackbar(
+        erro.message,
+        'error',
+        'i'
+      ))
+    if (networkError) showSnackbar(
+      networkError.message,
+      'error',
+      's'
+    )
 
     console.warn("[ApolloClient][Error]: ", Error)
   });
@@ -64,5 +82,5 @@ export function configureApolloClient(APP_NAME: string) {
     link: ApolloLink.from([authLink, errorLink, httpLink])
   });
 
-  Container.set('APOLLO_CLIENT', client);
+  Container.set(FASTING.ApolloClient, client);
 }

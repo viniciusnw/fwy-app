@@ -20,14 +20,14 @@ export const TimerContainer = styled(View)`
 `;
 
 export const StyledTextInput = styled(TextInput)`
-  height: 80px;
   width: 100%;
+  height: 80px;
   padding: 8px;
-  color: #fff;
   border: none;
+  padding: 15px;
+  color: #fff;
   line-height: 20px;
   border-radius: 6px;
-  padding: 30px 15px;
   background-color: rgba(255, 255, 255, 0.2);
   font-family: ${({ theme }) => theme.fonts.AdobeClean.regular};
 `;
@@ -219,7 +219,7 @@ export const StyledText22 = styled(Text)`
 
 export const StyledText23 = styled(Text)`
   font-weight: bold;
-  margin-bottom: -5px;
+  margin-bottom: -4px;
   color: ${({ theme }) => theme.color.white};
   font-family: ${({ theme }) => theme.fonts.AdobeClean.bold};
 `;

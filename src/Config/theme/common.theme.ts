@@ -11,9 +11,9 @@ export default {
     grayLight: '#8C8C8C',
     grayDark: '#353535',
     border: '#DDD',
-    success: 'green',
-    danger: '#FFD700',
-    warning: 'orange',
+    success: '#4BB543',
+    danger: '#FF0033',
+    warning: '#FFD700',
     transparent: 'rgba(255, 255, 255, .2)',
     fullTransparent: 'rgba(255, 255, 255, .0)'
   },

@@ -1,6 +1,7 @@
 import * as yup from 'yup';
 import { useFormik } from 'formik';
 import React, { useState } from 'react';
+import styled from 'styled-components/native';
 
 import {
   View,
@@ -24,6 +25,10 @@ import {
   StyledText,
 } from './sign-up-form.style';
 
+import { FASTING } from '@Config/constants';
+import { useTranslation } from 'react-i18next';
+
+const { languages, registerFields } = FASTING.enums;
 export interface DataUploadType {
   type: string;
   base64: string;
@@ -40,30 +45,26 @@ const SignUpForm: React.FC<any> = ({
 }) => {
   const [dataUpload, setImageUpload] = useState<DataUploadType | null>(null);
 
-  const fields = {
-    name: 'name',
-    email: 'email',
-    phone: 'phone',
-    birthday: 'birthday',
-    country: 'country',
-    state: 'state',
-    password: 'password',
+  const { t, i18n } = useTranslation('SignUp');
+  const tFormErros: any = t('formErros');
+  const tForm: any = t('form');
+
+  const FormRegisterSchemaPhonelength = {
+    [languages.PT_BR]: 15, // (11) 11111-1111
+    [languages.EN_US]: 17, // +1 (732) 581-7296
   };
 
   const FormRegisterSchema = yup.object().shape({
-    name: yup.string().required('Preencha seu nome.'),
-    email: yup
-      .string()
-      .email('E-mail deve ser um e-mail válido')
-      .required('Preencha seu e-mail.'),
+    name: yup.string().required(tFormErros.name),
+    email: yup.string().email(tFormErros.email).required(tFormErros.emailNull),
     phone: yup
       .string()
-      .length(15, 'deve ter exatamente 15 caracteres')
-      .required('Preencha seu telefone.'),
-    birthday: yup.date().required('Preencha a data do seu aniversário.'),
-    country: yup.string().required('Preencha seu país.'),
-    state: yup.string().required('Preencha seu estado.'),
-    password: yup.string().required('Preencha sua senha.'),
+      .length(FormRegisterSchemaPhonelength[i18n.language], tFormErros.phone)
+      .required(tFormErros.phoneNull),
+    birthday: yup.date().required(tFormErros.birthday),
+    country: yup.string().required(tFormErros.country),
+    state: yup.string().required(tFormErros.state),
+    password: yup.string().required(tFormErros.password),
   });
 
   const formik = useFormik({
@@ -77,13 +78,13 @@ const SignUpForm: React.FC<any> = ({
     //   [fields.password]: '123456',
     // },
     initialValues: {
-      [fields.name]: '',
-      [fields.email]: '',
-      [fields.phone]: '',
-      [fields.birthday]: '',
-      [fields.country]: '',
-      [fields.state]: '',
-      [fields.password]: '',
+      [registerFields.name]: '',
+      [registerFields.email]: '',
+      [registerFields.phone]: '',
+      [registerFields.birthday]: '',
+      [registerFields.country]: '',
+      [registerFields.state]: '',
+      [registerFields.password]: '',
     },
     validationSchema: FormRegisterSchema,
     onSubmit: (customer: any) => {
@@ -103,92 +104,77 @@ const SignUpForm: React.FC<any> = ({
 
   const signUpForm = {
     name: {
-      placeholder: 'Nome',
+      placeholder: tForm.name,
       autoCompleteType: 'name',
       value: formik.values.name,
       placeholderTextColor: '#FFF',
-      onBlur: formik.handleBlur(fields.name),
-      onChangeText: (value) => formik.setFieldValue(fields.name, value),
-      error:
-        formik.touched.name && formik.errors.name ? formik.errors.name : null,
+      onBlur: formik.handleBlur(registerFields.name),
+      onChangeText: (value) => formik.setFieldValue(registerFields.name, value),
+      error: formik.touched.name && formik.errors.name,
     },
     email: {
-      placeholder: 'E-mail',
+      placeholder: tForm.email,
       autoCompleteType: 'email',
       value: formik.values.email,
       placeholderTextColor: '#FFF',
-      onBlur: formik.handleBlur(fields.email),
-      onChangeText: (value) => formik.setFieldValue(fields.email, value),
-      error:
-        formik.touched.email && formik.errors.email
-          ? formik.errors.email
-          : null,
+      onBlur: formik.handleBlur(registerFields.email),
+      onChangeText: (value) =>
+        formik.setFieldValue(registerFields.email, value),
+      error: formik.touched.email && formik.errors.email,
     },
     phone: {
-      placeholder: 'Telefone',
+      placeholder: tForm.phone,
       autoCompleteType: 'tel',
       value: formik.values.phone,
       placeholderTextColor: '#FFF',
-      onBlur: formik.handleBlur(fields.phone),
-      onChangeText: (value) => formik.setFieldValue(fields.phone, value),
-      error:
-        formik.touched.phone && formik.errors.phone
-          ? formik.errors.phone
-          : null,
+      onBlur: formik.handleBlur(registerFields.phone),
+      onChangeText: (value) =>
+        formik.setFieldValue(registerFields.phone, value),
+      error: formik.touched.phone && formik.errors.phone,
     },
     country: {
-      placeholder: 'País',
+      placeholder: tForm.country,
       itens: countriesData,
       loading: countriesLoading,
       value: formik.values.country,
       placeholderTextColor: '#FFF',
-      onBlur: formik.handleBlur(fields.country),
-      error:
-        formik.touched.country && formik.errors.country
-          ? formik.errors.country
-          : null,
+      onBlur: formik.handleBlur(registerFields.country),
+      error: formik.touched.country && formik.errors.country,
       onChangeValue: (value) => {
-        formik.setFieldValue(fields.country, value);
+        formik.setFieldValue(registerFields.country, value);
         formChangeField('country', value);
       },
     },
     state: {
-      placeholder: 'Estado',
+      placeholder: tForm.state,
       loading: statesLoading,
       value: formik.values.state,
-      onBlur: formik.handleBlur(fields.state),
+      onBlur: formik.handleBlur(registerFields.state),
       itens: formik.values.country ? statesData : [],
-      error:
-        formik.touched.state && formik.errors.state
-          ? formik.errors.state
-          : null,
+      error: formik.touched.state && formik.errors.state,
       placeholderTextColor: '#FFF',
       onChangeValue: (value) => {
-        formik.setFieldValue(fields.state, value);
+        formik.setFieldValue(registerFields.state, value);
         formChangeField('state', value);
       },
     },
     birthday: {
       value: formik.values.birthday,
       placeholderTextColor: '#FFF',
-      placeholder: 'Data de Nascimento',
-      onChangeValue: (value) => formik.setFieldValue(fields.birthday, value),
-      error:
-        formik.touched.birthday && formik.errors.birthday
-          ? formik.errors.birthday
-          : null,
+      placeholder: tForm.birthday,
+      error: formik.touched.birthday && formik.errors.birthday,
+      onChangeValue: (value) =>
+        formik.setFieldValue(registerFields.birthday, value),
     },
     password: {
       secureTextEntry: true,
-      placeholder: 'Password',
+      placeholder: tForm.password,
       value: formik.values.password,
       placeholderTextColor: '#FFF',
-      onBlur: formik.handleBlur(fields.password),
-      onChangeText: (value) => formik.setFieldValue(fields.password, value),
-      error:
-        formik.touched.password && formik.errors.password
-          ? formik.errors.password
-          : null,
+      onBlur: formik.handleBlur(registerFields.password),
+      error: formik.touched.password && formik.errors.password,
+      onChangeText: (value) =>
+        formik.setFieldValue(registerFields.password, value),
     },
   };
 
@@ -207,43 +193,31 @@ const SignUpForm: React.FC<any> = ({
   };
 
   return (
-    <>
-      <TouchableOpacity
-        onPress={handlerUploadLaunchImageLibrary}
-        style={{
-          marginHorizontal: 8,
-          flexDirection: 'row',
-          alignItems: 'center',
-          justifyContent: 'center',
-        }}>
-        {(!dataUpload && (
-          <Icon
-            size={60}
-            color={'rgba(255, 255, 255, .4)'}
-            icon="user-circle"
-          />
-        )) ||
-          (dataUpload && (
-            <Image
-              style={{
-                borderRadius: 60,
-                width: 61,
-                height: 61,
-                resizeMode: 'cover',
-              }}
+    <StyledBox>
+      <KeyboardAvoidingView style={{ width: '100%' }} behavior="position">
+        <TouchableOpacityStyled onPress={handlerUploadLaunchImageLibrary}>
+          {(dataUpload && (
+            <ImageStyled
+              resizeMode={'cover'}
               source={{
                 uri: `data:${dataUpload.type};base64,${dataUpload.base64}`,
               }}
             />
-          ))}
+          )) || (
+            <Icon
+              size={60}
+              color={'rgba(255, 255, 255, .4)'}
+              icon="user-circle"
+            />
+          )}
 
-        <StyledText>
-          {(!dataUpload && 'Carregar Foto') || (dataUpload && 'Trocar Foto')}
-        </StyledText>
-      </TouchableOpacity>
+          <StyledText>
+            {(!dataUpload && tForm.avatar) ||
+              (dataUpload && tForm.avatarRemove)}
+          </StyledText>
+        </TouchableOpacityStyled>
 
-      <KeyboardAvoidingView style={{ width: '100%' }} behavior="padding">
-        <StyledBox>
+        <View style={{ marginTop: 30 }}>
           <StyledField>
             <Input {...signUpForm.name} />
           </StyledField>
@@ -269,19 +243,37 @@ const SignUpForm: React.FC<any> = ({
             <Input {...signUpForm.password} />
           </StyledField>
 
-          <View
-            style={{ width: '50%', alignSelf: 'center', marginVertical: 40 }}>
+          <SubmitContainer>
             <Button
+              color="secondary"
               loading={registerLoading}
-              onPress={formik.handleSubmit}
-              color="secondary">
-              Acessar
+              onPress={formik.handleSubmit}>
+              {tForm.submit}
             </Button>
-          </View>
-        </StyledBox>
+          </SubmitContainer>
+        </View>
       </KeyboardAvoidingView>
-    </>
+    </StyledBox>
   );
 };
 
 export default SignUpForm;
+
+const TouchableOpacityStyled = styled(TouchableOpacity)`
+  margin: 8px 0;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+`;
+
+const ImageStyled = styled(Image)`
+  width: 61px;
+  height: 61px;
+  border-radius: 60px;
+`;
+
+const SubmitContainer = styled(View)`
+  width: 50%;
+  margin: 40px 0;
+  align-self: center;
+`;

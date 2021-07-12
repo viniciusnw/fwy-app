@@ -1,5 +1,7 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import { StackScreenProps } from '@react-navigation/stack';
+import { withNavigationFocus } from '@react-navigation/compat';
 
 import TopBar from './top.navigator';
 import BottomBar from './bottom.navigator';
@@ -33,14 +35,14 @@ export class WrapperPropsType {
 }
 
 export class PagePropsType extends WrapperPropsType {
-  
+  isFocused: boolean = false;
 }
 
 type RoutePropsType = StackScreenProps<
   UnloogedStackParamList & LoggedStackParamList,
   'Wrapper'
 >;
-export default class Wrapper extends React.PureComponent<
+class Wrapper extends React.PureComponent<
   RoutePropsType & WrapperPropsType,
   any
 > {
@@ -58,7 +60,9 @@ export default class Wrapper extends React.PureComponent<
       Page: PageComponent,
       bottomBarType = null,
     } = this.props;
-    const { setPageConfigs } = PageComponent.WrappedComponent;
+
+    const { setPageConfigs } = PageComponent.WrappedComponent || {};
+
     const {
       bottomBarConfig = { color: '#FFF' },
       topBarConfig = {
@@ -116,3 +120,5 @@ export default class Wrapper extends React.PureComponent<
     );
   }
 }
+
+export default withNavigationFocus(connect(null, null)(Wrapper));

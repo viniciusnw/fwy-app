@@ -1,0 +1,44 @@
+{
+  "SignUp": {
+    "form": {
+      "avatar": "Carregar foto",
+      "avatarRemove": "Trocar Foto",
+      "name": "Nome",
+      "email": "E-mail",
+      "phone": "Telefone",
+      "country": "País",
+      "state": "Estado",
+      "birthday": "Data de nascimento",
+      "password": "Senha",
+      "submit": "Acessar"
+    },
+    "formErros": {
+      "name": "Preencha seu nome.",
+      "email": "E-mail deve ser um e-mail válido.",
+      "emailNull": "Preencha seu e-mail.",
+      "phone": "Número incompleto.",
+      "phoneNull": "Preencha seu telefone.",
+      "country": "Preencha seu país.",
+      "state": "Preencha seu estado.",
+      "birthday": "Preencha sua data de nascimento.",
+      "password": "Preencha sua senha."
+    }
+  },
+  "Login": {
+    "form": {
+      "email": "E-mail",
+      "password": "Senha",
+      "submit": "Entrar"
+    },
+    "formErros": {
+      "email": "E-mail deve ser um endereço válido",
+      "emailNull": "Preencha seu e-mail.",
+      "password": "Preencha sua senha."
+    },
+    "signup": "Cadastre-se"
+  },
+  "language": {
+    "english": "Inglês",
+    "portuguese": "Português"
+  }
+}

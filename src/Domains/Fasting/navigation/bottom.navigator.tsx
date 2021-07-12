@@ -27,7 +27,6 @@ class BottomBar extends React.Component<
   }
 
   componentDidMount() {
-    console.log('BottomBar=>componentDidMount', this);
     this.handlerGetActivesFastings();
   }
 

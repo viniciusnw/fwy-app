@@ -2,9 +2,9 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { StackScreenProps } from '@react-navigation/stack';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
+import { View, TouchableOpacity, ActivityIndicator } from 'react-native';
 
 import { Button } from '@Components';
-import { View, TouchableOpacity, ActivityIndicator } from 'react-native';
 import { LoggedStackParamList, PagePropsType } from '@Navigation';
 import { ReduxActions, ReduxPropsType, ReduxStateType } from '@Redux/Fasting';
 
@@ -33,7 +33,6 @@ class Timer extends React.PureComponent<
 
   constructor(props) {
     super(props);
-
     this.state = {
       finishFasting: false,
       startFasting: false,
@@ -136,6 +135,7 @@ class Timer extends React.PureComponent<
 
   private handlerEditStartDate = (prevProps: ReduxPropsType) => {
     const { reset } = this.props.navigation;
+    const { isFocused } = this.props;
 
     const {
       editFasting: { loading: loadingEditFasting, success },
@@ -149,7 +149,7 @@ class Timer extends React.PureComponent<
       params: { fastingId: fastingIdFromParam },
     } = this.props.route;
 
-    if (success && prevLoadingEditFasting != loadingEditFasting) {
+    if (isFocused && success && prevLoadingEditFasting != loadingEditFasting) {
       reset({
         index: 2,
         routes: [
@@ -222,7 +222,7 @@ class Timer extends React.PureComponent<
                 ) : (
                   <>
                     <StyledText13>STARTED FASTING</StyledText13>
-                    <StyledText14>{this.StartDate}</StyledText14>
+                    <StyledText14>{this.StartDateFormated}</StyledText14>
                     <StyledText15>Edit Start.</StyledText15>
                   </>
                 )}
@@ -230,7 +230,7 @@ class Timer extends React.PureComponent<
 
               <View style={{ alignItems: 'center' }}>
                 <StyledText13>FAST ENDING</StyledText13>
-                <StyledText14>{this.EndDate}</StyledText14>
+                <StyledText14>{this.EndDateFormated}</StyledText14>
               </View>
             </ContainerButtons>
 
@@ -244,8 +244,8 @@ class Timer extends React.PureComponent<
           <DateTimePickerModal
             mode="datetime"
             isVisible={true}
-            date={new Date()}
             maximumDate={new Date()}
+            date={this.InitialDateTimePickerModal}
             onConfirm={this.onConfirmEditStartDate}
             onCancel={() => this.setVisibleDateTimePickerModal(false)}
           />
@@ -271,22 +271,29 @@ class Timer extends React.PureComponent<
     navigation.navigate('FastEnd');
   };
 
-  private get StartDate() {
-    // Today, 12:59 PM -> Format
+  private get InitialDateTimePickerModal() {
+    const { fasting } = this.props.useRedux.Fastings;
+    if (!fasting) return new Date();
+    return fasting.startDate;
+  }
+  
+  private get StartDateFormated() {
     const { fasting } = this.props.useRedux.Fastings;
     if (!fasting) return;
     const time = fasting.startDate.toTimeString().split('G')[0].split(':');
     const date = fasting.startDate.toDateString().split(' ');
 
+    // return -> Today, 12:59 PM
     return `${date[0]} ${date[1]} ${date[2]}, ${time[0]}:${time[1]}`;
   }
 
-  private get EndDate() {
+  private get EndDateFormated() {
     const { fasting } = this.props.useRedux.Fastings;
     if (!fasting) return;
     const time = fasting.endDate.toTimeString().split('G')[0].split(':');
     const date = fasting.endDate.toDateString().split(' ');
 
+    // return -> Today, 12:59 AM
     return `${date[0]} ${date[1]} ${date[2]}, ${time[0]}:${time[1]}`;
   }
 
@@ -300,7 +307,7 @@ class Timer extends React.PureComponent<
     const {
       params: { fasting },
     } = this.props.route;
-    if (!fasting) return;
+    if (!fasting) return 0;
 
     const endDate = new Date();
     const startDate = new Date();

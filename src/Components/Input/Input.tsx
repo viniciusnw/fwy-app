@@ -2,6 +2,29 @@ import React from 'react';
 import styled from 'styled-components/native';
 import { TextInput, View, Text } from 'react-native';
 
+const Input = (props) => {
+  return (
+    <Container {...props}>
+      <StyledInput {...props} />
+
+      <ErrorContainer>
+        {props.error && (
+          <ErrorText
+            style={{
+              textShadowColor: 'rgba(150, 150, 150, 1)',
+              textShadowOffset: { width: -1, height: -1 },
+              textShadowRadius: 7,
+            }}>
+            * {props.error}
+          </ErrorText>
+        )}
+      </ErrorContainer>
+    </Container>
+  );
+};
+
+export default Input;
+
 const Container = styled(View)`
   flex-wrap: wrap;
   flex-direction: row;
@@ -32,28 +55,5 @@ const ErrorContainer = styled(View)`
 
 const ErrorText = styled(Text)`
   font-size: 12px;
-  color: ${({ theme }) => theme.color.danger};
+  color: ${({ theme }) => theme.color.warning};
 `;
-
-const Input = (props) => {
-  return (
-    <Container {...props}>
-      <StyledInput {...props} />
-
-      <ErrorContainer>
-        {props.error && (
-          <ErrorText
-            style={{
-              textShadowColor: 'rgba(150, 150, 150, 1)',
-              textShadowOffset: { width: -1, height: -1 },
-              textShadowRadius: 7,
-            }}>
-            * {props.error}
-          </ErrorText>
-        )}
-      </ErrorContainer>
-    </Container>
-  );
-};
-
-export default Input;

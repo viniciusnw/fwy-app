@@ -1,10 +1,13 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import styled from 'styled-components/native';
+import { View, TouchableOpacity } from 'react-native';
 import { StackScreenProps } from '@react-navigation/stack';
 
+import { withTranslation, WithTranslation } from 'react-i18next';
+
 import { StyledText } from './login.style';
-import { Button, Icon, Logo, Input } from '@Components';
-import { View, Text, TouchableOpacity } from 'react-native';
+import { Logo, DismissKeyboard } from '@Components';
 import { UnloogedStackParamList, PagePropsType } from '@Navigation';
 import { ReduxActions, ReduxPropsType, ReduxStateType } from '@Redux/Fasting';
 
@@ -12,7 +15,7 @@ import LoginForm from './components/login-form.component';
 
 type RoutePropsType = StackScreenProps<UnloogedStackParamList, 'Login'>;
 class Login extends React.Component<
-  RoutePropsType & ReduxPropsType & PagePropsType,
+  RoutePropsType & ReduxPropsType & PagePropsType & WithTranslation,
   any
 > {
   static setPageConfigs = {
@@ -36,21 +39,16 @@ class Login extends React.Component<
     const { loading } = login;
 
     return (
-      <View
-        style={{
-          flex: 1,
-          alignItems: 'center',
-          justifyContent: 'center',
-          paddingHorizontal: 40,
-        }}>
-        <LoginForm
-          lastUser={lastUser}
-          loginLoading={loading}
-          dispatchLogin={this.props.useDispatch.login}
-        />
+      <DismissKeyboard>
+        <Container>
+          <LoginForm
+            lastUser={lastUser}
+            loginLoading={loading}
+            dispatchLogin={this.props.useDispatch.login}
+          />
 
-        {/* Social Login */}
-        {/* <View style={{ flexDirection: 'row' }}>
+          {/* Social Login */}
+          {/* <View style={{ flexDirection: 'row' }}>
           <TouchableOpacity style={{ marginHorizontal: 8 }}>
             <Icon size={30} color={'#FFF'} icon="facebook-square" />
           </TouchableOpacity>
@@ -64,16 +62,19 @@ class Login extends React.Component<
           </TouchableOpacity>
         </View> */}
 
-        <TouchableOpacity
-          style={{ marginTop: 16, marginBottom: 60 }}
-          onPress={this.goSignUp}>
-          <StyledText>Cadastre-se</StyledText>
-        </TouchableOpacity>
+          <TouchableOpacity
+            style={{ marginTop: 16, marginBottom: 60 }}
+            onPress={this.goSignUp}>
+            <StyledText>{this.t('signup')}</StyledText>
+          </TouchableOpacity>
 
-        <Logo width={80} height={40} color={'white'} />
-      </View>
+          <Logo width={80} height={40} color={'white'} />
+        </Container>
+      </DismissKeyboard>
     );
   }
+
+  private t = (value: string) => this.props.t && this.props.t(value);
 }
 
 function mapStateToProps({ User, LastUser }: ReduxStateType) {
@@ -93,4 +94,13 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Login);
+export default withTranslation('Login')(
+  connect(mapStateToProps, mapDispatchToProps)(Login),
+);
+
+const Container = styled(View)`
+  flex: 1;
+  padding: 0 40px;
+  align-items: center;
+  justify-content: center;
+`;

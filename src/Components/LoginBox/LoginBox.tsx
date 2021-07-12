@@ -2,9 +2,8 @@ import React from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
 import styled from 'styled-components/native';
 import Button from '../Button';
-import Input from '../Input';
+import { Input } from '../Input';
 import Logo from '../Logo';
-
 
 const StyledContainer = styled(View)`
   width: 100%;
