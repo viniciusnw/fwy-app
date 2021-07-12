@@ -1,11 +1,11 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { View } from 'react-native';
+
+import { Icon } from '@Components';
 import { StackScreenProps } from '@react-navigation/stack';
 import { LoggedStackParamList, PagePropsType } from '@Navigation';
 import { ReduxActions, ReduxPropsType, ReduxStateType } from '@Redux/Fasting';
-
-import { Icon } from '@Components';
-import { View, Text } from 'react-native';
 import {
   AddFastItem,
   Badges,
@@ -32,57 +32,52 @@ class Home extends React.Component<
     super(props);
   }
 
-  componentDidUpdate(prevProps) {
-    // console.log(this.props);
-  }
+  componentDidUpdate() {}
 
   componentDidMount() {
+    this.handlerClearFasting();
     this.props.useDispatch.getPresets();
   }
 
-  goFastStart = (presetId) => {
-    const { navigation } = this.props;
-    navigation.navigate('FastStart', { presetId });
-  };
-
-  goToTimer = (fastingId) => {
-    const { navigation } = this.props;
-    navigation.navigate('Timer', { fastingId });
-  };
+  private handlerClearFasting() {
+    const { clearFasting } = this.props.useDispatch;
+    const { isFocused } = this.props;
+    isFocused && clearFasting();
+  }
 
   render() {
     const fastItemPlus = [
-      {
-        name: 'Fasting Iniciante',
-        timeNumber: '13',
-        timeString: 'H.',
-      },
-      {
-        name: 'Fasting Iniciante',
-        timeNumber: '16',
-        timeString: 'H.',
-      },
-      {
-        name: 'Personal Fasting Star',
-        timeNumber: '60',
-        timeString: 'H.',
-        tag: 'Fasting',
-      },
-      {
-        name: 'Consultation',
-        timeNumber: '30',
-        timeString: 'Min.',
-      },
-      {
-        name: 'Consultation',
-        timeNumber: '1',
-        timeString: 'H.',
-      },
-      {
-        name: 'Consultation',
-        timeNumber: '1',
-        timeString: '/Week',
-      },
+      // {
+      //   name: 'Fasting Iniciante',
+      //   timeNumber: '13',
+      //   timeString: 'H.',
+      // },
+      // {
+      //   name: 'Fasting Iniciante',
+      //   timeNumber: '16',
+      //   timeString: 'H.',
+      // },
+      // {
+      //   name: 'Personal Fasting Star',
+      //   timeNumber: '60',
+      //   timeString: 'H.',
+      //   tag: 'Fasting',
+      // },
+      // {
+      //   name: 'Consultation',
+      //   timeNumber: '30',
+      //   timeString: 'Min.',
+      // },
+      // {
+      //   name: 'Consultation',
+      //   timeNumber: '1',
+      //   timeString: 'H.',
+      // },
+      // {
+      //   name: 'Consultation',
+      //   timeNumber: '1',
+      //   timeString: '/Week',
+      // },
     ];
 
     return (
@@ -90,8 +85,8 @@ class Home extends React.Component<
         style={{
           flex: 1,
           alignItems: 'center',
-          justifyContent: 'center',
           marginHorizontal: 35,
+          justifyContent: 'flex-start',
         }}>
         {/* === */}
         <View style={{ marginHorizontal: 20 }}>
@@ -104,13 +99,15 @@ class Home extends React.Component<
             <StyledH2>Iniciar Jejum</StyledH2>
           </View>
 
-          <View
-            style={{
-              justifyContent: 'flex-start',
-              flexDirection: 'row',
-              margin: -8,
-            }}>
-            {[1, 2, 3].map((i, index) => this.Render_FastItem(index))}
+          <View>
+            <View
+              style={{
+                margin: -8,
+                flexDirection: 'row',
+                justifyContent: 'flex-start',
+              }}>
+              {[1, 2, 3].map((i, index) => this.Render_FastItem(index))}
+            </View>
           </View>
         </View>
 
@@ -118,10 +115,10 @@ class Home extends React.Component<
         <View style={{ marginTop: 40, width: '100%' }}>
           <View
             style={{
-              justifyContent: 'flex-start',
-              flexDirection: 'row',
-              alignItems: 'center',
               marginBottom: 12,
+              alignItems: 'center',
+              flexDirection: 'row',
+              justifyContent: 'flex-start',
             }}>
             <StyledH2>Planos</StyledH2>
             <Badges>
@@ -129,39 +126,51 @@ class Home extends React.Component<
             </Badges>
           </View>
 
-          <View
-            style={{
-              justifyContent: 'flex-start',
-              flexDirection: 'row',
-              flexWrap: 'wrap',
-              margin: -8,
-            }}>
-            {fastItemPlus.map((item, index) => (
-              <FastItem key={index}>
-                <View style={{ width: '100%', alignItems: 'flex-start' }}>
-                  <StyledText2>{item.name}</StyledText2>
-                </View>
-
-                <View style={{ width: '100%', alignItems: 'flex-start' }}>
-                  <View style={{ marginBottom: 6 }}>
-                    <StyledText3>
-                      {item.timeNumber}{' '}
-                      <StyledText4>{item.timeString}</StyledText4>
-                    </StyledText3>
+          <View style={{ flex: 1 }}>
+            <View
+              style={{
+                margin: -8,
+                flexWrap: 'wrap',
+                flexDirection: 'row',
+                justifyContent: 'flex-start',
+              }}>
+              {fastItemPlus.map((item: any, index) => (
+                <FastItem key={index}>
+                  <View style={{ width: '100%', alignItems: 'flex-start' }}>
+                    <StyledText2>{item.name}</StyledText2>
                   </View>
-                  {item.tag && <StyledText5>{item.tag}</StyledText5>}
-                </View>
 
-                <View style={{ width: '100%', alignItems: 'flex-end' }}>
-                  <Icon size={12} color={'#FFF'} icon="info" />
-                </View>
-              </FastItem>
-            ))}
+                  <View style={{ width: '100%', alignItems: 'flex-start' }}>
+                    <View style={{ marginBottom: 6 }}>
+                      <StyledText3>
+                        {item.timeNumber}{' '}
+                        <StyledText4>{item.timeString}</StyledText4>
+                      </StyledText3>
+                    </View>
+                    {item.tag && <StyledText5>{item.tag}</StyledText5>}
+                  </View>
+
+                  <View style={{ width: '100%', alignItems: 'flex-end' }}>
+                    <Icon size={12} color={'#FFF'} icon="info" />
+                  </View>
+                </FastItem>
+              ))}
+            </View>
           </View>
         </View>
       </View>
     );
   }
+
+  goFastStart = (presetId) => {
+    const { navigation } = this.props;
+    navigation.navigate('FastStart', { presetId });
+  };
+
+  goToTimer = (fastingId) => {
+    const { navigation } = this.props;
+    navigation.navigate('Timer', { fastingId });
+  };
 
   private Render_FastItem = (index) => {
     const Item = this.Render_ItemFast(index);
@@ -221,6 +230,7 @@ function mapDispatchToProps(dispatch) {
   return {
     useDispatch: {
       getPresets: () => dispatch(ReduxActions.getPresets()),
+      clearFasting: (_) => dispatch(ReduxActions.clearFasting()),
     },
   };
 }

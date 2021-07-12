@@ -245,8 +245,7 @@ export interface endFasting {
 }
 
 export interface endFastingVariables {
-  fastingId: string;
-  save: boolean;
+  endFasting: EndFastingInput;
 }
 
 /* tslint:disable */
@@ -404,6 +403,15 @@ export interface CustomerUpdateInput {
   avatar?: AvatarUpdate | null;
 }
 
+export interface EndFastingInput {
+  save: boolean;
+  fastingId: string;
+  customEndDate?: any | null;
+  howFelling?: number | null;
+  notes?: string | null;
+  picture?: PictureInput | null;
+}
+
 export interface FastingInput {
   name: string;
   startDate: any;
@@ -423,6 +431,11 @@ export interface FastingUpdateInput {
 export interface Pagination {
   pageNumber: number;
   nPerPage: number;
+}
+
+export interface PictureInput {
+  type: string;
+  data: string;
 }
 
 export interface PresetInput {

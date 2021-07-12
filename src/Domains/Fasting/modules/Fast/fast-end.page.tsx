@@ -1,17 +1,24 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import styled, { css } from 'styled-components/native';
+import { launchCamera, ImagePickerResponse } from 'react-native-image-picker';
 import { StackScreenProps } from '@react-navigation/stack';
+import DateTimePickerModal from 'react-native-modal-datetime-picker';
 
 import * as ASSETS from '@Config/assets';
-import { Button, Icon, Input } from '@Components';
+import { showSnackbar } from '@Config/graphql';
+import { Button, Icon, DismissKeyboard } from '@Components';
 import { LoggedStackParamList, PagePropsType } from '@Navigation';
 import { ReduxActions, ReduxPropsType, ReduxStateType } from '@Redux/Fasting';
+
 import {
   View,
   Text,
+  Share,
+  ScrollView,
   TouchableOpacity,
-  ActivityIndicator,
   ImageBackground,
+  KeyboardAvoidingView,
 } from 'react-native';
 import {
   StyledTextInput,
@@ -26,10 +33,20 @@ import {
   StyledText9,
 } from './fast.style';
 
+type FasEndState = {
+  pictureUpload: ImagePickerResponse | null;
+  saved: boolean;
+  fastingNotes: string;
+  howFellingSelected: number | null;
+  customEndDate: Date;
+  visibleStartDateTimePickerModal: boolean;
+  visibleEndDateTimePickerModal: boolean;
+};
+
 type RoutePropsType = StackScreenProps<LoggedStackParamList, 'FastEnd'>;
 class FastEnd extends React.Component<
   RoutePropsType & ReduxPropsType & PagePropsType,
-  any
+  FasEndState
 > {
   static setPageConfigs = {
     topBarConfig: { color: '#FFF' },
@@ -39,44 +56,175 @@ class FastEnd extends React.Component<
 
   constructor(props) {
     super(props);
+    this.state = {
+      pictureUpload: null,
+      saved: false,
+      fastingNotes: '',
+      howFellingSelected: null,
+      customEndDate: new Date(),
+      visibleStartDateTimePickerModal: false,
+      visibleEndDateTimePickerModal: false,
+    };
   }
 
-  componentDidUpdate() {
-    this.handlerEndFasting();
+  componentDidUpdate(prevProps) {
+    this.handlerEndFasting(prevProps);
   }
 
   private endFasting = (save: boolean) => {
-    const {
-      fasting,
-      createFasting: { data: fastingId },
-    } = this.props.useRedux.Fastings;
+    this.setState({ saved: save }, () => {
+      const {
+        fasting,
+        createFasting: { data: cFastingId },
+      } = this.props.useRedux.Fastings;
 
-    if (fasting?._id)
-      this.props.useDispatch.endFasting({ fastingId: fasting._id, save });
+      const {
+        customEndDate,
+        pictureUpload,
+        howFellingSelected,
+        fastingNotes,
+      } = this.state;
 
-    if (fastingId) this.props.useDispatch.endFasting({ fastingId, save });
+      const fastingId = fasting?._id
+        ? fasting._id
+        : cFastingId
+        ? cFastingId
+        : '';
+
+      const endFasting = (pictureUpload && {
+        save,
+        fastingId,
+        customEndDate,
+        howFelling: howFellingSelected,
+        notes: fastingNotes,
+        picture: {
+          type: (pictureUpload && pictureUpload.type) || '',
+          data: (pictureUpload && pictureUpload.base64) || '',
+        },
+      }) || {
+        save,
+        fastingId,
+        customEndDate,
+        howFelling: howFellingSelected,
+        notes: fastingNotes,
+      };
+
+      this.props.useDispatch.endFasting({
+        endFasting,
+      });
+    });
   };
 
-  private handlerEndFasting = () => {
+  private handlerEndFasting = (prevProps: ReduxPropsType) => {
     const { reset } = this.props.navigation;
+    const { isFocused } = this.props;
+    const { saved } = this.state;
+
+    const text = saved
+      ? 'Your fast was saved. ✅ '
+      : 'Your fast was dropped. ⛔️';
+
     const {
-      fasting,
       endFasting: { success },
     } = this.props.useRedux.Fastings;
 
-    if (!fasting && success) {
-      reset({
-        index: 1,
-        routes: [{ name: 'Home' }],
+    const {
+      endFasting: { success: prevSuccess },
+    } = prevProps.useRedux.Fastings;
+
+    if (isFocused && prevSuccess != success) {
+      showSnackbar(text, 'success', 'i', () => {
+        reset({
+          index: 1,
+          routes: [{ name: 'Home' }],
+        });
       });
     }
   };
 
+  private handlerShared = async () => {
+    try {
+      const result = await Share.share({
+        title: 'Nice effort! ',
+        url: 'https://www.fastingwithyara.com/',
+        message: `You completed a fast for a total ${this.Duration}`,
+      });
+
+      if (result.action === Share.sharedAction) {
+        if (result.activityType) {
+          // shared with activity type of result.activityType
+        } else {
+          // shared
+        }
+      } else if (result.action === Share.dismissedAction) {
+        // dismissed
+      }
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+
+  private handlerEditStartDate = (date: Date) => {
+    this.setVisibleDateTimePickerModal(false, true);
+    const fastingId = this.FastingId;
+
+    if (fastingId) {
+      this.props.useDispatch.editFasting({
+        id: fastingId,
+        editStartEnd: true,
+        fasting: {
+          startDate: date,
+        },
+      });
+    }
+  };
+
+  private handlerEditEndDate = (date: Date) => {
+    this.setVisibleDateTimePickerModal(false);
+    this.setState({
+      customEndDate: date,
+    });
+  };
+
+  private handlerLaunchCameraLibrary = () => {
+    launchCamera(
+      {
+        quality: 0.1,
+        mediaType: 'photo',
+        includeBase64: true,
+      },
+      (res: ImagePickerResponse) => {
+        const { base64 } = res;
+        if (base64) this.setState({ pictureUpload: res });
+      },
+    );
+  };
+
   render() {
-    const {
-      Emotes: { Asset9, Asset10, Asset11, Asset12, Asset13 },
-    } = ASSETS.FASTING.svgs;
     const { backgrounds } = ASSETS.FASTING;
+
+    const howFelling = [
+      {
+        value: 0,
+        label: '😡',
+      },
+      {
+        value: 1,
+        label: '😢',
+      },
+      {
+        value: 2,
+        label: '🙂',
+      },
+      {
+        value: 3,
+        label: '😄',
+      },
+      {
+        value: 4,
+        label: '😍',
+      },
+    ];
 
     const endFastItens = [
       {
@@ -85,135 +233,222 @@ class FastEnd extends React.Component<
       },
       {
         title: 'GOAL REACHED',
-        subtitle: this.EndDate,
+        subtitle: this.CurrentDate,
       },
     ];
 
     const {
-      endFasting: { loading },
+      endFasting: { loading, success },
     } = this.props.useRedux.Fastings;
 
+    const {
+      saved,
+      visibleStartDateTimePickerModal,
+      visibleEndDateTimePickerModal,
+    } = this.state;
+
+    const disabled = success || loading;
+
     return (
-      <>
-        {/* === */}
-        <View style={{ height: 200, width: '100%' }}>
-          <ImageBackground
-            resizeMode="cover"
-            style={{
-              flex: 1,
-              paddingVertical: 30,
-              paddingHorizontal: 40,
-              justifyContent: 'flex-end',
-            }}
-            source={backgrounds['tertiary']}>
-            <View>
-              <StyledText16>Nice effort! </StyledText16>
-              <StyledText17>You completed a fast for </StyledText17>
-              <StyledText17>
-                a total <StyledText18>{this.Duration}</StyledText18>
-              </StyledText17>
-            </View>
-
-            <TouchableOpacity
-              style={{
-                flexDirection: 'row',
-                alignItems: 'center',
-                alignSelf: 'flex-end',
-              }}>
-              <StyledText19>Share fast</StyledText19>
-              <Icon size={25} color={'#FFF'} icon="upload" />
-            </TouchableOpacity>
-          </ImageBackground>
-        </View>
-
-        {/* === */}
-        <View
-          style={{
-            flex: 1,
-            alignItems: 'center',
-            justifyContent: 'flex-start',
-            marginHorizontal: 40,
-            paddingTop: 30,
-          }}>
-          <View style={{ width: '100%' }}>
-            <TouchableOpacity
-              style={{
-                flexDirection: 'row',
-                alignItems: 'center',
-                justifyContent: 'center',
-                marginBottom: 20,
-              }}>
-              <Icon size={25} color={'#FFF'} icon="camera" />
-              <StyledText20>Share your fast breaker</StyledText20>
-            </TouchableOpacity>
-
-            {endFastItens.map((item, idx) => (
-              <View
-                key={idx}
+      <DismissKeyboard>
+        <ScrollView style={{ flex: 1 }}>
+          <KeyboardAvoidingView style={{ flex: 1 }} behavior="position">
+            {/* === */}
+            <View style={{ height: 200 }}>
+              <ImageBackground
+                resizeMode="cover"
                 style={{
-                  flexDirection: 'row',
-                  justifyContent: 'space-between',
-                  alignItems: 'center',
-                  marginVertical: 16,
-                }}>
+                  flex: 1,
+                  paddingVertical: 30,
+                  paddingHorizontal: 40,
+                  justifyContent: 'flex-end',
+                }}
+                source={backgrounds['tertiary']}>
                 <View>
-                  <StyledText21> {item.title} </StyledText21>
-                  <StyledText22> {item.subtitle} </StyledText22>
+                  <StyledText16>Nice effort! </StyledText16>
+                  <StyledText17>You completed a fast for </StyledText17>
+                  <StyledText17>
+                    a total <StyledText18>{this.Duration}</StyledText18>
+                  </StyledText17>
                 </View>
 
                 <TouchableOpacity
+                  disabled={disabled}
+                  onPress={this.handlerShared}
                   style={{
-                    marginLeft: 8,
-                    borderRadius: 40,
-                    paddingVertical: 8,
-                    paddingHorizontal: 12,
-                    justifyContent: 'center',
-                    backgroundColor: 'rgba(255, 255, 255, .4)',
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    alignSelf: 'flex-end',
                   }}>
-                  <StyledText23>EDIT</StyledText23>
+                  <StyledText19>Share fast</StyledText19>
+                  <Icon size={25} color={'#FFF'} icon="upload" />
                 </TouchableOpacity>
-              </View>
-            ))}
-          </View>
-
-          <View style={{ marginTop: 40, width: '100%' }}>
-            <View style={{ alignItems: 'center', marginBottom: 20 }}>
-              <StyledText9>How are you feealing?</StyledText9>
-              <View style={{ flexDirection: 'row', marginTop: 12 }}>
-                <Asset9 width={30} height={30} />
-                <Asset10 width={30} height={30} />
-                <Asset11 width={30} height={30} />
-                <Asset12 width={30} height={30} />
-                <Asset13 width={30} height={30} />
-              </View>
+              </ImageBackground>
             </View>
 
-            <StyledTextInput
-              multiline={true}
-              placeholder="Add a Note"
-              placeholderTextColor="#FFF"
+            {/* === */}
+            <View
+              style={{
+                flex: 1,
+                paddingTop: 30,
+                alignItems: 'center',
+                marginHorizontal: 40,
+                justifyContent: 'flex-start',
+              }}>
+              <View style={{ width: '100%' }}>
+                <TouchableOpacity
+                  disabled={disabled}
+                  onPress={this.handlerLaunchCameraLibrary}
+                  style={{
+                    marginBottom: 20,
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                  }}>
+                  <Icon size={25} color={'#FFF'} icon="camera" />
+                  <StyledText20>Share your fast breaker</StyledText20>
+                </TouchableOpacity>
+
+                {endFastItens.map((item, idx) => (
+                  <View
+                    key={idx}
+                    style={{
+                      marginVertical: 16,
+                      flexDirection: 'row',
+                      alignItems: 'center',
+                      justifyContent: 'space-between',
+                    }}>
+                    <View>
+                      <StyledText21> {item.title} </StyledText21>
+                      <StyledText22> {item.subtitle} </StyledText22>
+                    </View>
+
+                    <TouchableOpacity
+                      disabled={disabled}
+                      onPress={() =>
+                        this.setVisibleDateTimePickerModal(true, !idx)
+                      }
+                      style={{
+                        marginLeft: 8,
+                        borderRadius: 40,
+                        paddingVertical: 8,
+                        paddingHorizontal: 12,
+                        justifyContent: 'center',
+                        backgroundColor: 'rgba(255, 255, 255, .4)',
+                      }}>
+                      <StyledText23>EDIT</StyledText23>
+                    </TouchableOpacity>
+                  </View>
+                ))}
+              </View>
+
+              <View style={{ marginTop: 40, width: '100%' }}>
+                <View style={{ alignItems: 'center', marginBottom: 20 }}>
+                  <StyledText9>How are you feealing?</StyledText9>
+                  <View
+                    style={{
+                      marginTop: 12,
+                      minHeight: 50,
+                      flexDirection: 'row',
+                    }}>
+                    {howFelling.map((hFItem, index) => (
+                      <EmojiTouchable
+                        disabled={disabled}
+                        key={index}
+                        onPress={() => {
+                          const { howFellingSelected } = this.state;
+                          if (howFellingSelected == hFItem.value)
+                            return this.setState({ howFellingSelected: null });
+                          this.setState({ howFellingSelected: hFItem.value });
+                        }}>
+                        <Emoji
+                          selected={
+                            this.state.howFellingSelected == hFItem.value
+                          }>
+                          {hFItem.label}
+                        </Emoji>
+                      </EmojiTouchable>
+                    ))}
+                  </View>
+                </View>
+
+                <StyledTextInput
+                  editable={!disabled}
+                  multiline={true}
+                  placeholder="Add a Note"
+                  placeholderTextColor="#FFF"
+                  value={this.state.fastingNotes}
+                  onChangeText={(value) =>
+                    this.setState({ fastingNotes: value })
+                  }
+                />
+
+                <View style={{ flexDirection: 'row', marginTop: 20 }}>
+                  <Button
+                    color="secondary"
+                    disabled={disabled}
+                    loading={saved && loading}
+                    style={{ flex: 1, marginRight: 8 }}
+                    onPress={() => this.endFasting(true)}>
+                    Save
+                  </Button>
+                  <Button
+                    color={'transparent'}
+                    disabled={disabled}
+                    loading={!saved && loading}
+                    style={{ flex: 1, marginLeft: 8 }}
+                    onPress={() => this.endFasting(false)}>
+                    Delete
+                  </Button>
+                </View>
+              </View>
+            </View>
+          </KeyboardAvoidingView>
+
+          {visibleStartDateTimePickerModal && (
+            <DateTimePickerModal
+              mode="datetime"
+              isVisible={true}
+              maximumDate={new Date()}
+              onConfirm={this.handlerEditStartDate}
+              date={this.InitialStartDateTimePickerModal}
+              onCancel={() => this.setVisibleDateTimePickerModal(false, true)}
             />
+          )}
 
-            <View style={{ flexDirection: 'row', marginTop: 20 }}>
-              <Button
-                loading={loading}
-                color="secondary"
-                style={{ flex: 1, marginRight: 8 }}
-                onPress={() => this.endFasting(true)}>
-                Save
-              </Button>
-              <Button
-                loading={loading}
-                color={'transparent'}
-                style={{ flex: 1, marginLeft: 8 }}
-                onPress={() => this.endFasting(false)}>
-                Delete
-              </Button>
-            </View>
-          </View>
-        </View>
-      </>
+          {visibleEndDateTimePickerModal && (
+            <DateTimePickerModal
+              mode="datetime"
+              isVisible={true}
+              maximumDate={new Date()}
+              date={this.state.customEndDate}
+              onConfirm={this.handlerEditEndDate}
+              minimumDate={this.InitialStartDateTimePickerModal}
+              onCancel={() => this.setVisibleDateTimePickerModal(false)}
+            />
+          )}
+        </ScrollView>
+      </DismissKeyboard>
     );
+  }
+  private setVisibleDateTimePickerModal = (
+    visible: boolean,
+    start?: boolean,
+  ) => {
+    if (start)
+      return this.setState({
+        visibleStartDateTimePickerModal: visible,
+      });
+
+    this.setState({
+      visibleEndDateTimePickerModal: visible,
+    });
+  };
+
+  private get InitialStartDateTimePickerModal() {
+    const { fasting } = this.props.useRedux.Fastings;
+    if (!fasting) return new Date();
+    return fasting.startDate;
   }
 
   private get StartDate() {
@@ -224,8 +459,8 @@ class FastEnd extends React.Component<
     return `${fasting.startDate.toDateString()}, ${time[0]}:${time[1]}`;
   }
 
-  private get EndDate() {
-    const endDate = new Date();
+  private get CurrentDate() {
+    const endDate = this.state.customEndDate;
     const time = endDate.toTimeString().split('G')[0].split(':');
 
     return `${endDate.toDateString()}, ${time[0]}:${time[1]}`;
@@ -235,7 +470,9 @@ class FastEnd extends React.Component<
     const { fasting } = this.props.useRedux.Fastings;
     if (!fasting) return;
 
-    const differenceInTime = new Date().getTime() - fasting.startDate.getTime();
+    const differenceInTime =
+      new Date(this.state.customEndDate).getTime() -
+      fasting.startDate.getTime();
     const differenceInHours = differenceInTime / 1000 / 3600;
     const differenceInMinutes = differenceInTime / 1000 / 60;
 
@@ -243,6 +480,12 @@ class FastEnd extends React.Component<
     else if (differenceInMinutes >= 1)
       return `${differenceInMinutes.toFixed()} minutes.`;
     else return `1 minute.`;
+  }
+
+  private get FastingId() {
+    const { fasting } = this.props.useRedux.Fastings;
+    if (!fasting) return false;
+    return fasting._id;
   }
 }
 
@@ -258,8 +501,24 @@ function mapDispatchToProps(dispatch) {
   return {
     useDispatch: {
       endFasting: (_) => dispatch(ReduxActions.endFasting(_)),
+      editFasting: (_) => dispatch(ReduxActions.editFasting(_)),
     },
   };
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(FastEnd);
+
+const EmojiTouchable = styled(TouchableOpacity)`
+  padding: 0 4px;
+  align-items: center;
+  justify-content: center;
+`;
+
+const Emoji = styled(Text)`
+  font-size: 30px;
+  ${(props) =>
+    props.selected &&
+    css`
+      font-size: 40px;
+    `}
+`;

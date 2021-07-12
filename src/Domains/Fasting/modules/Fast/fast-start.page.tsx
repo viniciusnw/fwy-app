@@ -3,11 +3,11 @@ import { Formik } from 'formik';
 import { connect } from 'react-redux';
 import { StackScreenProps } from '@react-navigation/stack';
 
+import { Button } from '@Components';
 import * as ASSETS from '@Config/assets';
-import { Button, Icon } from '@Components';
 import { LoggedStackParamList, PagePropsType } from '@Navigation';
-import { View, TouchableOpacity, ImageBackground } from 'react-native';
 import { ReduxActions, ReduxPropsType, ReduxStateType } from '@Redux/Fasting';
+import { View, TouchableOpacity, ImageBackground, Share } from 'react-native';
 import {
   Footer,
   Divider,
@@ -72,6 +72,27 @@ class FastStart extends React.Component<
     const preset = this.Preset;
     if (!preset) return;
     this.setState({ preset });
+  };
+
+  private handlerShared = async () => {
+    try {
+      const result = await Share.share({
+        title: 'Fasting with Yara',
+        url: 'https://www.fastingwithyara.com/',
+      });
+
+      if (result.action === Share.sharedAction) {
+        if (result.activityType) {
+          // shared with activity type of result.activityType
+        } else {
+          // shared
+        }
+      } else if (result.action === Share.dismissedAction) {
+        // dismissed
+      }
+    } catch (error) {
+      console.log(error.message);
+    }
   };
 
   render() {
@@ -193,7 +214,7 @@ class FastStart extends React.Component<
                       </View>
                     </View>
 
-                    <Button small color="transparent">
+                    <Button small onPress={this.handlerShared} color="transparent">
                       Invite Friends
                     </Button>
                   </View>

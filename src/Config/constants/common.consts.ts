@@ -1,3 +1,25 @@
+
+
+enum languagesEnum {
+  PT_BR = 'pt-BR',
+  EN_US = 'en-US'
+}
+
+enum registerFieldsEnum {
+  name = 'name',
+  email = 'email',
+  phone = 'phone',
+  birthday = 'birthday',
+  country = 'country',
+  state = 'state',
+  password = 'password',
+}
+
+enum loginFieldsEnum {
+  email = "email",
+  password = "password",
+}
+
 export default {
   fullDays: [
     0,
@@ -69,5 +91,10 @@ export default {
     24,
   ],
   fastColors: ['#EC5349', '#8B4F9F', '#222842', '#EB334D'],
-  ApolloClient: 'APOLLO_CLIENT'
+  ApolloClient: 'APOLLO_CLIENT',
+  enums: {
+    languages: languagesEnum,
+    registerFields: registerFieldsEnum,
+    loginFields: loginFieldsEnum
+  }
 };

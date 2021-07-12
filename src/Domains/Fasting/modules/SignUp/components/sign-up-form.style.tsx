@@ -25,5 +25,4 @@ export const StyledSelect = styled(View)`
 
 export const StyledBox = styled(ScrollView)`
   width: 100%;
-  margin-top: ${({ theme }) => theme.spacing.large};
 `;

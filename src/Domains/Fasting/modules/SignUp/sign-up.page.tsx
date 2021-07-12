@@ -2,14 +2,17 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { StackScreenProps } from '@react-navigation/stack';
 
+import { withTranslation, WithTranslation } from 'react-i18next';
+
 import { StyledView } from './sign-up.style';
+import { DismissKeyboard } from '@Components';
 import SignUpForm from './components/sign-up-form.component';
 import { UnloogedStackParamList, PagePropsType } from '@Navigation';
 import { ReduxActions, ReduxPropsType, ReduxStateType } from '@Redux/Fasting';
 
 type RoutePropsType = StackScreenProps<UnloogedStackParamList, 'SignUp'>;
 class SignUp extends React.Component<
-  RoutePropsType & ReduxPropsType & PagePropsType,
+  RoutePropsType & ReduxPropsType & PagePropsType & WithTranslation,
   any
 > {
   static setPageConfigs = {
@@ -46,17 +49,19 @@ class SignUp extends React.Component<
     const { loading: countriesLoading, data: countriesData } = countries;
 
     return (
-      <StyledView>
-        <SignUpForm
-          statesData={statesData}
-          statesLoading={statesLoading}
-          countriesData={countriesData}
-          countriesLoading={countriesLoading}
-          registerLoading={registerLoading}
-          formChangeField={this.formChangeField}
-          dispatchRegister={this.props.useDispatch.register}
-        />
-      </StyledView>
+      <DismissKeyboard>
+        <StyledView>
+          <SignUpForm
+            statesData={statesData}
+            statesLoading={statesLoading}
+            countriesData={countriesData}
+            countriesLoading={countriesLoading}
+            registerLoading={registerLoading}
+            formChangeField={this.formChangeField}
+            dispatchRegister={this.props.useDispatch.register}
+          />
+        </StyledView>
+      </DismissKeyboard>
     );
   }
 
@@ -88,4 +93,6 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(SignUp);
+export default withTranslation('SignUp')(
+  connect(mapStateToProps, mapDispatchToProps)(SignUp),
+);

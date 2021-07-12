@@ -13,6 +13,12 @@ export default {
             error: false,
             errorMessage: null,
           },
+          endFasting: {
+            loading: false,
+            success: false,
+            error: false,
+            errorMessage: null,
+          },
           fasting: null
         };
       }

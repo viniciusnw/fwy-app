@@ -15,14 +15,30 @@ import { ApolloLink, NextLink, Operation } from 'apollo-link';
 
 import { FASTING } from '@Config/constants';
 
-function showSnackbarError(message, time) {
+const getSnackbarDuration = (time: 's' | 'l' | 'i') => {
+  switch (time) {
+    case 's': return Snackbar.LENGTH_SHORT
+    case 'l': return Snackbar.LENGTH_LONG
+    case 'i': return Snackbar.LENGTH_INDEFINITE
+  }
+}
+
+export function showSnackbar(
+  message,
+  type: 'error' | 'success',
+  time: 's' | 'l' | 'i',
+  onPress?: Function
+) {
+  const duration = getSnackbarDuration(time)
+  const textColor = type == 'error' ? '#FF0033' : '#28A745'
+
   Snackbar.show({
     text: message,
-    duration: time,
+    duration,
     action: {
+      textColor,
       text: 'Close',
-      textColor: '#FF0033',
-      onPress: () => null,
+      onPress: () => onPress && onPress(),
     },
   });
 }
@@ -36,13 +52,15 @@ export function configureApolloClient(APP_NAME: string) {
     const { graphQLErrors, networkError } = Error;
 
     if (graphQLErrors)
-      graphQLErrors?.map(erro => showSnackbarError(
+      graphQLErrors?.map(erro => showSnackbar(
         erro.message,
-        Snackbar.LENGTH_INDEFINITE
+        'error',
+        'i'
       ))
-    if (networkError) showSnackbarError(
+    if (networkError) showSnackbar(
       networkError.message,
-      Snackbar.LENGTH_SHORT
+      'error',
+      's'
     )
 
     console.warn("[ApolloClient][Error]: ", Error)

@@ -2,9 +2,9 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { StackScreenProps } from '@react-navigation/stack';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
+import { View, TouchableOpacity, ActivityIndicator } from 'react-native';
 
 import { Button } from '@Components';
-import { View, TouchableOpacity, ActivityIndicator } from 'react-native';
 import { LoggedStackParamList, PagePropsType } from '@Navigation';
 import { ReduxActions, ReduxPropsType, ReduxStateType } from '@Redux/Fasting';
 
@@ -33,7 +33,6 @@ class Timer extends React.PureComponent<
 
   constructor(props) {
     super(props);
-
     this.state = {
       finishFasting: false,
       startFasting: false,
@@ -136,6 +135,7 @@ class Timer extends React.PureComponent<
 
   private handlerEditStartDate = (prevProps: ReduxPropsType) => {
     const { reset } = this.props.navigation;
+    const { isFocused } = this.props;
 
     const {
       editFasting: { loading: loadingEditFasting, success },
@@ -149,7 +149,7 @@ class Timer extends React.PureComponent<
       params: { fastingId: fastingIdFromParam },
     } = this.props.route;
 
-    if (success && prevLoadingEditFasting != loadingEditFasting) {
+    if (isFocused && success && prevLoadingEditFasting != loadingEditFasting) {
       reset({
         index: 2,
         routes: [
@@ -276,24 +276,24 @@ class Timer extends React.PureComponent<
     if (!fasting) return new Date();
     return fasting.startDate;
   }
-
-  // return -> Today, 12:59 PM
+  
   private get StartDateFormated() {
     const { fasting } = this.props.useRedux.Fastings;
     if (!fasting) return;
     const time = fasting.startDate.toTimeString().split('G')[0].split(':');
     const date = fasting.startDate.toDateString().split(' ');
 
+    // return -> Today, 12:59 PM
     return `${date[0]} ${date[1]} ${date[2]}, ${time[0]}:${time[1]}`;
   }
 
-  // return -> Today, 12:59 AM
   private get EndDateFormated() {
     const { fasting } = this.props.useRedux.Fastings;
     if (!fasting) return;
     const time = fasting.endDate.toTimeString().split('G')[0].split(':');
     const date = fasting.endDate.toDateString().split(' ');
 
+    // return -> Today, 12:59 AM
     return `${date[0]} ${date[1]} ${date[2]}, ${time[0]}:${time[1]}`;
   }
 
