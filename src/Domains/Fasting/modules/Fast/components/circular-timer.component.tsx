@@ -10,7 +10,7 @@ import {
 } from './../fast.style';
 
 class CirgularTimer extends React.PureComponent<
-  ReduxPropsType & { startFasting: boolean; finishFasting: boolean },
+  ReduxPropsType & { startFasting: boolean },
   any
 > {
   private interval;
@@ -65,12 +65,12 @@ class CirgularTimer extends React.PureComponent<
           size={300}
           width={30}
           rotation={360}
-          duration={1450}
           lineCap="round"
+          duration={1450}
           backgroundWidth={30}
-          tintColor="#EC5349"
           backgroundColor="#222842"
-          fill={differenceInPercentage}>
+          fill={differenceInPercentage}
+          tintColor={remainingTimeToShow == 0 ? '#4BB543' : '#EC5349'}>
           {(fill) => (
             <TimerContainer>
               {false ? (

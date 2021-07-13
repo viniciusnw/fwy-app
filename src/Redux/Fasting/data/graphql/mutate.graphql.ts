@@ -89,6 +89,7 @@ export class Mutate extends GraphqlApi {
     return this.ApolloClient.mutate({
       mutation: editFastingMutate,
       variables: params,
+      fetchPolicy: 'no-cache',
     }).then(response => this.mapResponse(response, 'editFasting'))
       .catch(err => this.mapError(err))
   }
@@ -97,6 +98,7 @@ export class Mutate extends GraphqlApi {
     return this.ApolloClient.mutate({
       mutation: editStartEndFastingMutate,
       variables: params,
+      fetchPolicy: 'no-cache',
     }).then(response => this.mapResponse(response, 'editStartEndFasting'))
       .catch(err => this.mapError(err))
   }

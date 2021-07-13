@@ -46,19 +46,11 @@ export default {
 }
 
 function mapEditFast(oldFasting: any, responsePayload: any) {
-
   let fasting
-  if (responsePayload?.startDate)
-    fasting = {
-      ...oldFasting,
-      startDate: new Date(responsePayload.startDate)
-    }
-
-  if (responsePayload?.endDate)
-    fasting = {
-      ...oldFasting,
-      endDate: new Date(responsePayload.endDate)
-    }
-
+  fasting = {
+    ...oldFasting,
+    startDate: new Date(responsePayload?.startDate ? responsePayload.startDate : oldFasting.startDate),
+    endDate: new Date(responsePayload?.endDate ? responsePayload.endDate : oldFasting.endDate)
+  }
   return fasting
 }

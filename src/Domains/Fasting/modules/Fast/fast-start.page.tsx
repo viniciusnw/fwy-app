@@ -3,8 +3,8 @@ import { Formik } from 'formik';
 import { connect } from 'react-redux';
 import { StackScreenProps } from '@react-navigation/stack';
 
-import { Button } from '@Components';
 import * as ASSETS from '@Config/assets';
+import { Button, DismissKeyboard } from '@Components';
 import { LoggedStackParamList, PagePropsType } from '@Navigation';
 import { ReduxActions, ReduxPropsType, ReduxStateType } from '@Redux/Fasting';
 import { View, TouchableOpacity, ImageBackground, Share } from 'react-native';
@@ -128,100 +128,105 @@ class FastStart extends React.Component<
           errors,
           touched,
         }) => (
-          <View style={{ flex: 1 }}>
-            <FormContainer>
-              {/* === */}
-              <FormHeader>
-                {(!fromPlan && <CustomPlanTag />) || (
-                  <View style={{ marginBottom: 12, flex: 1 }} />
-                )}
-
-                {fromPreset && (
-                  <TouchableOpacity style={{ marginBottom: 12 }}>
-                    <StyledText>{saveOrUpdate}</StyledText>
-                  </TouchableOpacity>
-                )}
-              </FormHeader>
-
-              {/* === */}
-              <FastStartForm
-                touched={touched}
-                errors={errors}
-                values={values}
-                handleBlur={handleBlur}
-                setFieldValue={setFieldValue}
-              />
-
-              {/* === */}
-              <View style={{ padding: 15 }}>
-                <StyledText4>Long 5 Fast Journal</StyledText4>
-                <StyledText5>
-                  A lot happens during a fast. Tracking your moo Will Help you
-                  understand those changes, and reflecte on How you’e feeling at
-                  different stages of your fast.
-                </StyledText5>
-              </View>
-            </FormContainer>
-
-            {/* === */}
-            <Divider />
-
-            {/* === */}
-            <Footer>
-              <ImageBackground
-                resizeMode="cover"
-                style={{ flex: 1, paddingBottom: 62 }}
-                source={ASSETS.FASTING.backgrounds['primary']}>
-                <View style={{ marginHorizontal: '23%', top: -20 }}>
-                  {isAlreadyFasting ? (
-                    <Button
-                      style={{ zIndex: 10 }}
-                      color="primary"
-                      onPress={() => this.goToTimerId(isAlreadyFasting)}
-                      icon={{ icon: 'timer', color: '#EC5349', size: 22 }}>
-                      YOU’RE FASTING!
-                    </Button>
-                  ) : (
-                    <Button
-                      style={{ zIndex: 10 }}
-                      color="primary"
-                      onPress={handleSubmit}
-                      icon={{ icon: 'timer', color: '#EC5349', size: 22 }}>
-                      START YOUR FAST
-                    </Button>
+          <DismissKeyboard>
+            <View style={{ flex: 1 }}>
+              <FormContainer>
+                {/* === */}
+                <FormHeader>
+                  {(!fromPlan && <CustomPlanTag />) || (
+                    <View style={{ marginBottom: 12, flex: 1 }} />
                   )}
+
+                  {fromPreset && (
+                    <TouchableOpacity style={{ marginBottom: 12 }}>
+                      <StyledText>{saveOrUpdate}</StyledText>
+                    </TouchableOpacity>
+                  )}
+                </FormHeader>
+
+                {/* === */}
+                <FastStartForm
+                  touched={touched}
+                  errors={errors}
+                  values={values}
+                  handleBlur={handleBlur}
+                  setFieldValue={setFieldValue}
+                />
+
+                {/* === */}
+                <View style={{ padding: 15 }}>
+                  <StyledText4>Long 5 Fast Journal</StyledText4>
+                  <StyledText5>
+                    A lot happens during a fast. Tracking your moo Will Help you
+                    understand those changes, and reflecte on How you’e feeling
+                    at different stages of your fast.
+                  </StyledText5>
                 </View>
+              </FormContainer>
 
-                <TouchableOpacity
-                  style={{ flex: 1, justifyContent: 'center' }}
-                  onPress={this.goToBadgeAll}>
-                  <View
-                    style={{
-                      flexDirection: 'row',
-                      marginHorizontal: 22,
-                      justifyContent: 'space-around',
-                    }}>
-                    <View style={{ flexDirection: 'row' }}>
-                      <RibbonFull
-                        width={20}
-                        height={30}
-                        style={{ marginTop: 5 }}
-                      />
-                      <View style={{ marginLeft: 10 }}>
-                        <StyledText6>JOURNAL</StyledText6>
-                        <StyledText7>Long 3 entries</StyledText7>
-                        <StyledText8>7 days</StyledText8>
-                      </View>
-                    </View>
+              {/* === */}
+              <Divider />
 
-                    <Button small onPress={this.handlerShared} color="transparent">
-                      Invite Friends
-                    </Button>
+              {/* === */}
+              <Footer>
+                <ImageBackground
+                  resizeMode="cover"
+                  style={{ flex: 1, paddingBottom: 62 }}
+                  source={ASSETS.FASTING.backgrounds['primary']}>
+                  <View style={{ marginHorizontal: '23%', top: -20 }}>
+                    {isAlreadyFasting ? (
+                      <Button
+                        style={{ zIndex: 10 }}
+                        color="primary"
+                        onPress={() => this.goToTimerId(isAlreadyFasting)}
+                        icon={{ icon: 'timer', color: '#EC5349', size: 22 }}>
+                        YOU’RE FASTING!
+                      </Button>
+                    ) : (
+                      <Button
+                        style={{ zIndex: 10 }}
+                        color="primary"
+                        onPress={handleSubmit}
+                        icon={{ icon: 'timer', color: '#EC5349', size: 22 }}>
+                        START YOUR FAST
+                      </Button>
+                    )}
                   </View>
-                </TouchableOpacity>
-              </ImageBackground>
-            </Footer>
-          </View>
+
+                  <TouchableOpacity
+                    style={{ flex: 1, justifyContent: 'center' }}
+                    onPress={this.goToBadgeAll}>
+                    <View
+                      style={{
+                        flexDirection: 'row',
+                        marginHorizontal: 22,
+                        justifyContent: 'space-around',
+                      }}>
+                      <View style={{ flexDirection: 'row' }}>
+                        <RibbonFull
+                          width={20}
+                          height={30}
+                          style={{ marginTop: 5 }}
+                        />
+                        <View style={{ marginLeft: 10 }}>
+                          <StyledText6>JOURNAL</StyledText6>
+                          <StyledText7>Long 3 entries</StyledText7>
+                          <StyledText8>7 days</StyledText8>
+                        </View>
+                      </View>
+
+                      <Button
+                        small
+                        onPress={this.handlerShared}
+                        color="transparent">
+                        Invite Friends
+                      </Button>
+                    </View>
+                  </TouchableOpacity>
+                </ImageBackground>
+              </Footer>
+            </View>
+          </DismissKeyboard>
         )}
       </Formik>
     );

@@ -45,7 +45,6 @@ class Timer extends React.PureComponent<
   }
 
   componentDidUpdate(prevProps) {
-    // console.log('Timer=>componentDidUpdate', this.props.useRedux.Fastings.fasting);
     this.handlerCreateFasting(prevProps);
     this.handlerEditStartDate(prevProps);
   }
@@ -276,7 +275,7 @@ class Timer extends React.PureComponent<
     if (!fasting) return new Date();
     return fasting.startDate;
   }
-  
+
   private get StartDateFormated() {
     const { fasting } = this.props.useRedux.Fastings;
     if (!fasting) return;
