@@ -11,6 +11,8 @@ import EvilIcons from 'react-native-vector-icons/EvilIcons';
 
 const setIcon = (icon, props) => {
   switch (icon) {
+    case 'close':
+      return <AntDesign name="closecircle" {...props} />;
     case 'left':
       return <AntDesign name="left" {...props} />;
     case 'right':

@@ -33,12 +33,12 @@ import {
   StyledText9,
 } from './fast.style';
 
-type FasEndState = {
+type FastEndState = {
   pictureUpload: ImagePickerResponse | null;
   saved: boolean;
+  customEndDate: Date;
   fastingNotes: string;
   howFellingSelected: number | null;
-  customEndDate: Date;
   visibleStartDateTimePickerModal: boolean;
   visibleEndDateTimePickerModal: boolean;
 };
@@ -46,7 +46,7 @@ type FasEndState = {
 type RoutePropsType = StackScreenProps<LoggedStackParamList, 'FastEnd'>;
 class FastEnd extends React.Component<
   RoutePropsType & ReduxPropsType & PagePropsType,
-  FasEndState
+  FastEndState
 > {
   static setPageConfigs = {
     topBarConfig: { color: '#FFF' },
@@ -56,6 +56,7 @@ class FastEnd extends React.Component<
 
   constructor(props) {
     super(props);
+
     this.state = {
       pictureUpload: null,
       saved: false,
@@ -91,7 +92,8 @@ class FastEnd extends React.Component<
         ? cFastingId
         : '';
 
-      const endFasting = (pictureUpload && {
+      const hasPictureUpload = pictureUpload?.type && pictureUpload?.base64;
+      const endFasting = (hasPictureUpload && {
         save,
         fastingId,
         customEndDate,
@@ -121,8 +123,8 @@ class FastEnd extends React.Component<
     const { saved } = this.state;
 
     const text = saved
-      ? 'Your fast was saved. ✅ '
-      : 'Your fast was dropped. ⛔️';
+      ? 'Your fast was saved ✅ '
+      : 'Your fast was dropped ⛔️';
 
     const {
       endFasting: { success },
@@ -243,6 +245,7 @@ class FastEnd extends React.Component<
 
     const {
       saved,
+      pictureUpload,
       visibleStartDateTimePickerModal,
       visibleEndDateTimePickerModal,
     } = this.state;
@@ -264,6 +267,16 @@ class FastEnd extends React.Component<
                   justifyContent: 'flex-end',
                 }}
                 source={backgrounds['tertiary']}>
+                <TouchableOpacity
+                  disabled={disabled}
+                  onPress={this.props.navigation.goBack}
+                  style={{
+                    top: -30,
+                    alignSelf: 'flex-end',
+                  }}>
+                  <Icon size={25} color={'#FFF'} icon="close" />
+                </TouchableOpacity>
+
                 <View>
                   <StyledText16>Nice effort! </StyledText16>
                   <StyledText17>You completed a fast for </StyledText17>
@@ -298,15 +311,28 @@ class FastEnd extends React.Component<
               <View style={{ width: '100%' }}>
                 <TouchableOpacity
                   disabled={disabled}
-                  onPress={this.handlerLaunchCameraLibrary}
+                  onPress={
+                    pictureUpload
+                      ? () => this.setState({ pictureUpload: null })
+                      : this.handlerLaunchCameraLibrary
+                  }
                   style={{
                     marginBottom: 20,
                     flexDirection: 'row',
                     alignItems: 'center',
                     justifyContent: 'center',
                   }}>
-                  <Icon size={25} color={'#FFF'} icon="camera" />
-                  <StyledText20>Share your fast breaker</StyledText20>
+                  {pictureUpload ? (
+                    <>
+                      <Icon size={25} color={'#FFF'} icon="close" />
+                      <StyledText20>Delete picture</StyledText20>
+                    </>
+                  ) : (
+                    <>
+                      <Icon size={25} color={'#FFF'} icon="camera" />
+                      <StyledText20>Share your fast breaker</StyledText20>
+                    </>
+                  )}
                 </TouchableOpacity>
 
                 {endFastItens.map((item, idx) => (
@@ -431,6 +457,7 @@ class FastEnd extends React.Component<
       </DismissKeyboard>
     );
   }
+
   private setVisibleDateTimePickerModal = (
     visible: boolean,
     start?: boolean,
