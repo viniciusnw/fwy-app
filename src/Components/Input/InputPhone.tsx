@@ -16,6 +16,8 @@ const InputPhone = (props) => {
         <StyledInput
           type={'custom'}
           value={props.value}
+          onBlur={props.onBlur}
+          onFocus={props.onFocus}
           placeholder={props.placeholder}
           onChangeText={(value, rawValue) => props.onChangeText(value)}
           options={{
@@ -26,6 +28,8 @@ const InputPhone = (props) => {
         <StyledInput
           type={'cel-phone'}
           value={props.value}
+          onBlur={props.onBlur}
+          onFocus={props.onFocus}
           placeholder={props.placeholder}
           onChangeText={(value, rawValue) => props.onChangeText(value)}
           options={{
@@ -61,7 +65,7 @@ const ErrorContainer = styled(View)`
 
 const ErrorText = styled(Text)`
   font-size: 12px;
-  color: ${({ theme }) => theme.color.white};
+  color: ${({ theme }) => theme.color.warning};
 `;
 
 const StyledInput = styled(TextInputMask).attrs((props) => ({

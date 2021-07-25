@@ -3,9 +3,18 @@ import styled from 'styled-components/native';
 import { TextInput, View, Text } from 'react-native';
 
 const Input = (props) => {
+  const { tag } = props;
   return (
     <Container {...props}>
-      <StyledInput {...props} />
+      <InputContent>
+        <StyledInput {...props} />
+
+        {tag && (
+          <Tag>
+            <TagText>{tag}</TagText>
+          </Tag>
+        )}
+      </InputContent>
 
       <ErrorContainer>
         {props.error && (
@@ -34,8 +43,24 @@ const Container = styled(View)`
   margin-right: ${({ half }: any) => (half ? '4px' : '0')};
 `;
 
-const StyledInput = styled(TextInput)`
-  width: 100%;
+const InputContent = styled(View)`
+  flex-direction: row;
+`;
+
+const Tag = styled(View)`
+  width: 20%;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(255, 255, 255, 0.2);
+`;
+
+const TagText = styled(Text)`
+  font-size: 18px;
+  color: ${({ theme }) => theme.color.white};
+  font-family: ${({ theme }) => theme.fonts.AdobeClean.regular};
+`;
+
+const StyledInput = styled(TextInput)<any>`
   border: none;
   height: 47px;
   font-size: 17px;
@@ -44,6 +69,7 @@ const StyledInput = styled(TextInput)`
   padding: 10px 15px;
   background-color: rgba(255, 255, 255, 0.2);
   color: ${({ theme }) => theme.color.white};
+  width: ${({ tag }) => (tag ? '80%' : '100%')};
   font-family: ${({ theme }) => theme.fonts.AdobeClean.regular};
 `;
 

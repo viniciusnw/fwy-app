@@ -21,8 +21,11 @@ export const fields = {
 };
 
 export const FormFastSchema = yup.object().shape({
-  name: yup.string().required('Escolha um nome para seu Jejum.'),
-  hours: yup.number().min(1, 'Escolha as horas').required('Escolha as horas.'),
+  [fields.name]: yup.string().required('Escolha um nome para seu Jejum.'),
+  [fields.hours]: yup
+    .number()
+    .min(1, 'Escolha as horas')
+    .required('Escolha as horas.'),
 });
 
 const FastStartForm: React.FC<any> = ({

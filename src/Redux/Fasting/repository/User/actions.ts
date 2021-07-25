@@ -4,7 +4,7 @@ import { Mutate } from '@Redux/Fasting/data/graphql'
 import { customerLoginVariables, customerRegisterVariables, customerUpdateVariables } from '@Config/graphql'
 
 export default {
-  
+
   register: (params: customerRegisterVariables) => {
     return {
       type: 'REGISTER',

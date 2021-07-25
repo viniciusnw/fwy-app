@@ -43,6 +43,7 @@ const SignUpForm: React.FC<any> = ({
   dispatchRegister,
   formChangeField,
 }) => {
+  const [keyboardOffset, setKeyboardOffset] = useState<number>(-150);
   const [dataUpload, setImageUpload] = useState<DataUploadType | null>(null);
 
   const { t, i18n } = useTranslation('SignUp');
@@ -50,8 +51,8 @@ const SignUpForm: React.FC<any> = ({
   const tForm: any = t('form');
 
   const FormRegisterSchemaPhonelength = {
-    [languages.PT_BR]: 15, // (11) 11111-1111
-    [languages.EN_US]: 17, // +1 (732) 581-7296
+    [languages.PT_BR]: 15,
+    [languages.EN_US]: 17,
   };
 
   const FormRegisterSchema = yup.object().shape({
@@ -69,13 +70,13 @@ const SignUpForm: React.FC<any> = ({
 
   const formik = useFormik({
     // initialValues: {
-    //   [fields.name]: 'Vinicius Inacio',
-    //   [fields.email]: 'viniciusnw@hotmail.com.br',
-    //   [fields.phone]: '(31) 98406-5335',
-    //   [fields.birthday]: '1994-03-07T10:20:55.000Z',
-    //   [fields.country]: 'Brazil',
-    //   [fields.state]: 'Sao Paulo',
-    //   [fields.password]: '123456',
+    //   [registerFields.name]: 'Vinicius Inacio',
+    //   [registerFields.email]: 'viniciusnw@hotmail.com.br',
+    //   [registerFields.phone]: '(31) 98406-5335',
+    //   [registerFields.birthday]: '1994-03-07T10:20:55.000Z',
+    //   [registerFields.country]: 'Brazil',
+    //   [registerFields.state]: 'Sao Paulo',
+    //   [registerFields.password]: '123456',
     // },
     initialValues: {
       [registerFields.name]: '',
@@ -108,6 +109,7 @@ const SignUpForm: React.FC<any> = ({
       autoCompleteType: 'name',
       value: formik.values.name,
       placeholderTextColor: '#FFF',
+      onFocus: () => setKeyboardOffset(-150),
       onBlur: formik.handleBlur(registerFields.name),
       onChangeText: (value) => formik.setFieldValue(registerFields.name, value),
       error: formik.touched.name && formik.errors.name,
@@ -117,6 +119,7 @@ const SignUpForm: React.FC<any> = ({
       autoCompleteType: 'email',
       value: formik.values.email,
       placeholderTextColor: '#FFF',
+      onFocus: () => setKeyboardOffset(-150),
       onBlur: formik.handleBlur(registerFields.email),
       onChangeText: (value) =>
         formik.setFieldValue(registerFields.email, value),
@@ -127,6 +130,7 @@ const SignUpForm: React.FC<any> = ({
       autoCompleteType: 'tel',
       value: formik.values.phone,
       placeholderTextColor: '#FFF',
+      onFocus: () => setKeyboardOffset(-150),
       onBlur: formik.handleBlur(registerFields.phone),
       onChangeText: (value) =>
         formik.setFieldValue(registerFields.phone, value),
@@ -171,6 +175,7 @@ const SignUpForm: React.FC<any> = ({
       placeholder: tForm.password,
       value: formik.values.password,
       placeholderTextColor: '#FFF',
+      onFocus: () => setKeyboardOffset(0),
       onBlur: formik.handleBlur(registerFields.password),
       error: formik.touched.password && formik.errors.password,
       onChangeText: (value) =>
@@ -194,7 +199,10 @@ const SignUpForm: React.FC<any> = ({
 
   return (
     <StyledBox>
-      <KeyboardAvoidingView style={{ width: '100%' }} behavior="position">
+      <KeyboardAvoidingView
+        style={{ width: '100%' }}
+        keyboardVerticalOffset={keyboardOffset}
+        behavior="position">
         <TouchableOpacityStyled onPress={handlerUploadLaunchImageLibrary}>
           {(dataUpload && (
             <ImageStyled
