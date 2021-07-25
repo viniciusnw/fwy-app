@@ -8,12 +8,12 @@ class ReduxActionsType {
   saveWs = General.actions.saveWs
   getStates = General.actions.getStates
   getCountries = General.actions.getCountries
-  
+
   login = User.actions.login
   logout = User.actions.logout
   update = User.actions.update
   register = User.actions.register
-  
+
   newChatMessage = Chat.actions.newChatMessage
   getChatMessages = Chat.actions.getChatMessages
   sendChatMessage = Chat.actions.sendChatMessage
@@ -23,13 +23,14 @@ class ReduxActionsType {
 
   getPresets = Fastings.actions.getPresets
   createPreset = Fastings.actions.createPreset
-  
+
   getFasting = Fastings.actions.getFasting
   endFasting = Fastings.actions.endFasting
   editFasting = Fastings.actions.editFasting
+  updatePreset = Fastings.actions.updatePreset
   clearFasting = Fastings.actions.clearFasting
   createFasting = Fastings.actions.createFasting
-  getActivesFastings  = Fastings.actions.getActives
+  getActivesFastings = Fastings.actions.getActives
 }
 export type ReduxStateType = {
   General: GeneralReduxType;

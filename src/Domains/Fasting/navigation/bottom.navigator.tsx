@@ -37,8 +37,10 @@ class BottomBar extends React.Component<
       name == 'Timer' ||
       name == 'FastStart' ||
       name == 'FastEnd'
-    )
+    ) {
+      this.props.useDispatch.getPresets();
       this.props.useDispatch.getActivesFastings();
+    }
   };
 
   render() {
@@ -77,10 +79,10 @@ class BottomBar extends React.Component<
     if (bottomBarType == 'secondary')
       return (
         <NavbarSecondary
-          radius={[30, 30, 0, 0]}
-          background="darkBlue"
-          {...this.props}
           items={menu}
+          {...this.props}
+          background="darkBlue"
+          radius={[30, 30, 0, 0]}
         />
       );
     return null;
@@ -105,6 +107,7 @@ function mapStateToProps({ Fastings }: ReduxStateType) {
 function mapDispatchToProps(dispatch) {
   return {
     useDispatch: {
+      getPresets: () => dispatch(ReduxActions.getPresets()),
       getActivesFastings: () => dispatch(ReduxActions.getActivesFastings()),
     },
   };

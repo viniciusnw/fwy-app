@@ -15,7 +15,9 @@ export type LoggedStackParamList = {
   Logged: undefined;
   Home: undefined;
   FastStart: {
-    presetId?: string;
+    presetId?: string | number;
+    defaultHour?: number;
+    defaultName?: string;
     planId?: string;
   };
   Timer: {

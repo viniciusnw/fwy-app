@@ -1,12 +1,12 @@
 export default {
-  actionName: 'GET-PRESETS',
+  actionName: 'SAVE-OR-UPDATE-PRESET',
   reducer: (state, action) => {
     switch (action.type) {
 
-      case 'GET-PRESETS_PENDING': {
+      case 'SAVE-OR-UPDATE-PRESET_PENDING': {
         return {
           ...state,
-          getPresets: {
+          saveOrUpdatePreset: {
             loading: true,
             success: false,
             error: false,
@@ -15,23 +15,22 @@ export default {
         };
       }
 
-      case 'GET-PRESETS_FULFILLED': {
+      case 'SAVE-OR-UPDATE-PRESET_FULFILLED': {
         return {
           ...state,
-          getPresets: {
+          saveOrUpdatePreset: {
             loading: false,
             success: true,
             error: false,
             errorMessage: null,
           },
-          presets: action.payload
         };
       }
 
-      case 'GET-PRESETS_REJECTED': {
+      case 'SAVE-OR-UPDATE-PRESET_REJECTED': {
         return {
           ...state,
-          getPresets: {
+          saveOrUpdatePreset: {
             loading: false,
             success: false,
             error: true,

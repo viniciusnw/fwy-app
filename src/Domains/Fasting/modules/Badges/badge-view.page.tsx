@@ -86,7 +86,7 @@ class BadgeView extends React.Component<RoutePropsType & ReduxPropsType & PagePr
                   </View>
 
                   <Button small font={{ size: 10 }} color="transparent">
-                    Join to invite Friends
+                    Invite Friends
                   </Button>
                 </View>
               </View>

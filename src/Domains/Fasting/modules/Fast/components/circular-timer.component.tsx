@@ -70,7 +70,7 @@ class CirgularTimer extends React.PureComponent<
           backgroundWidth={30}
           backgroundColor="#222842"
           fill={differenceInPercentage}
-          tintColor={remainingTimeToShow == 0 ? '#4BB543' : '#EC5349'}>
+          tintColor={remainingTimeToShow == 0 ? '#EC5349' : '#EC5349'}>
           {(fill) => (
             <TimerContainer>
               {false ? (

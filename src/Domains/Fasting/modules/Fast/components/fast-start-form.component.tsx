@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef, LegacyRef } from 'react';
 import * as yup from 'yup';
 
 import { FASTING } from '@Config/constants';
@@ -31,11 +31,17 @@ const FastStartForm: React.FC<any> = ({
   values,
   errors,
   touched,
+  editable = true,
 }) => {
-  const { weekDays: days, hours, fastColors } = FASTING;
+  const scrollViewRef = useRef<ScrollView>(null);
+
+  const { weekDays: days, customHours, fastColors } = FASTING;
+
+  const hours = customHours(168);
 
   const fastForm = {
     name: {
+      editable: editable,
       value: values.name,
       placeholder: 'Fasting name',
       placeholderTextColor: '#FFF',
@@ -45,14 +51,11 @@ const FastStartForm: React.FC<any> = ({
     },
   };
 
-  // console.log('FastStartFormErros: ', errors);
-
-  // Scroll to select element
-  // ref.scrollTo({
-  //   x: dataSourceCords[scrollToIndex - 1],
-  //   y: 0,
-  //   animated: true,
-  // });
+  scrollViewRef.current?.scrollTo({
+    x: 43 * values.hours - 100,
+    y: 0,
+    animated: true,
+  });
 
   return (
     <>
@@ -64,11 +67,11 @@ const FastStartForm: React.FC<any> = ({
       {/* === */}
       <View style={{ padding: 15, width: '100%' }}>
         <StyledH1>Duration</StyledH1>
-        <StyledText2>You can save presets up to 24 hours.</StyledText2>
+        <StyledText2>You can save presets up to 168 hours.</StyledText2>
       </View>
 
       <View style={{ width: '100%', padding: 15 }}>
-        <View
+        {/* <View
           style={{
             marginBottom: 8,
             flexDirection: 'row',
@@ -95,18 +98,22 @@ const FastStartForm: React.FC<any> = ({
               </TouchableOpacity>
             ))}
           </ScrollView>
-        </View>
+        </View> */}
 
         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
           <StyledH2>Hours</StyledH2>
           <ScrollView
             horizontal
+            ref={scrollViewRef}
+            scrollEnabled={editable}
             showsVerticalScrollIndicator={false}
             showsHorizontalScrollIndicator={false}>
             {hours.map((h, i) => (
               <TouchableOpacity
                 key={i}
-                onPress={() => setFieldValue(fields.hours, h)}
+                onPress={() =>
+                  editable ? setFieldValue(fields.hours, h) : null
+                }
                 style={[
                   {
                     width: 45,

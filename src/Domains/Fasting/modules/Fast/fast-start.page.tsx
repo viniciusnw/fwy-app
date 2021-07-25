@@ -1,13 +1,21 @@
 import React from 'react';
 import { Formik } from 'formik';
 import { connect } from 'react-redux';
+import { showSnackbar } from '@Config/graphql';
 import { StackScreenProps } from '@react-navigation/stack';
 
 import * as ASSETS from '@Config/assets';
+import { FASTING } from '@Config/constants';
 import { Button, DismissKeyboard } from '@Components';
 import { LoggedStackParamList, PagePropsType } from '@Navigation';
 import { ReduxActions, ReduxPropsType, ReduxStateType } from '@Redux/Fasting';
-import { View, TouchableOpacity, ImageBackground, Share } from 'react-native';
+import {
+  View,
+  TouchableOpacity,
+  ImageBackground,
+  Share,
+  ActivityIndicator,
+} from 'react-native';
 import {
   Footer,
   Divider,
@@ -42,16 +50,18 @@ class FastStart extends React.Component<
     super(props);
     this.state = {
       preset: null,
+      defaultHour: null,
+      defaultName: null,
     };
   }
 
   componentDidMount() {
-    this.handlerLoadPreset();
+    this.handlerLoadInititalState();
   }
 
-  private handlerSubmitForm = (fastForm) => {
-    this.handlerCreateFasting(fastForm);
-  };
+  componentDidUpdate(prevProps) {
+    this.handlerSaverOrUpdatePreset(prevProps);
+  }
 
   private handlerCreateFasting = (fastForm) => {
     const {
@@ -68,10 +78,11 @@ class FastStart extends React.Component<
     });
   };
 
-  private handlerLoadPreset = () => {
+  private handlerLoadInititalState = () => {
     const preset = this.Preset;
-    if (!preset) return;
-    this.setState({ preset });
+    const defaultHour = this.DefaultHour;
+    const defaultName = this.DefaultName;
+    this.setState({ preset, defaultHour, defaultName });
   };
 
   private handlerShared = async () => {
@@ -82,28 +93,35 @@ class FastStart extends React.Component<
       });
 
       if (result.action === Share.sharedAction) {
-        if (result.activityType) {
-          // shared with activity type of result.activityType
-        } else {
-          // shared
-        }
-      } else if (result.action === Share.dismissedAction) {
-        // dismissed
-      }
+        // shared with activity type of result.activityType
+        if (result.activityType) return null;
+        else return null; // shared
+      } else if (result.action === Share.dismissedAction) return null; // dismissed
     } catch (error) {
       console.log(error.message);
     }
   };
 
+  private handlerSaverOrUpdatePreset = async (prevProps) => {
+    const { saveOrUpdatePreset } = this.props.useRedux.Fastings;
+    const {
+      saveOrUpdatePreset: prevSaveOrUpdatePreset,
+    } = prevProps.useRedux.Fastings;
+
+    if (saveOrUpdatePreset.success != prevSaveOrUpdatePreset.success)
+      showSnackbar('Saved ✅ ', 'success', 'i');
+  };
+
   render() {
     const { RibbonFull } = ASSETS.FASTING.svgs;
-    const { preset } = this.state;
+    const { saveOrUpdatePreset } = this.props.useRedux.Fastings;
+    const { preset, defaultHour, defaultName } = this.state;
 
     const FormInitialValues = {
       [FormFields.days]: preset?.days || 0,
-      [FormFields.hours]: preset?.hours || 1,
+      [FormFields.hours]: preset?.hours || defaultHour || 1,
       [FormFields.color]: preset?.color || '',
-      [FormFields.name]: preset?.name || '',
+      [FormFields.name]: preset?.name || defaultName || '',
     };
 
     const isAlreadyFasting = this.ActiveFastId;
@@ -112,18 +130,22 @@ class FastStart extends React.Component<
 
     const fromPlan = this.PlanId;
 
-    const saveOrUpdate = this.SaveOrUpdatePreset;
+    const fromDefault = this.DefaultName;
+
+    const isSaveOrUpdate = this.SaveOrUpdatePreset;
 
     return (
       <Formik
         enableReinitialize
         validationSchema={FormFastSchema}
         initialValues={FormInitialValues}
-        onSubmit={this.handlerSubmitForm}>
+        onSubmit={this.handlerCreateFasting}>
         {({
           setFieldValue,
           handleBlur,
           handleSubmit,
+          setFieldError,
+          setFieldTouched,
           values,
           errors,
           touched,
@@ -133,24 +155,41 @@ class FastStart extends React.Component<
               <FormContainer>
                 {/* === */}
                 <FormHeader>
-                  {(!fromPlan && <CustomPlanTag />) || (
+                  {(!fromPlan && !fromDefault && <CustomPlanTag />) || (
                     <View style={{ marginBottom: 12, flex: 1 }} />
                   )}
 
                   {fromPreset && (
-                    <TouchableOpacity style={{ marginBottom: 12 }}>
-                      <StyledText>{saveOrUpdate}</StyledText>
+                    <TouchableOpacity
+                      onPress={() =>
+                        this.saverOrUpdatePreset(
+                          isSaveOrUpdate,
+                          values,
+                          setFieldError,
+                          setFieldTouched,
+                        )
+                      }
+                      style={{ marginBottom: 12 }}
+                      disabled={saveOrUpdatePreset.loading}>
+                      {saveOrUpdatePreset.loading ? (
+                        <StyledText>
+                          <ActivityIndicator size="small" color={'#FFF'} />
+                        </StyledText>
+                      ) : (
+                        <StyledText>Save</StyledText>
+                      )}
                     </TouchableOpacity>
                   )}
                 </FormHeader>
 
                 {/* === */}
                 <FastStartForm
-                  touched={touched}
                   errors={errors}
                   values={values}
+                  touched={touched}
                   handleBlur={handleBlur}
                   setFieldValue={setFieldValue}
+                  editable={!!!this.DefaultName}
                 />
 
                 {/* === */}
@@ -176,16 +215,16 @@ class FastStart extends React.Component<
                   <View style={{ marginHorizontal: '23%', top: -20 }}>
                     {isAlreadyFasting ? (
                       <Button
-                        style={{ zIndex: 10 }}
                         color="primary"
+                        style={{ zIndex: 10 }}
                         onPress={() => this.goToTimerId(isAlreadyFasting)}
                         icon={{ icon: 'timer', color: '#EC5349', size: 22 }}>
                         YOU’RE FASTING!
                       </Button>
                     ) : (
                       <Button
-                        style={{ zIndex: 10 }}
                         color="primary"
+                        style={{ zIndex: 10 }}
                         onPress={handleSubmit}
                         icon={{ icon: 'timer', color: '#EC5349', size: 22 }}>
                         START YOUR FAST
@@ -193,7 +232,7 @@ class FastStart extends React.Component<
                     )}
                   </View>
 
-                  <TouchableOpacity
+                  {/* <TouchableOpacity
                     style={{ flex: 1, justifyContent: 'center' }}
                     onPress={this.goToBadgeAll}>
                     <View
@@ -214,15 +253,8 @@ class FastStart extends React.Component<
                           <StyledText8>7 days</StyledText8>
                         </View>
                       </View>
-
-                      <Button
-                        small
-                        onPress={this.handlerShared}
-                        color="transparent">
-                        Invite Friends
-                      </Button>
                     </View>
-                  </TouchableOpacity>
+                  </TouchableOpacity> */}
                 </ImageBackground>
               </Footer>
             </View>
@@ -233,9 +265,13 @@ class FastStart extends React.Component<
   }
 
   private get SaveOrUpdatePreset() {
+    const {
+      enums: { saveOrUpdate },
+    } = FASTING;
+
     const fromPreset = this.PresetId;
-    if (typeof fromPreset == 'string') return 'Update';
-    else return 'Save';
+    if (typeof fromPreset == 'string') return saveOrUpdate.Update;
+    else return saveOrUpdate.Save;
   }
 
   private get Preset() {
@@ -247,12 +283,35 @@ class FastStart extends React.Component<
     return Fastings.presets.find((f) => f._id == params.presetId);
   }
 
+  private get ActiveFastId() {
+    const { fastings } = this.props.useRedux.Fastings;
+    if (!fastings.length) return false;
+    fastings[0]._id;
+    return fastings[0]._id;
+  }
+
   private get PlanId() {
     const {
       route: { params },
     } = this.props;
-    if (!params?.planId) return false;
+    if (!params?.planId) return null;
     return params.planId;
+  }
+
+  private get DefaultHour() {
+    const {
+      route: { params },
+    } = this.props;
+    if (!params?.defaultHour) return null;
+    return params.defaultHour;
+  }
+
+  private get DefaultName() {
+    const {
+      route: { params },
+    } = this.props;
+    if (!params?.defaultName) return null;
+    return params.defaultName;
   }
 
   private get PresetId() {
@@ -261,13 +320,6 @@ class FastStart extends React.Component<
     } = this.props;
     if (!params?.presetId) return false;
     return params.presetId;
-  }
-
-  private get ActiveFastId() {
-    const { fastings } = this.props.useRedux.Fastings;
-    if (!fastings.length) return false;
-    fastings[0]._id;
-    return fastings[0]._id;
   }
 
   private goToTimerId = (fastingId) => {
@@ -284,6 +336,40 @@ class FastStart extends React.Component<
     const { navigation } = this.props;
     navigation.navigate('BadgeAll');
   };
+
+  private saverOrUpdatePreset = async (
+    isSaveOrUpdate,
+    values,
+    setFieldError: Function,
+    setFieldTouched: Function,
+  ) => {
+    const {
+      enums: { saveOrUpdate },
+    } = FASTING;
+
+    const { updatePreset, createPreset } = this.props.useDispatch;
+
+    if (!values.name) {
+      setFieldTouched(FormFields.name);
+      return setFieldError(FormFields.name);
+    }
+
+    if (saveOrUpdate[isSaveOrUpdate] == saveOrUpdate.Save)
+      createPreset({
+        preset: {
+          index: this.PresetId,
+          ...values,
+        },
+      });
+
+    if (saveOrUpdate[isSaveOrUpdate] == saveOrUpdate.Update)
+      updatePreset({
+        preset: {
+          id: this.PresetId,
+          ...values,
+        },
+      });
+  };
 }
 
 function mapStateToProps({ Fastings }: ReduxStateType) {
@@ -297,6 +383,8 @@ function mapStateToProps({ Fastings }: ReduxStateType) {
 function mapDispatchToProps(dispatch) {
   return {
     useDispatch: {
+      updatePreset: (_) => dispatch(ReduxActions.updatePreset(_)),
+      createPreset: (_) => dispatch(ReduxActions.createPreset(_)),
       clearFasting: (_) => dispatch(ReduxActions.clearFasting()),
     },
   };

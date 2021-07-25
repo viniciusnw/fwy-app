@@ -361,6 +361,23 @@ export interface sendChatMessageVariables {
 // @generated
 // This file was automatically generated and should not be edited.
 
+// ====================================================
+// GraphQL mutation operation: updatePreset
+// ====================================================
+
+export interface updatePreset {
+  updatePreset: boolean;
+}
+
+export interface updatePresetVariables {
+  preset: PresetInput;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
 //==============================================================
 // START Enums and Input Objects
 //==============================================================
@@ -439,6 +456,7 @@ export interface PictureInput {
 }
 
 export interface PresetInput {
+  id?: string | null;
   name: string;
   hours: number;
   days: number;

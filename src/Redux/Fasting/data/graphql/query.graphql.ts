@@ -43,7 +43,8 @@ export class Query extends GraphqlApi {
 
   public getPresets = () => {
     return this.ApolloClient.query({
-      query: getPresetsQuery
+      query: getPresetsQuery,
+      fetchPolicy: 'network-only'
     }).then(response => this.mapResponse(response, 'getPresets'))
       .catch(err => this.mapError(err))
   }

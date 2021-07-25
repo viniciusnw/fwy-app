@@ -1,0 +1,3 @@
+mutation updatePreset($preset: PresetInput!) {
+  updatePreset(preset: $preset)
+}

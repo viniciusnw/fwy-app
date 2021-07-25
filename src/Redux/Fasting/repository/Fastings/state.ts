@@ -43,12 +43,6 @@ export class FastingsReduxType {
     error: false,
     errorMessage: null,
   }
-  savePresets = {
-    loading: false,
-    success: false,
-    error: false,
-    errorMessage: null,
-  }
   getPresets = {
     loading: false,
     success: false,
@@ -62,6 +56,12 @@ export class FastingsReduxType {
     errorMessage: null,
   }
   editFasting = {
+    loading: false,
+    success: false,
+    error: false,
+    errorMessage: null,
+  }
+  saveOrUpdatePreset = {
     loading: false,
     success: false,
     error: false,

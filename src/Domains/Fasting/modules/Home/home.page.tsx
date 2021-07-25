@@ -36,7 +36,6 @@ class Home extends React.Component<
 
   componentDidMount() {
     this.handlerClearFasting();
-    this.props.useDispatch.getPresets();
   }
 
   private handlerClearFasting() {
@@ -47,37 +46,31 @@ class Home extends React.Component<
 
   render() {
     const fastItemPlus = [
-      // {
-      //   name: 'Fasting Iniciante',
-      //   timeNumber: '13',
-      //   timeString: 'H.',
-      // },
-      // {
-      //   name: 'Fasting Iniciante',
-      //   timeNumber: '16',
-      //   timeString: 'H.',
-      // },
-      // {
-      //   name: 'Personal Fasting Star',
-      //   timeNumber: '60',
-      //   timeString: 'H.',
-      //   tag: 'Fasting',
-      // },
-      // {
-      //   name: 'Consultation',
-      //   timeNumber: '30',
-      //   timeString: 'Min.',
-      // },
-      // {
-      //   name: 'Consultation',
-      //   timeNumber: '1',
-      //   timeString: 'H.',
-      // },
-      // {
-      //   name: 'Consultation',
-      //   timeNumber: '1',
-      //   timeString: '/Week',
-      // },
+      {
+        name: 'Circadian Rhythm TRF',
+        timeNumber: '13',
+        timeString: 'H.',
+      },
+      {
+        name: '16:8 TRF',
+        timeNumber: '16',
+        timeString: 'H.',
+      },
+      {
+        name: '18:6 TRF',
+        timeNumber: '18',
+        timeString: 'H.',
+      },
+      {
+        name: '20:4 TRF',
+        timeNumber: '20',
+        timeString: 'H.',
+      },
+      {
+        name: '36-Hour Fast',
+        timeNumber: '36',
+        timeString: 'H.',
+      },
     ];
 
     return (
@@ -120,10 +113,10 @@ class Home extends React.Component<
               flexDirection: 'row',
               justifyContent: 'flex-start',
             }}>
-            <StyledH2>Planos</StyledH2>
-            <Badges>
+            <StyledH2>Most popular</StyledH2>
+            {/* <Badges>
               <StyledText>PLUS</StyledText>
-            </Badges>
+            </Badges> */}
           </View>
 
           <View style={{ flex: 1 }}>
@@ -134,8 +127,16 @@ class Home extends React.Component<
                 flexDirection: 'row',
                 justifyContent: 'flex-start',
               }}>
-              {fastItemPlus.map((item: any, index) => (
-                <FastItem key={index}>
+              {fastItemPlus.map((item, index) => (
+                <FastItem
+                  onPress={() =>
+                    this.goFastStart(
+                      undefined,
+                      parseInt(item.timeNumber),
+                      item.name,
+                    )
+                  }
+                  key={index}>
                   <View style={{ width: '100%', alignItems: 'flex-start' }}>
                     <StyledText2>{item.name}</StyledText2>
                   </View>
@@ -147,7 +148,7 @@ class Home extends React.Component<
                         <StyledText4>{item.timeString}</StyledText4>
                       </StyledText3>
                     </View>
-                    {item.tag && <StyledText5>{item.tag}</StyledText5>}
+                    {/* {item.tag && <StyledText5>{item.tag}</StyledText5>} */}
                   </View>
 
                   <View style={{ width: '100%', alignItems: 'flex-end' }}>
@@ -162,20 +163,10 @@ class Home extends React.Component<
     );
   }
 
-  goFastStart = (presetId) => {
-    const { navigation } = this.props;
-    navigation.navigate('FastStart', { presetId });
-  };
-
-  goToTimer = (fastingId) => {
-    const { navigation } = this.props;
-    navigation.navigate('Timer', { fastingId });
-  };
-
   private Render_FastItem = (index) => {
-    const Item = this.Render_ItemFast(index);
-    if (!Item) return this.Render_EmptyFast(index);
-    else return Item;
+    const presetItem = this.Render_PresetFast(index);
+    if (!presetItem) return this.Render_EmptyFast(index);
+    else return presetItem;
   };
 
   private Render_EmptyFast = (index) => {
@@ -186,9 +177,9 @@ class Home extends React.Component<
     );
   };
 
-  private Render_ItemFast = (index) => {
+  private Render_PresetFast = (index) => {
     const { presets } = this.props.useRedux.Fastings;
-    const preset = presets.find((f) => f.index - 1 == index);
+    const preset = presets.find((p) => p.index - 1 == index);
     if (preset)
       return (
         <FastItem key={index} onPress={() => this.goFastStart(preset._id)}>
@@ -215,6 +206,15 @@ class Home extends React.Component<
     const differenceInHours = preset.days * 24 + preset.hours;
     return differenceInHours.toFixed();
   }
+
+  private goFastStart = (
+    presetId?: string | number,
+    defaultHour?: number,
+    defaultName?: string,
+  ) => {
+    const { navigation } = this.props;
+    navigation.navigate('FastStart', { presetId, defaultHour, defaultName });
+  };
 }
 
 function mapStateToProps({ User, Fastings }: ReduxStateType) {
@@ -229,7 +229,6 @@ function mapStateToProps({ User, Fastings }: ReduxStateType) {
 function mapDispatchToProps(dispatch) {
   return {
     useDispatch: {
-      getPresets: () => dispatch(ReduxActions.getPresets()),
       clearFasting: (_) => dispatch(ReduxActions.clearFasting()),
     },
   };

@@ -541,7 +541,7 @@ const EmojiTouchable = styled(TouchableOpacity)`
   justify-content: center;
 `;
 
-const Emoji = styled(Text)`
+const Emoji = styled(Text)<{ selected: boolean }>`
   font-size: 30px;
   ${(props) =>
     props.selected &&
