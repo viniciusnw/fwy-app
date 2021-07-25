@@ -20,6 +20,11 @@ enum loginFieldsEnum {
   password = "password",
 }
 
+enum SaveOrUpdateEnum {
+  Update = 'Update',
+  Save = 'Save'
+}
+
 export default {
   fullDays: [
     0,
@@ -90,11 +95,17 @@ export default {
     23,
     24,
   ],
-  fastColors: ['#EC5349', '#8B4F9F', '#222842', '#EB334D'],
   ApolloClient: 'APOLLO_CLIENT',
+  customHours: (hours: number) => {
+    const hoursArray = Array.from(Array(hours + 1)).map((i, idx) => idx);
+    hoursArray.shift();
+    return hoursArray;
+  },
+  fastColors: ['#EC5349', '#8B4F9F', '#222842', '#EB334D'],
   enums: {
     languages: languagesEnum,
     registerFields: registerFieldsEnum,
-    loginFields: loginFieldsEnum
+    loginFields: loginFieldsEnum,
+    saveOrUpdate: SaveOrUpdateEnum
   }
 };

@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { connect } from 'react-redux';
 import { View, Text } from 'react-native';
@@ -11,10 +10,9 @@ import { View, Text } from 'react-native';
 // <Text style={fontStyle.FredokaOneRegular} />
 
 class Details extends React.Component<any, any> {
-
   constructor(props) {
-    super(props)
-    const { toggleDrawer, goBack } = this.props.navigation
+    super(props);
+    const { toggleDrawer, goBack } = this.props.navigation;
     // props.setBottomBar({
     //   onPress: () => console.log('onNextBottomPress'),
     //   text: `Agendar`,
@@ -30,7 +28,14 @@ class Details extends React.Component<any, any> {
 
   render() {
     const { route } = this.props;
-    const { param1, param2 } = route.params
+    const { param1, param2 } = route.params;
+
+    // Scroll to select element
+    // ref.scrollTo({
+    //   x: dataSourceCords[scrollToIndex - 1],
+    //   y: 0,
+    //   animated: true,
+    // });
 
     return (
       <>
@@ -55,7 +60,8 @@ class Details extends React.Component<any, any> {
           </Button> 
         */}
 
-        <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+        <View
+          style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
           <Text>Route Param: </Text>
           <Text>{JSON.stringify({ param1, param2 })}</Text>
         </View>
@@ -64,7 +70,4 @@ class Details extends React.Component<any, any> {
   }
 }
 
-export default connect(
-  null,
-  null
-)(Details);
+export default connect(null, null)(Details);

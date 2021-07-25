@@ -6,6 +6,7 @@ import {
   endFastingVariables,
   editFastingVariables,
   createPresetVariables,
+  updatePresetVariables,
   createFastingVariables,
 } from '@Config/graphql'
 
@@ -42,8 +43,15 @@ export default {
 
   createPreset: (params: createPresetVariables) => {
     return {
-      type: 'CREATE-PRESET',
+      type: 'SAVE-OR-UPDATE-PRESET',
       payload: () => Container.get(Mutate).createPreset(params),
+    };
+  },
+
+  updatePreset: (params: updatePresetVariables) => {
+    return {
+      type: 'SAVE-OR-UPDATE-PRESET',
+      payload: () => Container.get(Mutate).updatePreset(params),
     };
   },
 

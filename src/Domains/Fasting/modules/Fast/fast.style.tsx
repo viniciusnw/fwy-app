@@ -248,7 +248,8 @@ export const FormHeader = styled(View)`
 `;
 
 export const Footer = styled(View)`
-  height: 230px;
+  /* height: 230px; */
+  height: 124px;
   bottom: -62px;
   right: 0px;
   left: 0;

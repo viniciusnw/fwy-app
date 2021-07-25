@@ -234,7 +234,7 @@ class Timer extends React.PureComponent<
             </ContainerButtons>
 
             <View style={{ width: '40%', alignSelf: 'center' }}>
-              <Button onPress={() => this.goToEndFast()}>End Fast</Button>
+              <Button onPress={this.goToEndFast}>End Fast</Button>
             </View>
           </>
         )}

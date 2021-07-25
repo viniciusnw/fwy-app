@@ -7,6 +7,7 @@ import {
   endFastingVariables,
   editFastingVariables,
   createPresetVariables,
+  updatePresetVariables,
   createFastingVariables,
   customerLoginVariables,
   customerUpdateVariables,
@@ -23,6 +24,7 @@ import endFastingMutate from './docs/endFasting.mutate.graphql'
 import editFastingMutate from './docs/editFasting.mutate.graphql'
 import editStartEndFastingMutate from './docs/editStartEndFasting.mutate.graphql'
 import createPresetMutate from './docs/createPreset.mutate.graphql'
+import updatePresetMutate from './docs/updatePreset.mutate.graphql'
 
 @Service()
 export class Mutate extends GraphqlApi {
@@ -108,6 +110,14 @@ export class Mutate extends GraphqlApi {
       mutation: createPresetMutate,
       variables: params,
     }).then(response => this.mapResponse(response, 'createPreset'))
+      .catch(err => this.mapError(err))
+  }
+
+  public updatePreset = (params: updatePresetVariables) => {
+    return this.ApolloClient.mutate({
+      mutation: updatePresetMutate,
+      variables: params,
+    }).then(response => this.mapResponse(response, 'updatePreset'))
       .catch(err => this.mapError(err))
   }
 }
