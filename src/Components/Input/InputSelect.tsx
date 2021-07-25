@@ -9,6 +9,57 @@ import {
   Text,
 } from 'react-native';
 
+const InputSelect: React.FC<any> = (props: any) => {
+  const RNPickerSelectRef: React.RefObject<RNPickerSelect> = React.createRef();
+
+  const mapItens = () => {
+    if (props.itens) return props.itens.map((i) => ({ label: i, value: i }));
+    return [];
+  };
+
+  useEffect(() => {}, [RNPickerSelectRef]);
+  return (
+    <Container {...props}>
+      <ContainerInput>
+        <StyledTouchableOpacity
+          onPress={() => RNPickerSelectRef.current?.togglePicker()}
+        />
+        <StyledTextInput
+          value={props.value}
+          placeholder={props.placeholder}
+          placeholderTextColor={props.placeholderTextColor}
+        />
+        {props.loading && (
+          <Loading>
+            <ActivityIndicator size="small" color={'#FFF'} />
+          </Loading>
+        )}
+      </ContainerInput>
+
+      <ErrorContainer>
+        {props.error && <ErrorText>* {props.error}</ErrorText>}
+      </ErrorContainer>
+
+      <RNPickerSelect
+        items={mapItens()}
+        value={props.value}
+        ref={RNPickerSelectRef}
+        disabled={props.loading}
+        modalProps={{ animated: true }}
+        placeholder={{ label: 'Selecione', value: '' }}
+        onValueChange={(value) => props.onChangeValue(value)}
+        style={{
+          inputIOS: {
+            display: 'none',
+          },
+        }}
+      />
+    </Container>
+  );
+};
+
+export default InputSelect;
+
 const Container = styled(View)`
   height: 64px;
   flex: ${({ half }: any) => (half ? 2 : 1)};
@@ -64,56 +115,5 @@ const ErrorContainer = styled(View)`
 
 const ErrorText = styled(Text)`
   font-size: 12px;
-  color: ${({ theme }) => theme.color.white};
+  color: ${({ theme }) => theme.color.warning};
 `;
-
-const InputSelect: React.FC<any> = (props: any) => {
-  const RNPickerSelectRef: React.RefObject<RNPickerSelect> = React.createRef();
-
-  const mapItens = () => {
-    if (props.itens) return props.itens.map((i) => ({ label: i, value: i }));
-    return [];
-  };
-
-  useEffect(() => {}, [RNPickerSelectRef]);
-  return (
-    <Container {...props}>
-      <ContainerInput>
-        <StyledTouchableOpacity
-          onPress={() => RNPickerSelectRef.current?.togglePicker()}
-        />
-        <StyledTextInput
-          value={props.value}
-          placeholder={props.placeholder}
-          placeholderTextColor={props.placeholderTextColor}
-        />
-        {props.loading && (
-          <Loading>
-            <ActivityIndicator size="small" color={'#FFF'} />
-          </Loading>
-        )}
-      </ContainerInput>
-
-      <ErrorContainer>
-        {props.error && <ErrorText>* {props.error}</ErrorText>}
-      </ErrorContainer>
-
-      <RNPickerSelect
-        items={mapItens()}
-        value={props.value}
-        ref={RNPickerSelectRef}
-        disabled={props.loading}
-        modalProps={{ animated: true }}
-        placeholder={{ label: 'Selecione', value: '' }}
-        onValueChange={(value) => props.onChangeValue(value)}
-        style={{
-          inputIOS: {
-            display: 'none',
-          },
-        }}
-      />
-    </Container>
-  );
-};
-
-export default InputSelect;

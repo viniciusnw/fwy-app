@@ -2,7 +2,7 @@ import { UserState } from './state'
 
 import login from './login.reducer'
 import register from './register.reducer'
-import update from './register.reducer'
+import update from './update.reducer'
 
 export default function reducer(
   state = UserState,

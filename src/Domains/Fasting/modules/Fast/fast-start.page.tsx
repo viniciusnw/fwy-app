@@ -29,7 +29,6 @@ import {
   FormContainer,
   FormHeader,
 } from './fast.style';
-
 import FastStartForm, {
   FormFastSchema,
   fields as FormFields,

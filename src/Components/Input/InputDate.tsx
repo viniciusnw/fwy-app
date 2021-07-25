@@ -90,5 +90,5 @@ const ErrorContainer = styled(View)`
 
 const ErrorText = styled(Text)`
   font-size: 12px;
-  color: ${({ theme }) => theme.color.white};
+  color: ${({ theme }) => theme.color.warning};
 `;
