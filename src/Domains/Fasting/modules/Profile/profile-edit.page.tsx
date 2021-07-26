@@ -2,10 +2,10 @@ import React from 'react';
 import { Formik } from 'formik';
 import { connect } from 'react-redux';
 import { StackScreenProps } from '@react-navigation/stack';
-
-import { Icon, Button, Input, InputDate, DismissKeyboard } from '@Components';
-import { LoggedStackParamList, PagePropsType } from '@Navigation';
 import { View, ScrollView, TouchableOpacity, Image } from 'react-native';
+
+import { LoggedStackParamList, PagePropsType } from '@Navigation';
+import { Icon, Button, Input, InputDate, DismissKeyboard } from '@Components';
 import { ReduxActions, ReduxPropsType, ReduxStateType } from '@Redux/Fasting';
 
 import FormCustomerUpdate, {
@@ -96,9 +96,9 @@ class ProfileEdit extends React.Component<
               setFieldValue,
             }) => (
               <FormCustomerUpdate
-                loading={loading}
                 errors={errors}
                 values={values}
+                loading={loading}
                 touched={touched}
                 handleBlur={handleBlur}
                 handleSubmit={handleSubmit}

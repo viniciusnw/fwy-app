@@ -109,7 +109,7 @@ const FormCustomerUpdate: React.FC<any> = ({
     weight: {
       tag: 'lb',
       placeholder: 'Weight',
-      autoCompleteType: 'tel',
+      keyboardType: 'numeric',
       value: `${values.weight}`,
       placeholderTextColor: '#FFF',
       onBlur: handleBlur(fields.weight),
@@ -120,7 +120,7 @@ const FormCustomerUpdate: React.FC<any> = ({
     height: {
       tag: 'In',
       placeholder: 'Height',
-      autoCompleteType: 'tel',
+      keyboardType: 'numeric',
       value: `${values.height}`,
       placeholderTextColor: '#FFF',
       onBlur: handleBlur(fields.height),

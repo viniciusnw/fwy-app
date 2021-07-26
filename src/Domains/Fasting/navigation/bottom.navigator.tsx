@@ -38,8 +38,11 @@ class BottomBar extends React.Component<
       name == 'FastStart' ||
       name == 'FastEnd'
     ) {
-      this.props.useDispatch.getPresets();
-      this.props.useDispatch.getActivesFastings();
+      const { data } = this.props.useRedux.User;
+      if (data?.token) {
+        this.props.useDispatch.getPresets();
+        this.props.useDispatch.getActivesFastings();
+      }
     }
   };
 
@@ -96,9 +99,10 @@ class BottomBar extends React.Component<
   }
 }
 
-function mapStateToProps({ Fastings }: ReduxStateType) {
+function mapStateToProps({ Fastings, User }: ReduxStateType) {
   return {
     useRedux: {
+      User,
       Fastings,
     },
   };

@@ -54,8 +54,13 @@ const FastStartForm: React.FC<any> = ({
     },
   };
 
+  const getWidthToScroll = () => {
+    if (values.hours <= 30) return 43;
+    else return 45;
+  };
+
   scrollViewRef.current?.scrollTo({
-    x: 43 * values.hours - 100,
+    x: getWidthToScroll() * values.hours - 100,
     y: 0,
     animated: true,
   });
