@@ -269,7 +269,6 @@ export const StyledField = styled(View)`
   margin-bottom: ${({ theme }) => theme.spacing.regular};
 `;
 
-
 export const Divider = (props) => (
   <View style={{ width: '100%', height: 42, bottom: -62, marginTop: -62 }} />
 );

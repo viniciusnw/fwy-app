@@ -33,30 +33,34 @@ class ProfileEdit extends React.Component<
   }
 
   private handlerCustomerUpdate(customerForm) {
-    Object.keys(customerForm).map((key) => {
+    const customerFormClone = JSON.parse(JSON.stringify(customerForm));
+
+    Object.keys(customerFormClone).map((key) => {
       if (this.User && customerForm[key] == this.User[key])
-        delete customerForm[key];
+        delete customerFormClone[key];
     });
 
-    if (customerForm?.weight)
-      customerForm.weight = parseFloat(customerForm.weight);
-    if (customerForm?.height)
-      customerForm.height = parseFloat(customerForm.height);
+    const fieldsToUpdate = Object.keys(customerFormClone);
 
-    if (customerForm?.avatar)
+    if (customerFormClone?.weight)
+      customerFormClone.weight = parseFloat(customerFormClone.weight);
+    if (customerFormClone?.height)
+      customerFormClone.height = parseFloat(customerFormClone.height);
+
+    if (customerFormClone?.avatar)
       this.props.useDispatch.update({
         customer: {
-          ...customerForm,
+          ...customerFormClone,
           avatar: {
-            type: customerForm.avatar.type,
-            data: customerForm.avatar.base64,
+            type: customerFormClone.avatar.type,
+            data: customerFormClone.avatar.base64,
           },
         },
       });
-    else
+    else if (fieldsToUpdate.length)
       this.props.useDispatch.update({
         customer: {
-          ...customerForm,
+          ...customerFormClone,
         },
       });
   }

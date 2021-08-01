@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { ReduxPropsType, ReduxStateType } from '@Redux/Fasting';
 import { AnimatedCircularProgress } from 'react-native-circular-progress';
+import { FASTING } from '@Config/constants';
 import {
   TimerContainer,
   StyledText9,
@@ -54,6 +55,7 @@ class CirgularTimer extends React.PureComponent<
   };
 
   render() {
+    const { fastColors } = FASTING;
     const { startFasting } = this.props;
     const { differenceInPercentage } = this.state;
     const remainingTime = 100 - differenceInPercentage;
@@ -68,9 +70,9 @@ class CirgularTimer extends React.PureComponent<
           lineCap="round"
           duration={1450}
           backgroundWidth={30}
-          backgroundColor="#222842"
-          fill={differenceInPercentage}
-          tintColor={remainingTimeToShow == 0 ? '#EC5349' : '#EC5349'}>
+          tintColor={'#EC5349'}
+          backgroundColor={'#222842'}
+          fill={differenceInPercentage}>
           {(fill) => (
             <TimerContainer>
               {false ? (
@@ -98,6 +100,13 @@ class CirgularTimer extends React.PureComponent<
         </AnimatedCircularProgress>
       </>
     );
+  }
+
+  private get Color() {
+    const { fasting } = this.props.useRedux.Fastings;
+
+    if (!fasting?.color) return;
+    return fasting?.color;
   }
 }
 

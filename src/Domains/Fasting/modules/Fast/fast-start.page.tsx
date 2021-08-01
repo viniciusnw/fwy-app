@@ -84,22 +84,22 @@ class FastStart extends React.Component<
     this.setState({ preset, defaultHour, defaultName });
   };
 
-  private handlerShared = async () => {
-    try {
-      const result = await Share.share({
-        title: 'Fasting with Yara',
-        url: 'https://www.fastingwithyara.com/',
-      });
+  // private handlerShared = async () => {
+  //   try {
+  //     const result = await Share.share({
+  //       title: 'Fasting with Yara',
+  //       url: 'https://www.fastingwithyara.com/',
+  //     });
 
-      if (result.action === Share.sharedAction) {
-        // shared with activity type of result.activityType
-        if (result.activityType) return null;
-        else return null; // shared
-      } else if (result.action === Share.dismissedAction) return null; // dismissed
-    } catch (error) {
-      console.log(error.message);
-    }
-  };
+  //     if (result.action === Share.sharedAction) {
+  //       // shared with activity type of result.activityType
+  //       if (result.activityType) return null;
+  //       else return null; // shared
+  //     } else if (result.action === Share.dismissedAction) return null; // dismissed
+  //   } catch (error) {
+  //     console.log(error.message);
+  //   }
+  // };
 
   private handlerSaverOrUpdatePreset = async (prevProps) => {
     const { saveOrUpdatePreset } = this.props.useRedux.Fastings;
@@ -112,7 +112,7 @@ class FastStart extends React.Component<
   };
 
   render() {
-    const { RibbonFull } = ASSETS.FASTING.svgs;
+    // const { RibbonFull } = ASSETS.FASTING.svgs;
     const { saveOrUpdatePreset } = this.props.useRedux.Fastings;
     const { preset, defaultHour, defaultName } = this.state;
 
@@ -217,7 +217,11 @@ class FastStart extends React.Component<
                         color="primary"
                         style={{ zIndex: 10 }}
                         onPress={() => this.goToTimerId(isAlreadyFasting)}
-                        icon={{ icon: 'timer', color: '#EC5349', size: 22 }}>
+                        icon={{
+                          size: 22,
+                          icon: 'timer',
+                          color: '#EC5349',
+                        }}>
                         YOU’RE FASTING!
                       </Button>
                     ) : (
@@ -225,7 +229,11 @@ class FastStart extends React.Component<
                         color="primary"
                         style={{ zIndex: 10 }}
                         onPress={handleSubmit}
-                        icon={{ icon: 'timer', color: '#EC5349', size: 22 }}>
+                        icon={{
+                          size: 22,
+                          icon: 'timer',
+                          color: '#EC5349',
+                        }}>
                         START YOUR FAST
                       </Button>
                     )}

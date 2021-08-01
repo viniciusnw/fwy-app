@@ -34,7 +34,6 @@ export default {
             success: false,
             error: true,
           },
-          data: null,
           errorMessage: action.payload,
         };
       }
