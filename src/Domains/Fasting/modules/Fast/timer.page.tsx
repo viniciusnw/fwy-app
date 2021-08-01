@@ -241,6 +241,7 @@ class Timer extends React.PureComponent<
 
         {visibleDateTimePickerModal && (
           <DateTimePickerModal
+            locale="en_GB"
             mode="datetime"
             isVisible={true}
             maximumDate={new Date()}

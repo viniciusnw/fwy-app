@@ -102,6 +102,7 @@ export default {
     return hoursArray;
   },
   fastColors: ['#EC5349', '#8B4F9F', '#222842', '#EB334D'],
+  fastColorsRgb: ['236, 83, 73', '139, 79, 159', '34, 40, 66', '235, 51, 77'],
   enums: {
     languages: languagesEnum,
     registerFields: registerFieldsEnum,

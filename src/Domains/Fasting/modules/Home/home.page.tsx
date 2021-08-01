@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { View } from 'react-native';
 
 import { Icon } from '@Components';
+import { FASTING } from '@Config/constants';
 import { StackScreenProps } from '@react-navigation/stack';
 import { LoggedStackParamList, PagePropsType } from '@Navigation';
 import { ReduxActions, ReduxPropsType, ReduxStateType } from '@Redux/Fasting';
@@ -180,23 +181,52 @@ class Home extends React.Component<
   private Render_PresetFast = (index) => {
     const { presets } = this.props.useRedux.Fastings;
     const preset = presets.find((p) => p.index - 1 == index);
+
+    const { fastColors, fastColorsRgb } = FASTING;
+
+    const colorIndex = fastColors.indexOf(preset ? preset.color : '');
+
     if (preset)
       return (
-        <FastItem key={index} onPress={() => this.goFastStart(preset._id)}>
-          <View style={{ width: '100%', alignItems: 'flex-start' }}>
-            <StyledText2>{preset.name}</StyledText2>
-          </View>
+        <View>
+          {preset.color ? (
+            <View
+              style={{
+                margin: 8,
+                width: 103,
+                height: 140,
+                borderRadius: 20,
+                position: 'absolute',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+                backgroundColor: 'rgba(255, 255, 255, 0.8)',
+              }}
+            />
+          ) : null}
 
-          <View style={{ width: '100%', alignItems: 'flex-start' }}>
-            <StyledText3>
-              {this.getDuration(preset)} <StyledText4>H.</StyledText4>
-            </StyledText3>
-          </View>
+          <FastItem
+            key={index}
+            style={[
+              fastColorsRgb[colorIndex] != undefined && {
+                backgroundColor: `rgba(${fastColorsRgb[colorIndex]}, .8)`,
+              },
+            ]}
+            onPress={() => this.goFastStart(preset._id)}>
+            <View style={{ width: '100%', alignItems: 'flex-start' }}>
+              <StyledText2>{preset.name}</StyledText2>
+            </View>
 
-          <View style={{ width: '100%', alignItems: 'flex-end' }}>
-            <Icon size={12} color={'#FFF'} icon="info" />
-          </View>
-        </FastItem>
+            <View style={{ width: '100%', alignItems: 'flex-start' }}>
+              <StyledText3>
+                {this.getDuration(preset)} <StyledText4>H.</StyledText4>
+              </StyledText3>
+            </View>
+
+            <View style={{ width: '100%', alignItems: 'flex-end' }}>
+              <Icon size={12} color={'#FFF'} icon="info" />
+            </View>
+          </FastItem>
+        </View>
       );
     return null;
   };

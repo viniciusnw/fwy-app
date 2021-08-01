@@ -35,6 +35,7 @@ const InputDate: React.FC<any> = (props) => {
       {visible && (
         <DateTimePickerModal
           mode="date"
+          locale="en_GB"
           isVisible={true}
           onCancel={() => setVisible(false)}
           date={props.value ? new Date(props.value) : new Date()}

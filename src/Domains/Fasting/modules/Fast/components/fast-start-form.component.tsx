@@ -125,10 +125,18 @@ const FastStartForm: React.FC<any> = ({
                 style={[
                   {
                     width: 45,
+                    borderWidth: 1,
                     borderRadius: 8,
                     paddingVertical: 6,
+                    borderColor: 'transparent',
                   },
-                  h == values.hours && { backgroundColor: '#EC5349' },
+                  h == values.hours && {
+                    backgroundColor: values.color ? values.color : '#EC5349',
+                  },
+                  h == values.hours &&
+                    values.color == fastColors[1] && {
+                      borderColor: 'black',
+                    },
                 ]}>
                 <StyledText3>{h}</StyledText3>
               </TouchableOpacity>

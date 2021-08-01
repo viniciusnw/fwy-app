@@ -434,6 +434,7 @@ class FastEnd extends React.Component<
           {visibleStartDateTimePickerModal && (
             <DateTimePickerModal
               mode="datetime"
+              locale="en_GB"
               isVisible={true}
               maximumDate={new Date()}
               onConfirm={this.handlerEditStartDate}
@@ -445,6 +446,7 @@ class FastEnd extends React.Component<
           {visibleEndDateTimePickerModal && (
             <DateTimePickerModal
               mode="datetime"
+              locale="en_GB"
               isVisible={true}
               maximumDate={new Date()}
               date={this.state.customEndDate}

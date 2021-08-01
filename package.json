@@ -1,6 +1,6 @@
 {
   "name": "@fasting/app",
-  "version": "2.4.4",
+  "version": "2.5.5",
   "homepage": "https://www.fastingwithyara.com/",
   "private": true,
   "dependencies": {
