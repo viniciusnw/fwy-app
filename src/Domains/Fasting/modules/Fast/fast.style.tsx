@@ -6,16 +6,16 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 
 export const Container = styled(View)`
   flex: 1;
+  margin: 0 40px;
   align-items: center;
   justify-content: flex-start;
-  margin: 0 40px;
 `;
 
 export const TimerContainer = styled(View)`
   flex: 1;
   padding-top: 60px;
-  padding-bottom: 40px;
   align-items: center;
+  padding-bottom: 40px;
   justify-content: space-around;
 `;
 

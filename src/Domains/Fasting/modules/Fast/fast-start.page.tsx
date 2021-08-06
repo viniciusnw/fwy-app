@@ -3,6 +3,7 @@ import { Formik } from 'formik';
 import { connect } from 'react-redux';
 import { showSnackbar } from '@Config/graphql';
 import { StackScreenProps } from '@react-navigation/stack';
+import { withTranslation, WithTranslation } from 'react-i18next';
 
 import * as ASSETS from '@Config/assets';
 import { FASTING } from '@Config/constants';
@@ -40,9 +41,9 @@ class FastStart extends React.Component<
   any
 > {
   static setPageConfigs = {
-    topBarConfig: { title: null, menu: true, back: true, color: '#FFF' },
-    pageConfig: { backgroundSolidColor: 'secondary' },
     bottomBarConfig: { color: '#FFF' },
+    pageConfig: { backgroundSolidColor: 'secondary' },
+    topBarConfig: { title: null, menu: true, back: true, color: '#FFF' },
   };
 
   constructor(props) {
@@ -397,4 +398,6 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(FastStart);
+export default withTranslation('FastStart')(
+  connect(mapStateToProps, mapDispatchToProps)(FastStart),
+);

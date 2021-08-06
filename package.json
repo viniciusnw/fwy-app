@@ -1,6 +1,6 @@
 {
   "name": "@fasting/app",
-  "version": "2.5.5",
+  "version": "2.6.5",
   "homepage": "https://www.fastingwithyara.com/",
   "private": true,
   "dependencies": {
@@ -50,6 +50,7 @@
     "react-native-snackbar": "^2.4.0",
     "react-native-snap-carousel": "3.9.1",
     "react-native-splash-screen": "3.2.0",
+    "react-native-store-review": "^0.2.0",
     "react-native-svg": "12.1.0",
     "react-native-tab-view": "2.15.2",
     "react-native-unimodules": "0.13.3",

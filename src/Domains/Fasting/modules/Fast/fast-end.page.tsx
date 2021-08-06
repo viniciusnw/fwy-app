@@ -1,9 +1,10 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import styled, { css } from 'styled-components/native';
-import { launchCamera, ImagePickerResponse } from 'react-native-image-picker';
 import { StackScreenProps } from '@react-navigation/stack';
+import { withTranslation, WithTranslation } from 'react-i18next';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
+import { launchCamera, ImagePickerResponse } from 'react-native-image-picker';
 
 import * as ASSETS from '@Config/assets';
 import { showSnackbar } from '@Config/graphql';
@@ -45,7 +46,7 @@ type FastEndState = {
 
 type RoutePropsType = StackScreenProps<LoggedStackParamList, 'FastEnd'>;
 class FastEnd extends React.Component<
-  RoutePropsType & ReduxPropsType & PagePropsType,
+  RoutePropsType & ReduxPropsType & PagePropsType & WithTranslation,
   FastEndState
 > {
   static setPageConfigs = {
@@ -151,16 +152,11 @@ class FastEnd extends React.Component<
         url: 'https://www.fastingwithyara.com/',
         message: `You completed a fast for a total ${this.Duration}`,
       });
-
       if (result.action === Share.sharedAction) {
-        if (result.activityType) {
-          // shared with activity type of result.activityType
-        } else {
-          // shared
-        }
-      } else if (result.action === Share.dismissedAction) {
-        // dismissed
-      }
+        // shared with activity type of result.activityType
+        if (result.activityType) return;
+        else return; // shared
+      } else if (result.action === Share.dismissedAction) return; // dismissed
     } catch (error) {
       console.log(error.message);
     }
@@ -203,6 +199,8 @@ class FastEnd extends React.Component<
   };
 
   render() {
+    const phoneLanguage = this.props.i18n.language.replace('-', '_');
+
     const { backgrounds } = ASSETS.FASTING;
 
     const howFelling = [
@@ -434,8 +432,8 @@ class FastEnd extends React.Component<
           {visibleStartDateTimePickerModal && (
             <DateTimePickerModal
               mode="datetime"
-              locale="en_GB"
               isVisible={true}
+              locale={phoneLanguage}
               maximumDate={new Date()}
               onConfirm={this.handlerEditStartDate}
               date={this.InitialStartDateTimePickerModal}
@@ -446,8 +444,8 @@ class FastEnd extends React.Component<
           {visibleEndDateTimePickerModal && (
             <DateTimePickerModal
               mode="datetime"
-              locale="en_GB"
               isVisible={true}
+              locale={phoneLanguage}
               maximumDate={new Date()}
               date={this.state.customEndDate}
               onConfirm={this.handlerEditEndDate}
@@ -483,16 +481,32 @@ class FastEnd extends React.Component<
   private get StartDate() {
     const { fasting } = this.props.useRedux.Fastings;
     if (!fasting) return;
-    const time = fasting.startDate.toTimeString().split('G')[0].split(':');
+    const phoneLanguage = this.props.i18n.language;
+    const time = fasting.startDate.toLocaleTimeString(phoneLanguage).split(':');
+    const timeAux = time[2].split(' ')[1] || '';
+    const date = fasting.startDate.toLocaleDateString(phoneLanguage, {
+      weekday: 'short',
+      month: 'short',
+      day: 'numeric',
+      year: 'numeric',
+    });
 
-    return `${fasting.startDate.toDateString()}, ${time[0]}:${time[1]}`;
+    return `${date} | ${time[0]}:${time[1]} ${timeAux}`;
   }
 
   private get CurrentDate() {
+    const phoneLanguage = this.props.i18n.language;
     const endDate = this.state.customEndDate;
-    const time = endDate.toTimeString().split('G')[0].split(':');
+    const time = endDate.toLocaleTimeString(phoneLanguage).split(':');
+    const timeAux = time[2].split(' ')[1] || '';
+    const date = endDate.toLocaleDateString(phoneLanguage, {
+      weekday: 'short',
+      month: 'short',
+      day: 'numeric',
+      year: 'numeric',
+    });
 
-    return `${endDate.toDateString()}, ${time[0]}:${time[1]}`;
+    return `${date} | ${time[0]}:${time[1]} ${timeAux}`;
   }
 
   private get Duration() {
@@ -535,7 +549,9 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(FastEnd);
+export default withTranslation('FastEnd')(
+  connect(mapStateToProps, mapDispatchToProps)(FastEnd),
+);
 
 const EmojiTouchable = styled(TouchableOpacity)`
   padding: 0 4px;

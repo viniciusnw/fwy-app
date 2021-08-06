@@ -79,7 +79,7 @@ class CirgularTimer extends React.PureComponent<
                 <StyledText9>Time Since Last Fast</StyledText9>
               ) : startFasting ? (
                 <StyledText9>
-                  Remaining ({remainingTimeToShow.toFixed(1)}%)
+                  Remaining ({remainingTimeToShow.toFixed(0)}%)
                 </StyledText9>
               ) : (
                 <StyledText9>Upcoming fast</StyledText9>
@@ -87,14 +87,7 @@ class CirgularTimer extends React.PureComponent<
 
               {this.props.children}
 
-              {false ? (
-                <StyledText11>
-                  Upcoming fast{`\n`}
-                  <StyledText12> 13 hours </StyledText12>
-                </StyledText11>
-              ) : (
-                <StyledText11 />
-              )}
+              <StyledText11>{this.CurrentTime}</StyledText11>
             </TimerContainer>
           )}
         </AnimatedCircularProgress>
@@ -102,11 +95,26 @@ class CirgularTimer extends React.PureComponent<
     );
   }
 
-  private get Color() {
+  private get CurrentTime() {
     const { fasting } = this.props.useRedux.Fastings;
 
-    if (!fasting?.color) return;
-    return fasting?.color;
+    if (!fasting) return;
+    if (!fasting.endDate) return;
+
+    const differenceInTime = new Date().getTime() - fasting.startDate.getTime();
+
+    let days: any = Math.floor(differenceInTime / 86400000),
+      seconds: any = Math.floor((differenceInTime / 1000) % 60),
+      minutes: any = Math.floor((differenceInTime / (1000 * 60)) % 60),
+      hours: any =
+        Math.floor((differenceInTime / (1000 * 60 * 60)) % 24) +
+        (days > 0 ? days : 0) * 24;
+
+    hours = hours < 10 ? '0' + hours : hours;
+    minutes = minutes < 10 ? '0' + minutes : minutes;
+    seconds = seconds < 10 ? '0' + seconds : seconds;
+
+    return hours + ':' + minutes + ':' + seconds;
   }
 }
 

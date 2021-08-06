@@ -1,10 +1,12 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { StackScreenProps } from '@react-navigation/stack';
+import { withTranslation, WithTranslation } from 'react-i18next';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import { View, TouchableOpacity, ActivityIndicator } from 'react-native';
 
 import { Button } from '@Components';
+import { FASTING } from '@Config/constants';
 import { LoggedStackParamList, PagePropsType } from '@Navigation';
 import { ReduxActions, ReduxPropsType, ReduxStateType } from '@Redux/Fasting';
 
@@ -22,13 +24,13 @@ import {
 
 type RoutePropsType = StackScreenProps<LoggedStackParamList, 'Timer'>;
 class Timer extends React.PureComponent<
-  RoutePropsType & ReduxPropsType & PagePropsType,
+  RoutePropsType & ReduxPropsType & PagePropsType & WithTranslation,
   any
 > {
   static setPageConfigs = {
-    topBarConfig: { title: null, menu: true, back: true, color: '#FFF' },
-    pageConfig: { backgroundImage: 'secondary' },
     bottomBarConfig: { color: '#FFF' },
+    pageConfig: { backgroundImage: 'secondary' },
+    topBarConfig: { title: null, menu: true, back: true, color: '#FFF' },
   };
 
   constructor(props) {
@@ -171,6 +173,8 @@ class Timer extends React.PureComponent<
       editFasting: { loading: loadingEditFasting },
     } = this.props.useRedux.Fastings;
 
+    const phoneLanguage = this.props.i18n.language.replace('-', '_');
+
     return (
       <Container>
         <View style={{ marginBottom: 70 }}>
@@ -241,9 +245,9 @@ class Timer extends React.PureComponent<
 
         {visibleDateTimePickerModal && (
           <DateTimePickerModal
-            locale="en_GB"
             mode="datetime"
             isVisible={true}
+            locale={phoneLanguage}
             maximumDate={new Date()}
             date={this.InitialDateTimePickerModal}
             onConfirm={this.onConfirmEditStartDate}
@@ -280,21 +284,31 @@ class Timer extends React.PureComponent<
   private get StartDateFormated() {
     const { fasting } = this.props.useRedux.Fastings;
     if (!fasting) return;
-    const time = fasting.startDate.toTimeString().split('G')[0].split(':');
-    const date = fasting.startDate.toDateString().split(' ');
+    const phoneLanguage = this.props.i18n.language;
+    const time = fasting.startDate.toLocaleTimeString(phoneLanguage).split(':');
+    const timeAux = time[2].split(' ')[1] || '';
+    const date = fasting.startDate.toLocaleDateString(phoneLanguage, {
+      weekday: 'short',
+      month: 'short',
+      day: 'numeric',
+    });
 
-    // return -> Today, 12:59 PM
-    return `${date[0]} ${date[1]} ${date[2]}, ${time[0]}:${time[1]}`;
+    return `${date} | ${time[0]}:${time[1]} ${timeAux}`;
   }
 
   private get EndDateFormated() {
     const { fasting } = this.props.useRedux.Fastings;
     if (!fasting) return;
-    const time = fasting.endDate.toTimeString().split('G')[0].split(':');
-    const date = fasting.endDate.toDateString().split(' ');
+    const phoneLanguage = this.props.i18n.language;
+    const time = fasting.endDate.toLocaleTimeString(phoneLanguage).split(':');
+    const timeAux = time[2].split(' ')[1] || '';
+    const date = fasting.endDate.toLocaleDateString(phoneLanguage, {
+      weekday: 'short',
+      month: 'short',
+      day: 'numeric',
+    });
 
-    // return -> Today, 12:59 AM
-    return `${date[0]} ${date[1]} ${date[2]}, ${time[0]}:${time[1]}`;
+    return `${date} | ${time[0]}:${time[1]} ${timeAux}`;
   }
 
   private get FastingId() {
@@ -338,4 +352,6 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Timer);
+export default withTranslation('Timer')(
+  connect(mapStateToProps, mapDispatchToProps)(Timer),
+);

@@ -10,11 +10,16 @@ const StyledContainer = styled(View)`
   align-items: center;
   justify-content: space-around;
   height: ${({ theme }) => theme.height.navbar};
-  border-top-left-radius: ${({ theme, radius }: any) => radius ? `${radius[0]}px` : 0};
-  border-top-right-radius: ${({ theme, radius }: any) => radius ? `${radius[1]}px` : 0};
-  border-bottom-left-radius: ${({ theme, radius }: any) => radius ? `${radius[2]}px` : 0};
-  border-bottom-right-radius: ${({ theme, radius }: any) => radius ? `${radius[3]}px` : 0};
-  background-color: ${({ theme, background }: any) => theme.color[!background ? 'default' : background]};
+  border-top-left-radius: ${({ theme, radius }: any) =>
+    radius ? `${radius[0]}px` : 0};
+  border-top-right-radius: ${({ theme, radius }: any) =>
+    radius ? `${radius[1]}px` : 0};
+  border-bottom-left-radius: ${({ theme, radius }: any) =>
+    radius ? `${radius[2]}px` : 0};
+  border-bottom-right-radius: ${({ theme, radius }: any) =>
+    radius ? `${radius[3]}px` : 0};
+  background-color: ${({ theme, background }: any) =>
+    theme.color[!background ? 'default' : background]};
 `;
 
 const StyledItem = styled(TouchableOpacity)`
@@ -24,11 +29,11 @@ const StyledItem = styled(TouchableOpacity)`
 export const NavbarSecondary = ({ color, items, ...props }) => {
   return (
     <StyledContainer {...props}>
-      {items.map(({ size, icon, ...props }) =>
+      {items.map(({ size, icon, ...props }) => (
         <StyledItem {...props}>
           <Icon icon={icon} color={color} size={size ? size : 28} />
         </StyledItem>
-      )}
+      ))}
     </StyledContainer>
   );
 };

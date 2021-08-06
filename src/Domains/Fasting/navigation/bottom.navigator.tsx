@@ -66,6 +66,7 @@ class BottomBar extends React.Component<
         },
       },
       {
+        disabled: true,
         icon: 'chat',
         size: 26,
         onPress: () => (name == 'Chat' ? null : navigate('Chat')),

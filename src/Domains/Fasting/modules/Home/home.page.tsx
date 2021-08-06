@@ -9,15 +9,12 @@ import { LoggedStackParamList, PagePropsType } from '@Navigation';
 import { ReduxActions, ReduxPropsType, ReduxStateType } from '@Redux/Fasting';
 import {
   AddFastItem,
-  Badges,
   FastItem,
   StyledH1,
   StyledH2,
-  StyledText,
   StyledText2,
   StyledText3,
   StyledText4,
-  StyledText5,
 } from './home.style';
 
 type RoutePropsType = StackScreenProps<LoggedStackParamList, 'Home'>;
@@ -188,7 +185,7 @@ class Home extends React.Component<
 
     if (preset)
       return (
-        <View>
+        <View key={index}>
           {preset.color ? (
             <View
               style={{
@@ -199,7 +196,7 @@ class Home extends React.Component<
                 position: 'absolute',
                 alignItems: 'center',
                 justifyContent: 'space-between',
-                backgroundColor: 'rgba(255, 255, 255, 0.8)',
+                backgroundColor: 'rgba(0, 0, 0, 0.8)',
               }}
             />
           ) : null}
@@ -208,7 +205,7 @@ class Home extends React.Component<
             key={index}
             style={[
               fastColorsRgb[colorIndex] != undefined && {
-                backgroundColor: `rgba(${fastColorsRgb[colorIndex]}, .8)`,
+                backgroundColor: `rgba(${fastColorsRgb[colorIndex]}, .7)`,
               },
             ]}
             onPress={() => this.goFastStart(preset._id)}>

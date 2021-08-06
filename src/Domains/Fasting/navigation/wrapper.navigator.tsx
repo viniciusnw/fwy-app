@@ -60,7 +60,7 @@ class Wrapper extends React.PureComponent<
       Page: PageComponent,
       bottomBarType = null,
     } = this.props;
-
+    
     const { setPageConfigs } = PageComponent.WrappedComponent || {};
 
     const {

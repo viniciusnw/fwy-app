@@ -10606,6 +10606,11 @@ react-native-splash-screen@3.2.0:
   resolved "https://registry.yarnpkg.com/react-native-splash-screen/-/react-native-splash-screen-3.2.0.tgz#d47ec8557b1ba988ee3ea98d01463081b60fff45"
   integrity sha512-Ls9qiNZzW/OLFoI25wfjjAcrf2DZ975hn2vr6U9gyuxi2nooVbzQeFoQS5vQcbCt9QX5NY8ASEEAtlLdIa6KVg==
 
+react-native-store-review@^0.2.0:
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/react-native-store-review/-/react-native-store-review-0.2.0.tgz#82796f5ed0926f6ce304452d652afbcf8a492b47"
+  integrity sha512-YQmRZVAVfUNG1D7SH77K9RuUd3prQHCetCqhTnzkhunLBwfx89cGuskYxXhtIZP5ZwgcHro4SiNlv9pEvuPJpQ==
+
 react-native-storybook-loader@1.8.1:
   version "1.8.1"
   resolved "https://registry.yarnpkg.com/react-native-storybook-loader/-/react-native-storybook-loader-1.8.1.tgz#5d6b3c51b0b85a3d676e9fafa95c19553a9ef918"
