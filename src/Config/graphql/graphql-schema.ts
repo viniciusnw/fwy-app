@@ -89,6 +89,7 @@ export interface customerLogin {
 export interface customerLoginVariables {
   email: string;
   password: string;
+  isAdmin?: boolean | null;
 }
 
 /* tslint:disable */
@@ -378,6 +379,57 @@ export interface updatePresetVariables {
 // @generated
 // This file was automatically generated and should not be edited.
 
+// ====================================================
+// GraphQL query operation: listCustomers
+// ====================================================
+
+export interface listCustomers_listCustomers_customers_avatar {
+  __typename: "Avatar";
+  type: string;
+  data: string;
+}
+
+export interface listCustomers_listCustomers_customers {
+  __typename: "Customer";
+  name: string;
+  email: string;
+  phone: string;
+  birthday: any;
+  country: string;
+  state: string;
+  gender: string | null;
+  weight: number | null;
+  height: number | null;
+  avatar: listCustomers_listCustomers_customers_avatar | null;
+}
+
+export interface listCustomers_listCustomers_nextPagination {
+  __typename: "NextPagination";
+  pageNumber: number;
+  nPerPage: number;
+  nextPageNumber: number | null;
+}
+
+export interface listCustomers_listCustomers {
+  __typename: "CustomerList";
+  customers: listCustomers_listCustomers_customers[] | null;
+  nextPagination: listCustomers_listCustomers_nextPagination;
+}
+
+export interface listCustomers {
+  listCustomers: listCustomers_listCustomers;
+}
+
+export interface listCustomersVariables {
+  pagination: Pagination;
+  term?: string | null;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
 //==============================================================
 // START Enums and Input Objects
 //==============================================================
@@ -457,11 +509,11 @@ export interface PictureInput {
 
 export interface PresetInput {
   id?: string | null;
+  index?: number | null;
   name: string;
   hours: number;
   days: number;
-  color: string;
-  index: number;
+  color?: string | null;
 }
 
 //==============================================================

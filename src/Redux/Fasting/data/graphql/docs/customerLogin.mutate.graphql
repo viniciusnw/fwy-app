@@ -1,5 +1,5 @@
-mutation customerLogin($email: String!, $password: String!) {
-  customerLogin(email: $email, password: $password) {
+mutation customerLogin($email: String!, $password: String!, $isAdmin: Boolean) {
+  customerLogin(email: $email, password: $password, isAdmin: $isAdmin) {
     _id
     name
     email

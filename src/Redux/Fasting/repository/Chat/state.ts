@@ -1,11 +1,11 @@
+import {
+  getChatMessages_getChatMessages_nextPagination
+} from '@Config/graphql'
+
 interface LoadMessages {
   loading: boolean
   success: boolean
-  nextPagination: {
-    nPerPage: number
-    pageNumber: number
-    nextPageNumber: number | null
-  }
+  nextPagination: getChatMessages_getChatMessages_nextPagination
   error: boolean
   errorMessage: string | null
 }
@@ -31,7 +31,8 @@ export class ChatReduxType {
     loading: false,
     success: false,
     nextPagination: {
-      nPerPage: 10,
+      __typename: 'NextPagination',
+      nPerPage: 15,
       pageNumber: 1,
       nextPageNumber: null
     },

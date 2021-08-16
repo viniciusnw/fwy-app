@@ -1,90 +1,204 @@
+import React from 'react';
 import { connect } from 'react-redux';
-import React, { Component } from 'react';
-import Config from 'react-native-config';
-import { View, Text, ActivityIndicator } from 'react-native';
+import { View, ActivityIndicator } from 'react-native';
 
-import Redux from '@Redux/FastingAdm';
-import { Button, Icon, Logo } from '@Components';
+import { Icon, Input } from '@Components';
+import CustomerItem from './components/customer-item.component';
+import SearchInput from './components/search-input.component';
+import * as ASSETS from '@Config/assets';
+import { FASTING_ADM } from '@Config/constants';
+import { StackScreenProps } from '@react-navigation/stack';
+import { LoggedStackParamList, PagePropsType } from '@ADMNavigation';
+import {
+  ReduxActions,
+  ReduxPropsType,
+  ReduxStateType,
+} from '@Redux/FastingAdm';
 
-class Home extends Component<any, any> {
+import {
+  Container,
+  CustomerContainer,
+  SearchContainer,
+  ScrollCustomers,
+} from './home.style';
+
+const debounce = require('lodash.debounce');
+
+type RoutePropsType = StackScreenProps<LoggedStackParamList, 'Home'>;
+class Home extends React.Component<
+  RoutePropsType & ReduxPropsType & PagePropsType,
+  any
+> {
+  static setPageConfigs = {
+    topBarConfig: { title: null, menu: true, color: '#FFF' },
+  };
+
   constructor(props) {
     super(props);
-    const { toggleDrawer } = this.props.navigation;
-    props.setTopBar({
-      title: 'Home',
-      menu: toggleDrawer,
+    this.state = {
+      searchTerm: '',
+    };
+  }
+
+  componentDidMount() {
+    this.loadCustomers();
+  }
+
+  private loadCustomers = () => {
+    const {
+      list: {
+        data: { nextPagination },
+      },
+    } = this.props.useRedux.Customer;
+
+    const pagination = {
+      pageNumber: 1,
+      nPerPage: nextPagination.nPerPage,
+    };
+    this.props.useDispatch.listCustomer({ pagination });
+  };
+
+  private loadMoreCustomers() {
+    const {
+      list: {
+        loading,
+        data: { nextPagination },
+      },
+    } = this.props.useRedux.Customer;
+    if (loading) return;
+    if (!nextPagination.nextPageNumber) return;
+
+    this.props.useDispatch.listCustomer({
+      pagination: {
+        pageNumber: nextPagination.nextPageNumber
+          ? nextPagination.nextPageNumber
+          : 1,
+        nPerPage: nextPagination.nPerPage,
+      },
     });
   }
 
-  goDetails() {
-    const { navigation } = this.props;
-    navigation.navigate('Details', {
-      param1: 86,
-      param2: 'From Home',
+  private searchCustomers = () => {
+    const {
+      search: {
+        data: { nextPagination },
+      },
+    } = this.props.useRedux.Customer;
+
+    const pagination = {
+      pageNumber: 1,
+      nPerPage: nextPagination.nPerPage,
+    };
+    this.props.useDispatch.searchCustomer({
+      pagination,
+      term: this.state.searchTerm,
+    });
+  };
+
+  private loadMoreSearchCustomers() {
+    const {
+      search: {
+        loading,
+        data: { nextPagination },
+      },
+    } = this.props.useRedux.Customer;
+    if (loading) return;
+    if (!nextPagination.nextPageNumber) return;
+
+    this.props.useDispatch.searchCustomer({
+      pagination: {
+        pageNumber: nextPagination.nextPageNumber
+          ? nextPagination.nextPageNumber
+          : 1,
+        nPerPage: nextPagination.nPerPage,
+      },
+      term: this.state.searchTerm,
     });
   }
 
   render() {
-    const {
-      base,
-      user: { login },
-      calendar,
-    } = this.props;
-    const { data, loading } = login;
-
-    console.log(calendar);
+    const { list } = this.props.useRedux.Customer;
+    const { search } = this.props.useRedux.Customer;
 
     return (
-      <>
-        <View
-          style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-          <Logo />
+      <Container>
+        <SearchContainer>
+          <SearchInput
+            initialValue={this.state.searchTerm}
+            onChange={debounce((value: string) => {
+              this.setState({ searchTerm: value }, () => {
+                if (value) this.searchCustomers();
+              });
+            }, 500)}
+          />
+        </SearchContainer>
 
-          <Text />
-          <Text>{Config.APP_NAME}</Text>
-          <Text />
-
-          <Button onPress={() => this.props.toggleSidebar()}>
-            <Text> Redux Test </Text>
-            <Text> </Text>
-            <Icon icon={'right'} />
-          </Button>
-
-          <Text />
-          <Text> Redux: {JSON.stringify(base)} </Text>
-          <Text />
-
-          <Button onPress={() => this.goDetails()}>
-            <Text> Go to Details </Text>
-          </Button>
-          <Text />
-          {loading ? (
-            <ActivityIndicator size="small" color={'red'} />
+        <CustomerContainer>
+          {this.state.searchTerm ? (
+            <ScrollCustomers
+              onEndReachedThreshold={0}
+              data={search.data.customers}
+              extraData={search.data.customers}
+              showsVerticalScrollIndicator={false}
+              showsHorizontalScrollIndicator={false}
+              keyExtractor={(item, index) => `${index}`}
+              onEndReached={() => this.loadMoreSearchCustomers()}
+              renderItem={({ item }: { item: any }) => (
+                <CustomerItem customer={item} />
+              )}
+              ListFooterComponent={() => (
+                <>
+                  {search.loading ? (
+                    <ActivityIndicator size="large" color={'#FFF'} />
+                  ) : (
+                    <React.Fragment />
+                  )}
+                </>
+              )}
+            />
           ) : (
-              <Button
-                onPress={data.logged ? this.props.logout : this.props.login}>
-                <Text> Loggin/Logout </Text>
-              </Button>
-            )}
-        </View>
-      </>
+            <ScrollCustomers
+              onEndReachedThreshold={0}
+              data={list.data.customers}
+              extraData={list.data.customers}
+              showsVerticalScrollIndicator={false}
+              showsHorizontalScrollIndicator={false}
+              keyExtractor={(item, index) => `${index}`}
+              onEndReached={() => this.loadMoreCustomers()}
+              renderItem={({ item }: { item: any }) => (
+                <CustomerItem customer={item} />
+              )}
+              ListFooterComponent={() => (
+                <>
+                  {list.loading ? (
+                    <ActivityIndicator size="large" color={'#FFF'} />
+                  ) : (
+                    <React.Fragment />
+                  )}
+                </>
+              )}
+            />
+          )}
+        </CustomerContainer>
+      </Container>
     );
   }
 }
 
-function mapStateToProps({ base, user, calendar }) {
+function mapStateToProps({ Customer }: ReduxStateType) {
   return {
-    base,
-    user,
-    calendar,
+    useRedux: {
+      Customer,
+    },
   };
 }
 
 function mapDispatchToProps(dispatch) {
   return {
-    toggleSidebar: () => dispatch(Redux.actions.toggleSidebar()),
-    login: _ => dispatch(Redux.actions.login(_)),
-    logout: () => dispatch(Redux.actions.logout()),
+    useDispatch: {
+      listCustomer: (_) => dispatch(ReduxActions.listCustomer(_)),
+      searchCustomer: (_) => dispatch(ReduxActions.searchCustomer(_)),
+    },
   };
 }
 

@@ -1,10 +1,28 @@
 import React from 'react';
-import { createStackNavigator } from '@react-navigation/stack';
-
+import { Login } from '@ADMModules';
 import Wrapper from './wrapper.navigator';
-import { Home, Details } from '@ADMModules';
+import {
+  createStackNavigator,
+  StackScreenProps,
+} from '@react-navigation/stack';
 
-export default class UnLogged extends React.Component<any, any> {
+export type UnloogedStackParamList = {
+  UnLogged: undefined;
+  Wrapper: undefined;
+  Login: undefined;
+};
+
+const UnloogedStackList = [
+  {
+    name: 'Login',
+    Page: Login,
+    topBarType: null,
+    bottomBarType: null,
+  },
+];
+
+type RoutePropsType = StackScreenProps<UnloogedStackParamList, 'UnLogged'>;
+export default class UnLogged extends React.Component<RoutePropsType, any> {
   constructor(props) {
     super(props);
   }
@@ -12,17 +30,15 @@ export default class UnLogged extends React.Component<any, any> {
   render() {
     const Stack = createStackNavigator();
     return (
-      <Stack.Navigator>
-        <Stack.Screen
-          name="Home"
-          component={(props) => <Wrapper {...props} Page={Home} bottomBarType={null} />}
-          options={{ header: (_) => null }}
-        />
-        <Stack.Screen
-          name="Details"
-          component={(props) => <Wrapper {...props} Page={Details} bottomBarType={null} />}
-          options={{ header: (_) => null }}
-        />
+      <Stack.Navigator initialRouteName={'Login'}>
+        {UnloogedStackList.map((StackItem, index) => (
+          <Stack.Screen
+            key={index}
+            name={StackItem.name}
+            component={(props) => <Wrapper {...props} {...StackItem} />}
+            options={{ header: (_) => null }}
+          />
+        ))}
       </Stack.Navigator>
     );
   }

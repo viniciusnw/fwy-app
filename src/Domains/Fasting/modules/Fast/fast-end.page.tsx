@@ -491,7 +491,7 @@ class FastEnd extends React.Component<
       year: 'numeric',
     });
 
-    return `${date} | ${time[0]}:${time[1]} ${timeAux}`;
+    return `${date} | ${time[0]}:${time[1]}${timeAux}`;
   }
 
   private get CurrentDate() {
@@ -506,7 +506,7 @@ class FastEnd extends React.Component<
       year: 'numeric',
     });
 
-    return `${date} | ${time[0]}:${time[1]} ${timeAux}`;
+    return `${date} | ${time[0]}:${time[1]}${timeAux}`;
   }
 
   private get Duration() {

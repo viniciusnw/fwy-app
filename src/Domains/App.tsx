@@ -23,6 +23,8 @@ export default class App extends React.Component {
   render() {
     const { APP_NAME } = Config;
     const { store, persistor } = Store[APP_NAME];
+
+
     return (
       <Provider store={store}>
         <PersistGate persistor={persistor}>
