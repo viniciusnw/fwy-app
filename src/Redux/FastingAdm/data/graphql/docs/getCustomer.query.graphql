@@ -1,0 +1,18 @@
+query getCustomer($customerId: String!) {
+  getCustomer(customerId: $customerId) {
+    _id
+    name
+    email
+    phone
+    birthday
+    country
+    state
+    gender
+    weight
+    height
+    avatar {
+      type
+      data
+    }
+  }
+}

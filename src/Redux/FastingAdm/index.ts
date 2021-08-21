@@ -3,6 +3,7 @@ import Chat, { ChatReduxType } from './repository/Chat';
 import User, { UserReduxType } from './repository/User';
 import General, { GeneralReduxType } from './repository/General';
 import Customer, { CustomerReduxType } from './repository/Customer';
+import Fasting, { FastingReduxType } from './repository/Fasting';
 
 class ReduxActionsType {
   saveWs = General.actions.saveWs
@@ -12,6 +13,9 @@ class ReduxActionsType {
 
   listCustomer = Customer.actions.list
   searchCustomer = Customer.actions.search
+  getCustomer = Customer.actions.get
+
+  getLastFasting = Fasting.actions.getLast
 
   newChatMessage = Chat.actions.newChatMessage
   getChatMessages = Chat.actions.getChatMessages
@@ -25,7 +29,8 @@ export type ReduxStateType = {
   Chat: ChatReduxType;
   LastUser: LastUserReduxType;
   General: GeneralReduxType;
-  Customer: CustomerReduxType
+  Customer: CustomerReduxType;
+  Fasting: FastingReduxType
 }
 
 // ==

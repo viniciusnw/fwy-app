@@ -12,12 +12,21 @@ export type LoggedStackParamList = {
   Wrapper: undefined;
   Logged: undefined;
   Home: undefined;
+  Customer: {
+    customerId: string;
+  };
 };
 
 const LoggedStackList = [
   {
     name: 'Home',
     Page: Pages.Home,
+    topBarType: 'primary',
+    bottomBarType: 'primary',
+  },
+  {
+    name: 'Customer',
+    Page: Pages.Customer,
     topBarType: 'primary',
     bottomBarType: 'primary',
   },

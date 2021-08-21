@@ -23,7 +23,10 @@ const languageDetector = {
 
     let phoneLanguage = '';
     if (Platform.OS === 'android') phoneLanguage = NativeModules.I18Manager.localeIdentifier;
-    else phoneLanguage = NativeModules.SettingsManager.settings.AppleLocale;
+    else phoneLanguage = NativeModules.SettingsManager.settings.AppleLocale ||
+      NativeModules.SettingsManager.settings.AppleLanguages[0] ||
+      NativeModules.I18nManager.localeIdentifier;
+
     phoneLanguage = phoneLanguage.replace('_', '-');
     return callback(phoneLanguage);
   },

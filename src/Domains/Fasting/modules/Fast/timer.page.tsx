@@ -176,7 +176,9 @@ class Timer extends React.PureComponent<
     const phoneLanguage = this.props.i18n.language.replace('-', '_');
 
     return (
-      <Container>
+      <Container
+        showsVerticalScrollIndicator={false}
+        showsHorizontalScrollIndicator={false}>
         <View style={{ marginBottom: 70 }}>
           <StyledH3>
             {!startFasting ? 'Get ready to fast' : 'You’re Fasting!'}

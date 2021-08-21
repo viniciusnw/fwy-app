@@ -134,55 +134,49 @@ class Home extends React.Component<
         </SearchContainer>
 
         <CustomerContainer>
-          {this.state.searchTerm ? (
-            <ScrollCustomers
-              onEndReachedThreshold={0}
-              data={search.data.customers}
-              extraData={search.data.customers}
-              showsVerticalScrollIndicator={false}
-              showsHorizontalScrollIndicator={false}
-              keyExtractor={(item, index) => `${index}`}
-              onEndReached={() => this.loadMoreSearchCustomers()}
-              renderItem={({ item }: { item: any }) => (
-                <CustomerItem customer={item} />
-              )}
-              ListFooterComponent={() => (
-                <>
-                  {search.loading ? (
-                    <ActivityIndicator size="large" color={'#FFF'} />
-                  ) : (
-                    <React.Fragment />
-                  )}
-                </>
-              )}
-            />
-          ) : (
-            <ScrollCustomers
-              onEndReachedThreshold={0}
-              data={list.data.customers}
-              extraData={list.data.customers}
-              showsVerticalScrollIndicator={false}
-              showsHorizontalScrollIndicator={false}
-              keyExtractor={(item, index) => `${index}`}
-              onEndReached={() => this.loadMoreCustomers()}
-              renderItem={({ item }: { item: any }) => (
-                <CustomerItem customer={item} />
-              )}
-              ListFooterComponent={() => (
-                <>
-                  {list.loading ? (
-                    <ActivityIndicator size="large" color={'#FFF'} />
-                  ) : (
-                    <React.Fragment />
-                  )}
-                </>
-              )}
-            />
-          )}
+          <ScrollCustomers
+            numColumns={3}
+            onEndReachedThreshold={0}
+            data={
+              this.state.searchTerm
+                ? search.data.customers
+                : list.data.customers
+            }
+            extraData={
+              this.state.searchTerm
+                ? search.data.customers
+                : list.data.customers
+            }
+            showsVerticalScrollIndicator={false}
+            showsHorizontalScrollIndicator={false}
+            keyExtractor={(item, index) => `${index}`}
+            onEndReached={() =>
+              this.state.searchTerm
+                ? this.loadMoreSearchCustomers()
+                : this.loadMoreCustomers()
+            }
+            renderItem={({ item }: any) => (
+              <CustomerItem onClick={this.goCustomerPage} customer={item} />
+            )}
+            ListFooterComponent={() => (
+              <>
+                {list.loading || search.loading ? (
+                  <ActivityIndicator size="large" color={'#FFF'} />
+                ) : (
+                  <React.Fragment />
+                )}
+              </>
+            )}
+          />
         </CustomerContainer>
       </Container>
     );
   }
+
+  private goCustomerPage = (customerId: string) => {
+    const { navigation } = this.props;
+    navigation.navigate('Customer', { customerId });
+  };
 }
 
 function mapStateToProps({ Customer }: ReduxStateType) {

@@ -1,14 +1,12 @@
 import React from 'react';
 import { Button, Icon } from '@Components';
 import styled from 'styled-components/native';
-import { View, TextInput, Text } from 'react-native';
+import { View, TextInput, Text, ScrollView } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
-export const Container = styled(View)`
+export const Container = styled(ScrollView)`
   flex: 1;
   margin: 0 40px;
-  align-items: center;
-  justify-content: flex-start;
 `;
 
 export const TimerContainer = styled(View)`
@@ -54,6 +52,7 @@ export const StyledH3 = styled(Text)`
   font-size: 22px;
   font-weight: bold;
   margin-bottom: -7px;
+  text-align: center;
   color: ${({ theme }) => theme.color.white};
   font-family: ${({ theme }) => theme.fonts.AdobeClean.bold};
 `;
@@ -248,11 +247,11 @@ export const FormHeader = styled(View)`
 `;
 
 export const Footer = styled(View)`
-  /* height: 230px; */
-  height: 124px;
-  bottom: -62px;
-  right: 0px;
   left: 0;
+  right: 0px;
+  bottom: -96px;
+  height: 124px;
+  /* height: 230px; */
 `;
 
 export const ContainerButtons = styled(View)<any>`
@@ -270,7 +269,7 @@ export const StyledField = styled(View)`
 `;
 
 export const Divider = (props) => (
-  <View style={{ width: '100%', height: 42, bottom: -62, marginTop: -62 }} />
+  <View style={{ width: '100%', height: 42, bottom: -96, marginTop: -62 }} />
 );
 
 export const CustomPlanTag = (props) => (

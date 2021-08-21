@@ -11,7 +11,7 @@ import { Store } from '@Redux/Store';
 import { Root as Fasting } from '@Navigation';
 import { Root as FastingAdm } from '@ADMNavigation';
 
-import { SafeAreaView, ActivityIndicator, StatusBar, View } from 'react-native';
+import { ActivityIndicator, View } from 'react-native';
 
 import '@Config/locales';
 
@@ -24,22 +24,13 @@ export default class App extends React.Component {
     const { APP_NAME } = Config;
     const { store, persistor } = Store[APP_NAME];
 
-
     return (
       <Provider store={store}>
         <PersistGate persistor={persistor}>
           <ThemeProvider theme={THEME[APP_NAME]}>
             <Suspense
               fallback={<ActivityIndicator size="small" color={'#FFF'} />}>
-              <SafeAreaView style={{ flex: 1 }}>
-                <StatusBar
-                  hidden={false}
-                  animated={true}
-                  barStyle={'dark-content'}
-                  showHideTransition={'slide'}
-                />
-                <RootApp />
-              </SafeAreaView>
+              <RootApp />
             </Suspense>
           </ThemeProvider>
         </PersistGate>

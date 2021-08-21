@@ -1,6 +1,7 @@
 query listCustomers($pagination: Pagination!, $term: String) {
   listCustomers(pagination: $pagination, term: $term) {
     customers {
+      _id
       name
       email
       phone

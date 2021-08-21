@@ -5,22 +5,23 @@ import { APP_NAME_TYPE } from '@Config/types';
 import {
   GraphqlApi,
   listCustomersVariables,
-  getChatMessagesVariables
+  getChatMessagesVariables,
+  getCustomerVariables,
+  getLastFastingVariables
 } from '@Config/graphql'
 
 import listCustomersQuery from './docs/listCustomers.query.graphql'
+import getCustomerQuery from './docs/getCustomer.query.graphql'
+import getLastFasting from './docs/getLastFasting.query.graphql'
 import getChatMessagesQuery from './../../../Fasting/data/graphql/docs/getChatMessages.query.graphql'
 @Service()
 export class Query extends GraphqlApi {
 
   public test = (params) => {
     const { store } = Store[APP_NAME_TYPE.FASTING_ADM];
-
     console.log(params)
     console.log(store.getState())
     console.log(this.ApolloClient)
-
-    // return new Promise((res) => setTimeout(() => res({ name: 'teste' }), 1500))
   }
 
   public listCustomers = (params: listCustomersVariables) => {
@@ -37,6 +38,23 @@ export class Query extends GraphqlApi {
       variables: params,
       fetchPolicy: 'network-only'
     }).then(response => this.mapResponse(response, 'getChatMessages'))
+      .catch(err => this.mapError(err))
+  }
+
+  public getCustomer = (params: getCustomerVariables) => {
+    return this.ApolloClient.query({
+      query: getCustomerQuery,
+      variables: params,
+    }).then(response => this.mapResponse(response, 'getCustomer'))
+      .catch(err => this.mapError(err))
+  }
+
+  public getLastFasting = (params: getLastFastingVariables) => {
+    return this.ApolloClient.query({
+      query: getLastFasting,
+      variables: params,
+      fetchPolicy: 'network-only'
+    }).then(response => this.mapResponse(response, 'getLastFasting'))
       .catch(err => this.mapError(err))
   }
 }
