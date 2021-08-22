@@ -1,7 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { View, ScrollView } from 'react-native';
 import styled from 'styled-components/native';
+import { View, ScrollView } from 'react-native';
+import { withTranslation, WithTranslation } from 'react-i18next';
 
 import { Icon } from '@Components';
 import { FASTING } from '@Config/constants';
@@ -21,7 +22,7 @@ import {
 
 type RoutePropsType = StackScreenProps<LoggedStackParamList, 'Home'>;
 class Home extends React.Component<
-  RoutePropsType & ReduxPropsType & PagePropsType,
+  RoutePropsType & ReduxPropsType & PagePropsType & WithTranslation,
   any
 > {
   static setPageConfigs = {
@@ -80,13 +81,13 @@ class Home extends React.Component<
         showsHorizontalScrollIndicator={false}>
         {/* === */}
         <View style={{ marginHorizontal: 20 }}>
-          <StyledH1>Escolha como começar o seu Jejum</StyledH1>
+          <StyledH1>{this.t('title')}</StyledH1>
         </View>
 
         {/* === */}
         <View style={{ marginTop: 40, width: '100%' }}>
           <FastPresetListHeader>
-            <StyledH2>Iniciar Jejum</StyledH2>
+            <StyledH2>{this.t('presetTitle')}</StyledH2>
           </FastPresetListHeader>
 
           <View>
@@ -99,16 +100,13 @@ class Home extends React.Component<
         {/* === */}
         <View style={{ marginTop: 40, width: '100%' }}>
           <FastPresetListHeader>
-            <StyledH2>Most popular</StyledH2>
-            {/* <Badges>
-              <StyledText>PLUS</StyledText>
-            </Badges> */}
+            <StyledH2>{this.t('defaultTitle')}</StyledH2>
           </FastPresetListHeader>
 
           <View>
             <FastPresetContent>
               {fastItemPlus.map((item, index) => (
-                <>
+                <React.Fragment key={index}>
                   {item.name ? (
                     <FastItem
                       onPress={() =>
@@ -117,8 +115,7 @@ class Home extends React.Component<
                           parseInt(item.timeNumber),
                           item.name,
                         )
-                      }
-                      key={index}>
+                      }>
                       <View style={{ width: '100%', alignItems: 'flex-start' }}>
                         <StyledText2>{item.name}</StyledText2>
                       </View>
@@ -130,7 +127,6 @@ class Home extends React.Component<
                             <StyledText4>{item.timeString}</StyledText4>
                           </StyledText3>
                         </View>
-                        {/* {item.tag && <StyledText5>{item.tag}</StyledText5>} */}
                       </View>
 
                       <View style={{ width: '100%', alignItems: 'flex-end' }}>
@@ -140,7 +136,7 @@ class Home extends React.Component<
                   ) : (
                     <EmptyFastItem />
                   )}
-                </>
+                </React.Fragment>
               ))}
             </FastPresetContent>
           </View>
@@ -171,7 +167,7 @@ class Home extends React.Component<
 
     if (preset)
       return (
-        <View key={index}>
+        <React.Fragment key={index}>
           {preset.color ? <PresetBackdrop /> : null}
 
           <FastItem
@@ -196,7 +192,7 @@ class Home extends React.Component<
               <Icon size={12} color={'#FFF'} icon="info" />
             </View>
           </FastItem>
-        </View>
+        </React.Fragment>
       );
     return null;
   };
@@ -215,13 +211,19 @@ class Home extends React.Component<
     const { navigation } = this.props;
     navigation.navigate('FastStart', { presetId, defaultHour, defaultName });
   };
+
+  private t = (value: string) => this.props.t && this.props.t(value);
 }
+
+const PresetFast = styled(View)`
+  flex-grow: 1;
+  height: 140px;
+  flex-basis: 103px;
+`;
 
 const Container = styled(ScrollView)`
   flex: 1;
   margin: 0 6%;
-  /* align-items: center;
-  justify-content: flex-start; */
 `;
 
 const FastPresetContent = styled(View)`
@@ -267,4 +269,6 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Home);
+export default withTranslation('Home')(
+  connect(mapStateToProps, mapDispatchToProps)(Home),
+);

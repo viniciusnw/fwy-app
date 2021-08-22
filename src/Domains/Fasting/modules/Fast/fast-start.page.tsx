@@ -1,5 +1,6 @@
 import React from 'react';
 import { Formik } from 'formik';
+import * as yup from 'yup';
 import { connect } from 'react-redux';
 import { showSnackbar } from '@Config/graphql';
 import { StackScreenProps } from '@react-navigation/stack';
@@ -17,27 +18,25 @@ import {
   Share,
   ActivityIndicator,
 } from 'react-native';
+
 import {
   Footer,
   Divider,
   StyledText,
   StyledText4,
   StyledText5,
-  StyledText6,
-  StyledText7,
-  StyledText8,
   CustomPlanTag,
   FormContainer,
   FormHeader,
 } from './fast.style';
+
 import FastStartForm, {
-  FormFastSchema,
   fields as FormFields,
 } from './components/fast-start-form.component';
 
 type RoutePropsType = StackScreenProps<LoggedStackParamList, 'FastStart'>;
 class FastStart extends React.Component<
-  RoutePropsType & ReduxPropsType & PagePropsType,
+  RoutePropsType & ReduxPropsType & PagePropsType & WithTranslation,
   any
 > {
   static setPageConfigs = {
@@ -85,22 +84,22 @@ class FastStart extends React.Component<
     this.setState({ preset, defaultHour, defaultName });
   };
 
-  // private handlerShared = async () => {
-  //   try {
-  //     const result = await Share.share({
-  //       title: 'Fasting with Yara',
-  //       url: 'https://www.fastingwithyara.com/',
-  //     });
+  private handlerShared = async () => {
+    try {
+      const result = await Share.share({
+        title: 'Fasting with Yara',
+        url: 'https://www.fastingwithyara.com/',
+      });
 
-  //     if (result.action === Share.sharedAction) {
-  //       // shared with activity type of result.activityType
-  //       if (result.activityType) return null;
-  //       else return null; // shared
-  //     } else if (result.action === Share.dismissedAction) return null; // dismissed
-  //   } catch (error) {
-  //     console.log(error.message);
-  //   }
-  // };
+      if (result.action === Share.sharedAction) {
+        // shared with activity type of result.activityType
+        if (result.activityType) return null;
+        else return null; // shared
+      } else if (result.action === Share.dismissedAction) return null; // dismissed
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
 
   private handlerSaverOrUpdatePreset = async (prevProps) => {
     const { saveOrUpdatePreset } = this.props.useRedux.Fastings;
@@ -112,10 +111,60 @@ class FastStart extends React.Component<
       showSnackbar('Saved ✅ ', 'success', 'i');
   };
 
+  private saverOrUpdatePreset = async (
+    isSaveOrUpdate,
+    values,
+    setFieldError: Function,
+    setFieldTouched: Function,
+  ) => {
+    const {
+      enums: { saveOrUpdate },
+    } = FASTING;
+
+    const { updatePreset, createPreset } = this.props.useDispatch;
+
+    if (!values.name) {
+      setFieldTouched(FormFields.name);
+      return setFieldError(FormFields.name);
+    }
+
+    if (saveOrUpdate[isSaveOrUpdate] == saveOrUpdate.Save)
+      createPreset({
+        preset: {
+          index: this.PresetId,
+          ...values,
+        },
+      });
+
+    if (saveOrUpdate[isSaveOrUpdate] == saveOrUpdate.Update)
+      updatePreset({
+        preset: {
+          id: this.PresetId,
+          ...values,
+        },
+      });
+  };
+
   render() {
-    // const { RibbonFull } = ASSETS.FASTING.svgs;
     const { saveOrUpdatePreset } = this.props.useRedux.Fastings;
     const { preset, defaultHour, defaultName } = this.state;
+    const isAlreadyFasting = this.ActiveFastId;
+    const fromPreset = this.PresetId;
+    const fromPlan = this.PlanId;
+    const fromDefault = this.DefaultName;
+    const isSaveOrUpdate = this.SaveOrUpdatePreset;
+
+    const tJournal: any = this.t('journal');
+    const tForm: any = this.t('form');
+    const tFormErros: any = this.t('formErros');
+
+    const FormFastSchema = yup.object().shape({
+      [FormFields.name]: yup.string().required(tFormErros.name),
+      [FormFields.hours]: yup
+        .number()
+        .min(1, tFormErros.hours)
+        .required(tFormErros.hours),
+    });
 
     const FormInitialValues = {
       [FormFields.days]: preset?.days || 0,
@@ -123,16 +172,6 @@ class FastStart extends React.Component<
       [FormFields.color]: preset?.color || '',
       [FormFields.name]: preset?.name || defaultName || '',
     };
-
-    const isAlreadyFasting = this.ActiveFastId;
-
-    const fromPreset = this.PresetId;
-
-    const fromPlan = this.PlanId;
-
-    const fromDefault = this.DefaultName;
-
-    const isSaveOrUpdate = this.SaveOrUpdatePreset;
 
     return (
       <Formik
@@ -176,7 +215,7 @@ class FastStart extends React.Component<
                           <ActivityIndicator size="small" color={'#FFF'} />
                         </StyledText>
                       ) : (
-                        <StyledText>Save</StyledText>
+                        <StyledText>{this.t('save')}</StyledText>
                       )}
                     </TouchableOpacity>
                   )}
@@ -194,12 +233,8 @@ class FastStart extends React.Component<
 
                 {/* === */}
                 <View style={{ padding: 15 }}>
-                  <StyledText4>Long 5 Fast Journal</StyledText4>
-                  <StyledText5>
-                    A lot happens during a fast. Tracking your moo Will Help you
-                    understand those changes, and reflecte on How you’e feeling
-                    at different stages of your fast.
-                  </StyledText5>
+                  <StyledText4>{tJournal.items[0].title}</StyledText4>
+                  <StyledText5>{tJournal.items[0].content}</StyledText5>
                 </View>
               </FormContainer>
 
@@ -223,7 +258,7 @@ class FastStart extends React.Component<
                           icon: 'timer',
                           color: '#EC5349',
                         }}>
-                        YOU’RE FASTING!
+                        {tFormErros.submit}
                       </Button>
                     ) : (
                       <Button
@@ -235,7 +270,7 @@ class FastStart extends React.Component<
                           icon: 'timer',
                           color: '#EC5349',
                         }}>
-                        START YOUR FAST
+                        {tForm.submit}
                       </Button>
                     )}
                   </View>
@@ -345,39 +380,7 @@ class FastStart extends React.Component<
     navigation.navigate('BadgeAll');
   };
 
-  private saverOrUpdatePreset = async (
-    isSaveOrUpdate,
-    values,
-    setFieldError: Function,
-    setFieldTouched: Function,
-  ) => {
-    const {
-      enums: { saveOrUpdate },
-    } = FASTING;
-
-    const { updatePreset, createPreset } = this.props.useDispatch;
-
-    if (!values.name) {
-      setFieldTouched(FormFields.name);
-      return setFieldError(FormFields.name);
-    }
-
-    if (saveOrUpdate[isSaveOrUpdate] == saveOrUpdate.Save)
-      createPreset({
-        preset: {
-          index: this.PresetId,
-          ...values,
-        },
-      });
-
-    if (saveOrUpdate[isSaveOrUpdate] == saveOrUpdate.Update)
-      updatePreset({
-        preset: {
-          id: this.PresetId,
-          ...values,
-        },
-      });
-  };
+  private t = (value: string) => this.props.t && this.props.t(value);
 }
 
 function mapStateToProps({ Fastings }: ReduxStateType) {
@@ -398,6 +401,6 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default withTranslation('FastStart')(
+export default withTranslation('Fasting')(
   connect(mapStateToProps, mapDispatchToProps)(FastStart),
 );

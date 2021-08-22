@@ -228,11 +228,11 @@ class FastEnd extends React.Component<
 
     const endFastItens = [
       {
-        title: 'STARTERED FASTING',
+        title: this.t('start'),
         subtitle: this.StartDate,
       },
       {
-        title: 'GOAL REACHED',
+        title: this.t('end'),
         subtitle: this.CurrentDate,
       },
     ];
@@ -276,10 +276,11 @@ class FastEnd extends React.Component<
                 </TouchableOpacity>
 
                 <View>
-                  <StyledText16>Nice effort! </StyledText16>
-                  <StyledText17>You completed a fast for </StyledText17>
+                  <StyledText16>{this.t('title')}</StyledText16>
+                  <StyledText17>{this.t('description')}</StyledText17>
                   <StyledText17>
-                    a total <StyledText18>{this.Duration}</StyledText18>
+                    {this.t('descriptionLine2')}{' '}
+                    <StyledText18>{this.Duration}</StyledText18>
                   </StyledText17>
                 </View>
 
@@ -291,7 +292,7 @@ class FastEnd extends React.Component<
                     alignItems: 'center',
                     alignSelf: 'flex-end',
                   }}>
-                  <StyledText19>Share fast</StyledText19>
+                  <StyledText19>{this.t('btnShare')}</StyledText19>
                   <Icon size={25} color={'#FFF'} icon="upload" />
                 </TouchableOpacity>
               </ImageBackground>
@@ -323,12 +324,12 @@ class FastEnd extends React.Component<
                   {pictureUpload ? (
                     <>
                       <Icon size={25} color={'#FFF'} icon="close" />
-                      <StyledText20>Delete picture</StyledText20>
+                      <StyledText20>{this.t('btnDeletePhoto')}</StyledText20>
                     </>
                   ) : (
                     <>
                       <Icon size={25} color={'#FFF'} icon="camera" />
-                      <StyledText20>Share your fast breaker</StyledText20>
+                      <StyledText20>{this.t('btnAddPhoto')}</StyledText20>
                     </>
                   )}
                 </TouchableOpacity>
@@ -360,7 +361,7 @@ class FastEnd extends React.Component<
                         justifyContent: 'center',
                         backgroundColor: 'rgba(255, 255, 255, .4)',
                       }}>
-                      <StyledText23>EDIT</StyledText23>
+                      <StyledText23>{this.t('edit')}</StyledText23>
                     </TouchableOpacity>
                   </View>
                 ))}
@@ -368,7 +369,7 @@ class FastEnd extends React.Component<
 
               <View style={{ marginTop: 40, width: '100%' }}>
                 <View style={{ alignItems: 'center', marginBottom: 20 }}>
-                  <StyledText9>How are you feealing?</StyledText9>
+                  <StyledText9>{this.t('feel')}</StyledText9>
                   <View
                     style={{
                       marginTop: 12,
@@ -399,7 +400,7 @@ class FastEnd extends React.Component<
                 <StyledTextInput
                   editable={!disabled}
                   multiline={true}
-                  placeholder="Add a Note"
+                  placeholder={this.t('textAreaPlaceholder')}
                   placeholderTextColor="#FFF"
                   value={this.state.fastingNotes}
                   onChangeText={(value) =>
@@ -414,7 +415,7 @@ class FastEnd extends React.Component<
                     loading={saved && loading}
                     style={{ flex: 1, marginRight: 8 }}
                     onPress={() => this.endFasting(true)}>
-                    Save
+                    {this.t('save')}
                   </Button>
                   <Button
                     color={'transparent'}
@@ -422,7 +423,7 @@ class FastEnd extends React.Component<
                     loading={!saved && loading}
                     style={{ flex: 1, marginLeft: 8 }}
                     onPress={() => this.endFasting(false)}>
-                    Delete
+                    {this.t('delete')}
                   </Button>
                 </View>
               </View>
@@ -519,10 +520,13 @@ class FastEnd extends React.Component<
     const differenceInHours = differenceInTime / 1000 / 3600;
     const differenceInMinutes = differenceInTime / 1000 / 60;
 
-    if (differenceInHours >= 1) return `${differenceInHours.toFixed()} hours.`;
+    if (differenceInHours >= 1)
+      return this.t('timeH', { count: parseInt(differenceInHours.toFixed()) });
     else if (differenceInMinutes >= 1)
-      return `${differenceInMinutes.toFixed()} minutes.`;
-    else return `1 minute.`;
+      return this.t('timeM', {
+        count: parseInt(differenceInMinutes.toFixed()),
+      });
+    else return this.t('timeM', { count: 1 });
   }
 
   private get FastingId() {
@@ -530,7 +534,25 @@ class FastEnd extends React.Component<
     if (!fasting) return false;
     return fasting._id;
   }
+
+  private t = (value: string, variables?: any) =>
+    this.props.t && this.props.t(value, variables);
 }
+
+const EmojiTouchable = styled(TouchableOpacity)`
+  padding: 0 4px;
+  align-items: center;
+  justify-content: center;
+`;
+
+const Emoji = styled(Text)<{ selected: boolean }>`
+  font-size: 30px;
+  ${(props) =>
+    props.selected &&
+    css`
+      font-size: 40px;
+    `}
+`;
 
 function mapStateToProps({ Fastings }: ReduxStateType) {
   return {
@@ -549,21 +571,6 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default withTranslation('FastEnd')(
+export default withTranslation('EndFasting')(
   connect(mapStateToProps, mapDispatchToProps)(FastEnd),
 );
-
-const EmojiTouchable = styled(TouchableOpacity)`
-  padding: 0 4px;
-  align-items: center;
-  justify-content: center;
-`;
-
-const Emoji = styled(Text)<{ selected: boolean }>`
-  font-size: 30px;
-  ${(props) =>
-    props.selected &&
-    css`
-      font-size: 40px;
-    `}
-`;

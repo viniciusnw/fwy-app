@@ -1,9 +1,11 @@
-import React, { useRef, LegacyRef } from 'react';
 import * as yup from 'yup';
+import React, { useRef } from 'react';
+import { useTranslation } from 'react-i18next';
+import { View, TouchableOpacity, ScrollView } from 'react-native';
 
 import { FASTING } from '@Config/constants';
 import { Button, Input } from '@Components';
-import { View, TouchableOpacity, ScrollView } from 'react-native';
+
 import {
   StyledH1,
   StyledH2,
@@ -20,14 +22,6 @@ export const fields = {
   color: 'color',
 };
 
-export const FormFastSchema = yup.object().shape({
-  [fields.name]: yup.string().required('Escolha um nome para seu Jejum.'),
-  [fields.hours]: yup
-    .number()
-    .min(1, 'Escolha as horas')
-    .required('Escolha as horas.'),
-});
-
 const FastStartForm: React.FC<any> = ({
   setFieldValue,
   handleBlur,
@@ -36,6 +30,9 @@ const FastStartForm: React.FC<any> = ({
   touched,
   editable = true,
 }) => {
+  const { t } = useTranslation('Fasting');
+  const tForm: any = t('form');
+
   const scrollViewRef = useRef<ScrollView>(null);
 
   const { weekDays: days, customHours, fastColors } = FASTING;
@@ -46,7 +43,7 @@ const FastStartForm: React.FC<any> = ({
     name: {
       editable: editable,
       value: values.name,
-      placeholder: 'Fasting name',
+      placeholder: tForm.name,
       placeholderTextColor: '#FFF',
       onBlur: handleBlur(fields.name),
       error: touched.name && errors.name ? errors.name : null,
@@ -74,8 +71,8 @@ const FastStartForm: React.FC<any> = ({
 
       {/* === */}
       <View style={{ padding: 15, width: '100%' }}>
-        <StyledH1>Duration</StyledH1>
-        <StyledText2>You can save presets up to 168 hours.</StyledText2>
+        <StyledH1>{t('duration')}</StyledH1>
+        <StyledText2>{t('durationText')}</StyledText2>
       </View>
 
       <View style={{ width: '100%', padding: 15 }}>
@@ -109,7 +106,7 @@ const FastStartForm: React.FC<any> = ({
         </View> */}
 
         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-          <StyledH2>Hours</StyledH2>
+          <StyledH2>{tForm.hours}</StyledH2>
           <ScrollView
             horizontal
             ref={scrollViewRef}
@@ -147,7 +144,7 @@ const FastStartForm: React.FC<any> = ({
 
       {/* === */}
       <View style={{ width: '100%', padding: 15 }}>
-        <StyledH1>Color</StyledH1>
+        <StyledH1>{tForm.color}</StyledH1>
         <View
           style={{
             marginTop: 15,

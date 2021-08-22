@@ -1,4 +1,110 @@
 {
+  "Settings": {
+    "community": "Comunidade",
+    "support": "Suporte",
+    "social": "Social",
+    "rate": "Avalie-nos na App Store",
+    "find": "Encontre-nos online",
+    "share": "Compartilhe",
+    "contact": "Suporte para Contatos",
+    "help": "Ajuda",
+    "terms": "Termos de uso",
+    "insta": "Siga no Instagram",
+    "face": "Siga no Facebook"
+  },
+  "ProfileEdit": {
+    "form": {
+      "avatar": "Mudar a foto do perfil",
+      "name": "Nome",
+      "email": "E-mail",
+      "date": "Aniversário",
+      "gender": "Gênero",
+      "genderOptions": {
+        "masculine": "Masculino",
+        "feminine": "Feminino",
+        "other": "Outro"
+      },
+      "weight": "Peso",
+      "weight_uom": "Kg",
+      "height": "Altura",
+      "height_uom": "m",
+      "submit": "Salvar"
+    },
+    "formErros": {
+      "name": "Preencha seu nome.",
+      "email": "E-mail inválido.",
+      "emailNull": "Preencha seu email.",
+      "date": "Preencha sua data de nascimento.",
+      "gender": "Preencha seu gênero.",
+      "weight": "Peso inválido.",
+      "weightNull": "Preencha seu peso.",
+      "height": "Preencha sua altura.",
+      "heightNull": "Altura inválido."
+    },
+    "privateInfo": "Informações privadas"
+  },
+  "EndFasting": {
+    "title": "Belo esforço!",
+    "description": "Você completou um jejum com",
+    "descriptionLine2": "um total de",
+    "timeH": "{{count}} hora.",
+    "timeH_plural": "{{count}} horas.",
+    "timeM": "{{count}} minuto.",
+    "timeM_plural": "{{count}} minutos.",
+    "btnShare": "Compartilhe o jejum",
+    "btnAddPhoto": "Compartilhe uma foto seu jejum",
+    "btnDeletePhoto": "Apagar foto",
+    "start": "COMEÇOU O JEJUM",
+    "end": "OBJETIVO ALCANÇADO",
+    "edit": "EDITAR",
+    "feel": "Como você está se sentindo?",
+    "textAreaPlaceholder": "Adicione uma anotação",
+    "save": "Salvar",
+    "delete": "Deletar"
+  },
+  "Timer": {
+    "title": "Prepare-se para o jejum",
+    "titleStart": "Você está jejuando!",
+    "remaining": "Restante",
+    "upcoming": "Próximo jejum",
+    "btnStart": "COMECE SEU JEJUM DE {{HOURS}}H",
+    "btnChange": "ALTERAR JEJUM",
+    "btnRemider": "DEFINIR LEMBRETE",
+    "start": "INICIO DO JEJUM",
+    "edit": "editar",
+    "end": "FINAL DO JEJUM",
+    "btnEnd": "Finalizar jejum"
+  },
+  "Fasting": {
+    "customPlan": "Plano personalizado",
+    "save": "Salvar",
+    "duration": "Duração",
+    "durationText": "Você pode salvar predefinições por até 168 horas.",
+    "form": {
+      "name": "Nome do jejum",
+      "hours": "Horas",
+      "color": "Cor",
+      "submit": "COMECE SEU JEJUM"
+    },
+    "formErros": {
+      "name": "Escolha um nome para seu Jejum.",
+      "hours": "Escolha as horas",
+      "submit": "VOCÊ ESTÁ JEJANDO!"
+    },
+    "journal": {
+      "items": [
+        {
+          "title": "Diário de Jejum",
+          "content": "Muita coisa acontece durante um jejum. Acompanhar seu moo ajudará você a entender essas mudanças e refletir sobre como você está se sentindo em diferentes estágios de seu jejum."
+        }
+      ]
+    }
+  },
+  "Home": {
+    "title": "Escolha como começar o seu Jejum",
+    "presetTitle": "Iniciar Jejum",
+    "defaultTitle": "Mais populares"
+  },
   "SignUp": {
     "form": {
       "avatar": "Carregar foto",

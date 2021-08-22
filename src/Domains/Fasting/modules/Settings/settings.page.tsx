@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import styled, { css } from 'styled-components/native';
 import { StyledH1, StyledText } from './settings.style';
 import { StackScreenProps } from '@react-navigation/stack';
+import { withTranslation, WithTranslation } from 'react-i18next';
 import { LoggedStackParamList, PagePropsType } from '@Navigation';
 import {
   View,
@@ -20,7 +21,7 @@ const packageJson = require('../../../../../package.json');
 
 type RoutePropsType = StackScreenProps<LoggedStackParamList, 'Settings'>;
 class Settings extends React.Component<
-  RoutePropsType & ReduxPropsType & PagePropsType,
+  RoutePropsType & ReduxPropsType & PagePropsType & WithTranslation,
   any
 > {
   static setPageConfigs = {
@@ -65,39 +66,34 @@ class Settings extends React.Component<
 
     const commu = [
       {
-        label: 'Rate us on App Store',
+        label: this.t('rate'),
         callback: () => this.handleStoreReview(),
       },
       {
-        label: 'Find Us Online',
-        callback: () =>
-          this.handleOpenLink(
-            'https://www.fastingwithyara.com/specifications-1',
-          ),
+        label: this.t('find'),
+        callback: () => this.handleOpenLink('https://www.fastingwithyara.com/'),
       },
       {
-        label: 'Share',
+        label: this.t('share'),
         callback: () => this.handleShared(),
       },
     ];
 
     const support = [
       {
-        label: 'Contacts Support',
+        label: this.t('contact'),
+        callback: () =>
+          this.handleOpenLink('https://www.fastingwithyara.com/#comp-k59n4fqz'),
+      },
+      {
+        label: this.t('help'),
         callback: () =>
           this.handleOpenLink(
             'https://www.fastingwithyara.com/specifications-1',
           ),
       },
       {
-        label: 'Help',
-        callback: () =>
-          this.handleOpenLink(
-            'https://www.fastingwithyara.com/specifications-1',
-          ),
-      },
-      {
-        label: 'Terms of Use',
+        label: this.t('terms'),
         callback: () =>
           this.handleOpenLink(
             'https://www.fastingwithyara.com/specifications-1',
@@ -107,12 +103,12 @@ class Settings extends React.Component<
 
     const social = [
       {
-        label: 'Follow on Instagram',
+        label: this.t('insta'),
         callback: () =>
           this.handleOpenLink('https://www.instagram.com/fastingwithyarainc/'),
       },
       {
-        label: 'Follow on Facebook',
+        label: this.t('face'),
         callback: () =>
           this.handleOpenLink('https://www.facebook.com/fastingwithYara'),
       },
@@ -137,7 +133,7 @@ class Settings extends React.Component<
           showsHorizontalScrollIndicator={false}
           style={{ width: '100%' }}>
           <View style={{ paddingHorizontal: 10, paddingVertical: 25 }}>
-            <StyledH1>Community</StyledH1>
+            <StyledH1>{this.t('community')}</StyledH1>
           </View>
 
           {commu.map((item, idx) => (
@@ -149,7 +145,7 @@ class Settings extends React.Component<
           ))}
 
           <View style={{ paddingHorizontal: 10, paddingVertical: 25 }}>
-            <StyledH1>Support</StyledH1>
+            <StyledH1>{this.t('support')}</StyledH1>
           </View>
           {support.map((item, idx) => (
             <MenuItem onPress={item.callback} key={idx}>
@@ -160,7 +156,7 @@ class Settings extends React.Component<
           ))}
 
           <View style={{ paddingHorizontal: 10, paddingVertical: 25 }}>
-            <StyledH1>Social</StyledH1>
+            <StyledH1>{this.t('social')}</StyledH1>
           </View>
           {social.map((item, idx) => (
             <MenuItem onPress={item.callback} key={idx}>
@@ -182,6 +178,9 @@ class Settings extends React.Component<
       </View>
     );
   }
+
+  private t = (value: string, variables?: any) =>
+    this.props.t && this.props.t(value, variables);
 }
 
 const MenuItem = styled(TouchableOpacity)`
@@ -213,4 +212,6 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Settings);
+export default withTranslation('Settings')(
+  connect(mapStateToProps, mapDispatchToProps)(Settings),
+);

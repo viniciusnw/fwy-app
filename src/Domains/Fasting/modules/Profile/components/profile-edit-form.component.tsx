@@ -1,5 +1,5 @@
-import * as yup from 'yup';
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { launchImageLibrary } from 'react-native-image-picker';
 import {
   View,
@@ -26,24 +26,6 @@ export const fields = {
   avatar: 'avatar',
 };
 
-export const FormCustomerUpdateSchema = yup.object().shape({
-  [fields.name]: yup.string().required('Preencha seu nome.'),
-  [fields.email]: yup
-    .string()
-    .email('E-mail inválido.')
-    .required('Preencha seu email.'),
-  [fields.birthday]: yup.date().required('Preencha sua data de nascimento.'),
-  [fields.gender]: yup.string().required('Preencha seu gênero'),
-  [fields.weight]: yup
-    .number()
-    .required('Preencha seu peso')
-    .min(1, 'Peso inválido.'),
-  [fields.height]: yup
-    .number()
-    .required('Preencha sua altura')
-    .min(1, 'Altura inválido.'),
-});
-
 const FormCustomerUpdate: React.FC<any> = ({
   setFieldValue,
   handleBlur,
@@ -53,6 +35,9 @@ const FormCustomerUpdate: React.FC<any> = ({
   touched,
   loading,
 }) => {
+  const { t } = useTranslation('ProfileEdit');
+  const tForm: any = t('form');
+
   const [keyboardOffset, setKeyboardOffset] = useState<number>(-150);
 
   const handlerUploadLaunchImageLibrary = () => {
@@ -69,10 +54,18 @@ const FormCustomerUpdate: React.FC<any> = ({
     );
   };
 
+  const genderOptions = [
+    tForm.genderOptions.masculine,
+    tForm.genderOptions.feminine,
+    tForm.genderOptions.other,
+  ];
+
+  console.log(genderOptions);
+
   const profileEdit = {
     name: {
       value: values.name,
-      placeholder: 'Name',
+      placeholder: tForm.name,
       placeholderTextColor: '#FFF',
       onBlur: handleBlur(fields.name),
       onFocus: () => setKeyboardOffset(-200),
@@ -81,7 +74,7 @@ const FormCustomerUpdate: React.FC<any> = ({
     },
     email: {
       value: values.email,
-      placeholder: 'E-mail',
+      placeholder: tForm.email,
       autoCompleteType: 'email',
       placeholderTextColor: '#FFF',
       onBlur: handleBlur(fields.email),
@@ -91,24 +84,24 @@ const FormCustomerUpdate: React.FC<any> = ({
     },
     birthday: {
       value: values.birthday,
-      placeholder: 'Birthday',
+      placeholder: tForm.date,
       placeholderTextColor: '#FFF',
       onBlur: handleBlur(fields.birthday),
       onChangeValue: (value) => setFieldValue(fields.birthday, value),
       error: touched.birthday && errors.birthday ? errors.birthday : null,
     },
     gender: {
+      itens: genderOptions,
       value: values.gender,
-      placeholder: 'Gender',
+      placeholder: tForm.gender,
       placeholderTextColor: '#FFF',
-      itens: ['Masculino', 'Feminino'],
       onBlur: handleBlur(fields.gender),
       onChangeValue: (value) => setFieldValue(fields.gender, value),
       error: touched.gender && errors.gender ? errors.gender : null,
     },
     weight: {
-      tag: 'lb',
-      placeholder: 'Weight',
+      tag: tForm.weight_uom,
+      placeholder: tForm.weight,
       keyboardType: 'numeric',
       value: `${values.weight}`,
       placeholderTextColor: '#FFF',
@@ -118,8 +111,8 @@ const FormCustomerUpdate: React.FC<any> = ({
       onChangeText: (value) => setFieldValue(fields.weight, value),
     },
     height: {
-      tag: 'In',
-      placeholder: 'Height',
+      tag: tForm.height_uom,
+      placeholder: tForm.height,
       keyboardType: 'numeric',
       value: `${values.height}`,
       placeholderTextColor: '#FFF',
@@ -159,7 +152,7 @@ const FormCustomerUpdate: React.FC<any> = ({
             paddingHorizontal: 40,
             alignSelf: 'flex-start',
           }}>
-          <StyledText1>Change Profile Picture</StyledText1>
+          <StyledText1>{tForm.avatar}</StyledText1>
         </View>
       </TouchableOpacity>
 
@@ -169,7 +162,7 @@ const FormCustomerUpdate: React.FC<any> = ({
         </StyledField>
 
         <View style={{ marginBottom: 15, paddingHorizontal: 15, opacity: 0.5 }}>
-          <StyledText2> Private Information </StyledText2>
+          <StyledText2>{t('privateInfo')}</StyledText2>
         </View>
 
         <StyledField>
@@ -194,7 +187,7 @@ const FormCustomerUpdate: React.FC<any> = ({
 
         <View style={{ marginTop: 15, marginHorizontal: '33%' }}>
           <Button loading={loading} onPress={handleSubmit} color="secondary">
-            Save
+            {tForm.submit}
           </Button>
         </View>
 

@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { StackScreenProps } from '@react-navigation/stack';
+import { withTranslation, WithTranslation } from 'react-i18next';
 
 import { Icon, Button } from '@Components';
 import { LoggedStackParamList, PagePropsType } from '@Navigation';
@@ -15,7 +16,7 @@ import {
 
 type RoutePropsType = StackScreenProps<LoggedStackParamList, 'Profile'>;
 class Profile extends React.Component<
-  RoutePropsType & ReduxPropsType & PagePropsType,
+  RoutePropsType & ReduxPropsType & PagePropsType & WithTranslation,
   any
 > {
   static setPageConfigs = {
@@ -255,6 +256,8 @@ class Profile extends React.Component<
       </View>
     );
   }
+
+  private t = (value: string) => this.props.t && this.props.t(value);
 }
 
 function mapStateToProps({}: ReduxStateType) {
@@ -271,4 +274,6 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Profile);
+export default withTranslation('Profile')(
+  connect(mapStateToProps, mapDispatchToProps)(Profile),
+);

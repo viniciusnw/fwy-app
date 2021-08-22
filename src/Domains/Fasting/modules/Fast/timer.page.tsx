@@ -181,12 +181,12 @@ class Timer extends React.PureComponent<
         showsHorizontalScrollIndicator={false}>
         <View style={{ marginBottom: 70 }}>
           <StyledH3>
-            {!startFasting ? 'Get ready to fast' : 'You’re Fasting!'}
+            {!startFasting ? this.t('title') : this.t('titleStart')}
           </StyledH3>
         </View>
 
         {/* === */}
-        <View style={{ marginBottom: 60 }}>
+        <View style={{ marginBottom: 60, alignItems: 'center' }}>
           <CirgularTimer startFasting={startFasting}>
             <FastTimer
               onFinish={() => this.setFinishFast(true)}
@@ -198,18 +198,25 @@ class Timer extends React.PureComponent<
         {/* === */}
         {!startFasting ? (
           <>
-            <View style={{ marginBottom: 80 }}>
+            <View
+              style={{
+                justifyContent: 'center',
+                flexDirection: 'row',
+                marginBottom: 80,
+              }}>
               <Button onPress={this.handlerStartFasting}>
-                Start your {this.DifferenceInHours}h Fast
+                {this.t('btnStart', { HOURS: this.DifferenceInHours })}
               </Button>
             </View>
 
             <ContainerButtons marginBottom={20}>
               <Button onPress={goBack} color="primary">
-                CHANGE FAST
+                {this.t('btnChange')}
               </Button>
 
-              <Button color="primary">SET REMINDER</Button>
+              <Button onPress={() => null} color="primary">
+                {this.t('btnRemider')}
+              </Button>
             </ContainerButtons>
           </>
         ) : (
@@ -226,21 +233,21 @@ class Timer extends React.PureComponent<
                   </View>
                 ) : (
                   <>
-                    <StyledText13>STARTED FASTING</StyledText13>
+                    <StyledText13>{this.t('start')}</StyledText13>
                     <StyledText14>{this.StartDateFormated}</StyledText14>
-                    <StyledText15>Edit Start.</StyledText15>
+                    <StyledText15>{this.t('edit')}</StyledText15>
                   </>
                 )}
               </TouchableOpacity>
 
               <View style={{ alignItems: 'center' }}>
-                <StyledText13>FAST ENDING</StyledText13>
+                <StyledText13>{this.t('end')}</StyledText13>
                 <StyledText14>{this.EndDateFormated}</StyledText14>
               </View>
             </ContainerButtons>
 
             <View style={{ width: '40%', alignSelf: 'center' }}>
-              <Button onPress={this.goToEndFast}>End Fast</Button>
+              <Button onPress={this.goToEndFast}>{this.t('btnEnd')}</Button>
             </View>
           </>
         )}
@@ -334,6 +341,9 @@ class Timer extends React.PureComponent<
     const differenceInHours = differenceInTime / 1000 / 3600;
     return differenceInHours;
   }
+
+  private t = (value: string, variables?: any) =>
+    this.props.t && this.props.t(value, variables);
 }
 
 function mapStateToProps({ Fastings }: ReduxStateType) {

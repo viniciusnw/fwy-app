@@ -1,6 +1,7 @@
 import React from 'react';
 import { Button, Icon } from '@Components';
 import styled from 'styled-components/native';
+import { useTranslation } from 'react-i18next';
 import { View, TextInput, Text, ScrollView } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
@@ -272,15 +273,19 @@ export const Divider = (props) => (
   <View style={{ width: '100%', height: 42, bottom: -96, marginTop: -62 }} />
 );
 
-export const CustomPlanTag = (props) => (
-  <View
-    style={{
-      flex: 1,
-      marginBottom: 12,
-      flexDirection: 'row',
-      alignItems: 'center',
-    }}>
-    <StyledText>Custom Plan</StyledText>
-    <Icon size={12} icon="info" color={'#FFF'} style={{ marginLeft: 4 }} />
-  </View>
-);
+export const CustomPlanTag = (props) => {
+  const { t } = useTranslation('Fasting');
+
+  return (
+    <View
+      style={{
+        flex: 1,
+        marginBottom: 12,
+        flexDirection: 'row',
+        alignItems: 'center',
+      }}>
+      <StyledText>{t('customPlan')}</StyledText>
+      <Icon size={12} icon="info" color={'#FFF'} style={{ marginLeft: 4 }} />
+    </View>
+  );
+};
