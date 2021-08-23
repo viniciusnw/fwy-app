@@ -302,7 +302,7 @@ class Timer extends React.PureComponent<
       day: 'numeric',
     });
 
-    return `${date} | ${time[0]}:${time[1]} ${timeAux}`;
+    return `${date} ${time[0]}:${time[1]} ${timeAux}`;
   }
 
   private get EndDateFormated() {
@@ -317,7 +317,7 @@ class Timer extends React.PureComponent<
       day: 'numeric',
     });
 
-    return `${date} | ${time[0]}:${time[1]} ${timeAux}`;
+    return `${date} ${time[0]}:${time[1]} ${timeAux}`;
   }
 
   private get FastingId() {

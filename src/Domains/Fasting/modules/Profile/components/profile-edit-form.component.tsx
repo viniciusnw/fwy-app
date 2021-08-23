@@ -60,8 +60,6 @@ const FormCustomerUpdate: React.FC<any> = ({
     tForm.genderOptions.other,
   ];
 
-  console.log(genderOptions);
-
   const profileEdit = {
     name: {
       value: values.name,

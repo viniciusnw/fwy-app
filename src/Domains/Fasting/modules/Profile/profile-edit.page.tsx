@@ -6,9 +6,10 @@ import { StackScreenProps } from '@react-navigation/stack';
 import { withTranslation, WithTranslation } from 'react-i18next';
 import { View, ScrollView, TouchableOpacity, Image } from 'react-native';
 
+import { showSnackbar } from '@Config/graphql';
 import { LoggedStackParamList, PagePropsType } from '@Navigation';
-import { Icon, Button, Input, InputDate, DismissKeyboard } from '@Components';
 import { ReduxActions, ReduxPropsType, ReduxStateType } from '@Redux/Fasting';
+import { Icon, Button, Input, InputDate, DismissKeyboard } from '@Components';
 
 import FormCustomerUpdate, {
   fields as FormFields,
@@ -29,11 +30,23 @@ class ProfileEdit extends React.Component<
     super(props);
   }
 
-  componentDidMount() {
-    // console.log('ProfileEdit=>componentDidMount: ', this.props.useRedux.User);
+  componentDidUpdate(prevProps: ReduxPropsType) {
+    this.handleCustomerUpdate(prevProps);
   }
 
-  private handlerCustomerUpdate(customerForm) {
+  private handleCustomerUpdate(prevProps: ReduxPropsType) {
+    const {
+      update: { success },
+    } = this.props.useRedux.User;
+    const {
+      update: { success: prevSuccess },
+    } = prevProps.useRedux.User;
+
+    if (success && success != prevSuccess)
+      showSnackbar('Your profile was update ✅ ', 'success', 'i');
+  }
+
+  private customerUpdate(customerForm) {
     const customerFormClone = JSON.parse(JSON.stringify(customerForm));
 
     Object.keys(customerFormClone).map((key) => {
@@ -110,7 +123,7 @@ class ProfileEdit extends React.Component<
             enableReinitialize
             initialValues={FormInitialValues}
             validationSchema={FormCustomerUpdateSchema}
-            onSubmit={this.handlerCustomerUpdate.bind(this)}>
+            onSubmit={this.customerUpdate.bind(this)}>
             {({
               values,
               errors,

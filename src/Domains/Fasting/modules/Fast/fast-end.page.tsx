@@ -345,7 +345,8 @@ class FastEnd extends React.Component<
                     }}>
                     <View>
                       <StyledText21> {item.title} </StyledText21>
-                      <StyledText22> {item.subtitle} </StyledText22>
+                      <StyledText22> {item.subtitle && item.subtitle[0]} </StyledText22>
+                      <StyledText22> {item.subtitle && item.subtitle[1]} </StyledText22>
                     </View>
 
                     <TouchableOpacity
@@ -492,7 +493,10 @@ class FastEnd extends React.Component<
       year: 'numeric',
     });
 
-    return `${date} | ${time[0]}:${time[1]}${timeAux}`;
+    return [
+      `${date}`,
+      `${time[0]}:${time[1]}${timeAux}`
+    ]
   }
 
   private get CurrentDate() {
@@ -507,7 +511,10 @@ class FastEnd extends React.Component<
       year: 'numeric',
     });
 
-    return `${date} | ${time[0]}:${time[1]}${timeAux}`;
+    return [
+      `${date}`,
+      `${time[0]}:${time[1]}${timeAux}`
+    ]
   }
 
   private get Duration() {

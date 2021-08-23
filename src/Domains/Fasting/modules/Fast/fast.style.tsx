@@ -197,6 +197,7 @@ export const StyledText20 = styled(Text)`
 export const StyledText21 = styled(Text)`
   font-size: 15px;
   font-weight: bold;
+  margin-bottom: 4px;
   color: ${({ theme }) => theme.color.primary};
   font-family: ${({ theme }) => theme.fonts.AdobeClean.bold};
 `;
