@@ -10,8 +10,10 @@ import en_us from './en_US.json';
 const { languages } = FASTING.enums || FASTING_ADM.enums
 
 const resources = {
+  [languages.PT_US]: pt_br,
   [languages.PT_BR]: pt_br,
   [languages.EN_US]: en_us,
+  [languages.EN_BR]: en_us,
 };
 
 const languageDetector = {
@@ -23,7 +25,10 @@ const languageDetector = {
 
     let phoneLanguage = '';
     if (Platform.OS === 'android') phoneLanguage = NativeModules.I18Manager.localeIdentifier;
-    else phoneLanguage = NativeModules.SettingsManager.settings.AppleLocale;
+    else phoneLanguage = NativeModules.SettingsManager.settings.AppleLocale ||
+      NativeModules.SettingsManager.settings.AppleLanguages[0] ||
+      NativeModules.I18nManager.localeIdentifier;
+
     phoneLanguage = phoneLanguage.replace('_', '-');
     return callback(phoneLanguage);
   },

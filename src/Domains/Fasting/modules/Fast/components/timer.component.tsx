@@ -82,14 +82,17 @@ class FastTimer extends React.PureComponent<
 
     const differenceInTime = new Date().getTime() - fasting.endDate.getTime();
 
-    let seconds: any = Math.floor((differenceInTime / 1000) % 60),
+    let days: any = Math.floor(differenceInTime / 86400000),
+      seconds: any = Math.floor((differenceInTime / 1000) % 60),
       minutes: any = Math.floor((differenceInTime / (1000 * 60)) % 60),
-      hours: any = Math.floor((differenceInTime / (1000 * 60 * 60)) % 24);
+      hours: any =
+        Math.floor((differenceInTime / (1000 * 60 * 60)) % 24) +
+        (days > 0 ? days : 0) * 24;
 
     hours = hours < 10 ? '0' + hours : hours;
     minutes = minutes < 10 ? '0' + minutes : minutes;
     seconds = seconds < 10 ? '0' + seconds : seconds;
-
+    
     return hours + ' : ' + minutes + ' : ' + seconds;
   }
 

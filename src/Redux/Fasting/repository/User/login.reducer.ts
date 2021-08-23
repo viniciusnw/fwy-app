@@ -23,7 +23,6 @@ export default {
           },
           errorMessage: null,
           data: action.payload.response,
-          lastUser: action.payload.lastUser
         };
       }
 

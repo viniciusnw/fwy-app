@@ -31,6 +31,10 @@
 		81C5826D25F98B740002CE11 /* AdobeClean-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 81C5826925F98B740002CE11 /* AdobeClean-Light.ttf */; };
 		81C5826E25F98B740002CE11 /* AdobeClean-It.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 81C5826A25F98B740002CE11 /* AdobeClean-It.ttf */; };
 		B20EC664C2C143FCB80CFAA1 /* AdobeClean-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8137F791C95C49EEAF59B9E5 /* AdobeClean-Light.ttf */; };
+		B53DD73526C6C82E00D2CAD9 /* AdobeClean-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FA252CA38C044E27B9B56E68 /* AdobeClean-Bold.ttf */; };
+		B53DD73626C6C82E00D2CAD9 /* AdobeClean-It.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D39B9406055F49D38AB42D56 /* AdobeClean-It.ttf */; };
+		B53DD73726C6C82E00D2CAD9 /* AdobeClean-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8137F791C95C49EEAF59B9E5 /* AdobeClean-Light.ttf */; };
+		B53DD73826C6C82E00D2CAD9 /* AdobeClean-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 85A110C8CEBD4A87B846152A /* AdobeClean-Regular.ttf */; };
 		DD34F6C4282E48A0A9E4BC63 /* AdobeClean-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 85A110C8CEBD4A87B846152A /* AdobeClean-Regular.ttf */; };
 		ECCEDDCE2716990868EBD142 /* libPods-Storybook.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6B152536A128A4A6E15CDE9A /* libPods-Storybook.a */; };
 /* End PBXBuildFile section */
@@ -59,7 +63,7 @@
 		76081E852A5C4972BFEABBD4 /* MaterialCommunityIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = MaterialCommunityIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/MaterialCommunityIcons.ttf"; sourceTree = "<group>"; };
 		7674B3D010AE4AC5BF914125 /* FontAwesome5_Brands.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome5_Brands.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome5_Brands.ttf"; sourceTree = "<group>"; };
 		8111B7B2247C42460075DF0C /* FWY.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FWY.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		8111B7C4247C45A30075DF0C /* FWY/Adm.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FWY/Adm.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		8111B7C4247C45A30075DF0C /* FWYAdm.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FWYAdm.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		81147BF82475F88000632D15 /* FastingAdm.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = FastingAdm.plist; path = /Users/vinicius/Develop/www/Fasting/App/ios/App/FastingAdm.plist; sourceTree = "<absolute>"; };
 		81147C07247680B300632D15 /* Fasting.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Fasting.plist; path = /Users/vinicius/Develop/www/Fasting/App/ios/App/Fasting.plist; sourceTree = "<absolute>"; };
 		811B3584247A1D6200DFD0AC /* Config.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = Config.xcconfig; path = App/Config.xcconfig; sourceTree = "<group>"; };
@@ -239,7 +243,7 @@
 			children = (
 				815436E2247C27A2007DC080 /* Storybook.app */,
 				8111B7B2247C42460075DF0C /* FWY.app */,
-				8111B7C4247C45A30075DF0C /* FWY/Adm.app */,
+				8111B7C4247C45A30075DF0C /* FWYAdm.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -299,7 +303,7 @@
 			);
 			name = FastingAdm;
 			productName = App;
-			productReference = 8111B7C4247C45A30075DF0C /* FWY/Adm.app */;
+			productReference = 8111B7C4247C45A30075DF0C /* FWYAdm.app */;
 			productType = "com.apple.product-type.application";
 		};
 		815436D3247C27A2007DC080 /* Storybook */ = {
@@ -336,6 +340,7 @@
 						ProvisioningStyle = Manual;
 					};
 					8111B7B4247C45A30075DF0C = {
+						DevelopmentTeam = 9XYA4NB2DM;
 						ProvisioningStyle = Manual;
 					};
 				};
@@ -379,6 +384,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B53DD73526C6C82E00D2CAD9 /* AdobeClean-Bold.ttf in Resources */,
+				B53DD73626C6C82E00D2CAD9 /* AdobeClean-It.ttf in Resources */,
+				B53DD73726C6C82E00D2CAD9 /* AdobeClean-Light.ttf in Resources */,
+				B53DD73826C6C82E00D2CAD9 /* AdobeClean-Regular.ttf in Resources */,
 				8111B7BE247C45A30075DF0C /* Images.xcassets in Resources */,
 				8111B7BF247C45A30075DF0C /* LaunchScreen.xib in Resources */,
 				81915FA4248D690600B76AD5 /* FredokaOne.ttf in Resources */,
@@ -877,9 +886,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = Admin.entitlements;
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 3;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = 9XYA4NB2DM;
 				ENABLE_BITCODE = NO;
 				ENV_FILE = .fasting.adm.env.dev;
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -894,8 +904,8 @@
 					"-lc++",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.fwy.adm;
-				PRODUCT_NAME = FWY/Adm;
-				PROVISIONING_PROFILE_SPECIFIER = "";
+				PRODUCT_NAME = FWYAdm;
+				PROVISIONING_PROFILE_SPECIFIER = admin.develop.profile;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -908,9 +918,11 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = AdminRelease.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 3;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = 9XYA4NB2DM;
 				ENV_FILE = .fasting.adm.env;
 				INFOPLIST_FILE = App/FastingAdm.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -920,8 +932,8 @@
 					"-lc++",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.fwy.adm;
-				PRODUCT_NAME = FWY/Adm;
-				PROVISIONING_PROFILE_SPECIFIER = "";
+				PRODUCT_NAME = FWYAdm;
+				PROVISIONING_PROFILE_SPECIFIER = admin.appstore.profile;
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
 			};

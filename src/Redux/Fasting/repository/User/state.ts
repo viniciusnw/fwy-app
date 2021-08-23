@@ -1,5 +1,4 @@
 import {
-  customerLoginVariables,
   customerLogin_customerLogin,
   customerRegister_customerRegister,
   customerUpdate_customerUpdate
@@ -22,7 +21,6 @@ export class UserReduxType {
     error: false,
   }
   errorMessage = null
-  lastUser: customerLoginVariables | null = null
   data: customerLogin_customerLogin | customerRegister_customerRegister | customerUpdate_customerUpdate | null = null
 }
 

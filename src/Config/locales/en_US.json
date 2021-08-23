@@ -1,4 +1,110 @@
 {
+  "Settings": {
+    "community": "Community",
+    "support": "Support",
+    "social": "Social",
+    "rate": "Rate us on App Store",
+    "find": "Find Us Online",
+    "share": "Share",
+    "contact": "Contacts Support",
+    "help": "Help",
+    "terms": "Terms of Use",
+    "insta": "Follow on Instagram",
+    "face": "Follow on Facebook"
+  },
+  "ProfileEdit": {
+    "form": {
+      "avatar": "Change profile picture",
+      "name": "Name",
+      "email": "E-mail",
+      "date": "Birthday",
+      "gender": "Gender",
+      "genderOptions": {
+        "masculine": "Masculine",
+        "feminine": "Feminine",
+        "other": "Other"
+      },
+      "weight": "Weight",
+      "weight_uom": "lb",
+      "height": "Height",
+      "height_uom": "In",
+      "submit": "Save"
+    },
+    "formErros": {
+      "name": "Fill in your name.",
+      "email": "Invalid email.",
+      "emailNull": "Fill your email.",
+      "date": "Fill in your date of birth.",
+      "gender": "Fill your gender.",
+      "weight": "Invalid weight.",
+      "weightNull": "Fill your weight.",
+      "height": "Fill your height.",
+      "heightNull": "Invalid height."
+    },
+    "privateInfo": "Private informations"
+  },
+  "EndFasting": {
+    "title": "Nice effort!",
+    "description": "You completed a fast for",
+    "descriptionLine2": "a total",
+    "timeH": "{{count}} hour.",
+    "timeH_plural": "{{count}} hours.",
+    "timeM": "{{count}} minute.",
+    "timeM_plural": "{{count}} minutes.",
+    "btnShare": "Share fast",
+    "btnAddPhoto": "Share a picture of your fast",
+    "btnDeletePhoto": "Delete picture",
+    "start": "STARTED FASTING",
+    "end": "GOAL REACHED",
+    "edit": "EDIT",
+    "feel": "How are you feeling?",
+    "textAreaPlaceholder": "Add a note",
+    "save": "Save",
+    "delete": "Delete"
+  },
+  "Timer": {
+    "title": "Get ready to fast",
+    "titleStart": "You’re Fasting!",
+    "remaining": "Remaining",
+    "upcoming": "Upcoming fast",
+    "btnStart": "START YOUR {{HOURS}}H FAST",
+    "btnChange": "CHANGE FAST",
+    "btnRemider": "SET REMINDER",
+    "start": "STARTED FASTING",
+    "edit": "edit",
+    "end": "FAST ENDING",
+    "btnEnd": "End fast"
+  },
+  "Fasting": {
+    "customPlan": "Custom plan",
+    "save": "Save",
+    "duration": "Duration",
+    "durationText": "You can save presets up to 168 hours.",
+    "form": {
+      "name": "Fasting name",
+      "hours": "Hours",
+      "color": "Color",
+      "submit": "START YOUR FAST"
+    },
+    "formErros": {
+      "name": "Choose a name for your Fast.",
+      "hours": "Choose the hours.",
+      "submit": "YOU’RE FASTING!"
+    },
+    "journal": {
+      "items": [
+        {
+          "title": "Long 5 Fast Journal",
+          "content": "A lot happens during a fast. Tracking your moo Will Help you understand those changes, and reflecte on How you’e feeling at different stages of your fast."
+        }
+      ]
+    }
+  },
+  "Home": {
+    "title": "Choose how to start your Fast",
+    "presetTitle": "Start fasting",
+    "defaultTitle": "Most popular"
+  },
   "SignUp": {
     "form": {
       "avatar": "Load picture",

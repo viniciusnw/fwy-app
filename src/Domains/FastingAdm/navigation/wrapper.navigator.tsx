@@ -1,50 +1,130 @@
 import React from 'react';
-import { Header } from '@Components';
-import BottomBar from './bottom.navigator';
+import { connect } from 'react-redux';
+import { StackScreenProps } from '@react-navigation/stack';
+import { withNavigationFocus } from '@react-navigation/compat';
+import { ImageBackground, SafeAreaView, StatusBar } from 'react-native';
 
-export default class Wrapper extends React.PureComponent<any, any> {
+import TopBar from './top.navigator';
+import BottomBar from './bottom.navigator';
+import * as ASSETS from '@Config/assets';
+
+import { PageContainer } from './navigation.styles';
+import { LoggedStackParamList } from './logged.navigator';
+import { UnloogedStackParamList } from './unlogged.navigator';
+
+type PageConfigType = {
+  pageConfig?: {
+    backgroundImage?: string;
+    backgroundSolidColor?: any;
+  };
+  topBarConfig?: {
+    menu?: any;
+    back?: any;
+    color?: any;
+    title?: any;
+  };
+  bottomBarConfig?: {
+    color?: string;
+  };
+};
+export class WrapperPropsType {
+  name: any;
+  Page: any;
+  topBarType: any;
+  bottomBarType: any;
+}
+
+export class PagePropsType extends WrapperPropsType {
+  isFocused: boolean = false;
+}
+
+type RoutePropsType = StackScreenProps<
+  UnloogedStackParamList & LoggedStackParamList,
+  'Wrapper'
+>;
+class Wrapper extends React.PureComponent<
+  RoutePropsType & WrapperPropsType,
+  any
+> {
   constructor(props) {
     super(props);
-    this.state = {
-      bottomBar: {
-        text: 'Avançar',
-        label: false,
-        description: false,
-        onPress: () => null,
-      },
-      topBar: {
-        title: 'TakeCare',
-        back: null,
-        menu: null,
-      },
-    };
   }
 
-  setBottomBar = (config) => this.setState({ bottomBar: config });
-  setTopBar = (config) => this.setState({ topBar: config });
+  componentDidUpdate() {
+    // console.log("Wrapper=>componentDidUpdate: ", this.props)
+  }
 
   render() {
-    const { bottomBarType = null, Page } = this.props;
-    const { bottomBar, topBar } = this.state;
+    const {
+      topBarType = null,
+      Page: PageComponent,
+      bottomBarType = null,
+    } = this.props;
+    const { setPageConfigs } = PageComponent.WrappedComponent || {};
+    const {
+      bottomBarConfig = { color: '#FFF' },
+      topBarConfig = {
+        menu: false,
+        back: true,
+        color: '#FFF',
+        title: 'Fasting',
+      },
+      pageConfig = { backgroundImage: 'primary' },
+    } = setPageConfigs;
+    const { backgroundImage, backgroundSolidColor } = pageConfig;
+
+    const Page = this.renderPage(
+      PageComponent,
+      topBarType,
+      topBarConfig,
+      bottomBarType,
+      bottomBarConfig,
+    );
+
+    if (backgroundSolidColor)
+      return <PageContainer color={backgroundSolidColor}>{Page}</PageContainer>;
 
     return (
-      <>
-        <Header back={topBar.back} menu={topBar.menu} title={topBar.title} />
+      <ImageBackground
+        resizeMode="cover"
+        style={{ flex: 1 }}
+        source={
+          ASSETS.FASTING.backgrounds[
+            backgroundImage ? backgroundImage : 'primary'
+          ]
+        }>
+        {Page}
+      </ImageBackground>
+    );
+  }
 
-        <Page
-          {...this.props}
-          setTopBar={this.setTopBar}
-          setBottomBar={this.setBottomBar}
+  private renderPage(
+    Page: any,
+    topBarType: any,
+    topBarConfig: any,
+    bottomBarType: any,
+    bottomBarConfig: any,
+  ) {
+    return (
+      <SafeAreaView style={{ flex: 1 }}>
+        <StatusBar
+          hidden={false}
+          animated={true}
+          barStyle={'dark-content'}
+          showHideTransition={'slide'}
         />
+        <>
+          {topBarType ? <TopBar {...this.props} {...topBarConfig} /> : null}
 
-        {bottomBarType ? (
-          <BottomBar
-            navigation={this.props.navigation}
-            type={bottomBarType}
-            {...bottomBar}
-          />
-        ) : null}
-      </>
+          <Page {...this.props} />
+
+          {bottomBarType ? (
+            <BottomBar {...this.props} {...bottomBarConfig} />
+          ) : null}
+        </>
+      </SafeAreaView>
     );
   }
 }
+
+export default withNavigationFocus(connect(null, null)(Wrapper));

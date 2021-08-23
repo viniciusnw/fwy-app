@@ -1,82 +1,74 @@
 import React from 'react';
-import { Text } from 'react-native';
+import { connect } from 'react-redux';
+import { StackScreenProps } from '@react-navigation/stack';
 import {
-  Navbar,
-  ActionBar,
-  ActionBarWrapperSingle,
-  ActionBarWrapperDouble,
-  PriceResume,
-  Button,
-} from '@Components';
+  ReduxActions,
+  ReduxPropsType,
+  ReduxStateType,
+} from '@Redux/FastingAdm';
 
-export default class BottomBar extends React.Component<any, any> {
+import { WrapperPropsType } from './wrapper.navigator';
+import { LoggedStackParamList } from './logged.navigator';
+import { UnloogedStackParamList } from './unlogged.navigator';
+
+import { Navbar, NavbarSecondary } from '@Components';
+
+type BottomBarPropsType = ReduxPropsType & {
+  color: string;
+};
+
+type RoutePropsType = StackScreenProps<
+  UnloogedStackParamList & LoggedStackParamList,
+  'Wrapper'
+>;
+class BottomBar extends React.Component<
+  RoutePropsType & BottomBarPropsType & WrapperPropsType,
+  any
+> {
   constructor(props) {
     super(props);
-    this.state = {
-      menu: [
-        {
-          icon: 'calendar',
-          label: 'Agenda',
-          onPress: this.goCalendar.bind(this),
-          primary: false,
-        },
-        {
-          icon: 'wallet',
-          label: 'Carteira',
-          onPress: this.goWallet.bind(this),
-          primary: true,
-        },
-        {
-          icon: 'list',
-          label: 'Histórico',
-          onPress: this.goHistory.bind(this),
-          primary: false,
-        },
-      ],
-    };
-  }
-
-  goCalendar() {
-    const { navigation } = this.props;
-    navigation.navigate('calendar', {});
-  }
-
-  goWallet() {
-    const { navigation } = this.props;
-    navigation.navigate('wallet', {});
-  }
-
-  goHistory() {
-    const { navigation } = this.props;
-    navigation.navigate('history', {});
+    // console.log('BottomBar=>constructor', this)
   }
 
   render() {
-    const { menu } = this.state;
-    const { type, text = 'Avançar', label, description, onPress } = this.props;
+    const { navigation, bottomBarType, name } = this.props;
+    const { navigate } = navigation;
 
-    if (type == 'action-bar')
+    const menu = [
+      {
+        size: 25,
+        icon: 'home',
+        onPress: () => (name == 'Home' ? null : navigate('Home')),
+      },
+    ];
+
+    if (bottomBarType == 'primary')
+      return <Navbar {...this.props} items={menu} />;
+    if (bottomBarType == 'secondary')
       return (
-        <ActionBar>
-          {label && description ? (
-            <ActionBarWrapperDouble>
-              <PriceResume label={label} description={description} />
-              <Button onPress={onPress} color="black">
-                <Text>{text}</Text>
-              </Button>
-            </ActionBarWrapperDouble>
-          ) : (
-            <ActionBarWrapperSingle>
-              <Button onPress={onPress} color="black">
-                <Text>{text}</Text>
-              </Button>
-            </ActionBarWrapperSingle>
-          )}
-        </ActionBar>
+        <NavbarSecondary
+          items={menu}
+          {...this.props}
+          background="darkBlue"
+          radius={[30, 30, 0, 0]}
+        />
       );
-
-    if (type == 'nav-bar') return <Navbar items={menu} />;
-
     return null;
   }
 }
+
+function mapStateToProps({ User }: ReduxStateType) {
+  return {
+    useRedux: {
+      User,
+    },
+  };
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    useDispatch: {},
+  };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(BottomBar);

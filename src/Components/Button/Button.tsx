@@ -10,8 +10,9 @@ const StyledButton = styled.TouchableOpacity`
   border-radius: 10px;
   align-items: center;
   justify-content: center;
-  height: ${({ small }: any) => small ? '34px' : '42.5px'};
-  background-color: ${({ theme, color, }: any) => theme.color[!color ? 'default' : color]};
+  height: ${({ small }: any) => (small ? '34px' : '42.5px')};
+  background-color: ${({ theme, color }: any) =>
+    theme.color[!color ? 'default' : color]};
 `;
 
 const StyledView = styled.View<any>`
@@ -20,31 +21,35 @@ const StyledView = styled.View<any>`
   flex-direction: row;
   align-items: center;
   justify-content: space-around;
-  justify-content: ${({ single }: any) => single ? 'center' : 'space-around'};
+  justify-content: ${({ single }: any) => (single ? 'center' : 'space-around')};
 `;
 
 const StyledText = styled.Text<any>`
-  margin-bottom: -7px;
+  line-height: 20px;
   color: ${({ theme }: any) => theme.color.white};
-  font-family: ${({theme}) => theme.fonts.AdobeClean.regular};
-  font-size: ${({ fontSize }: any) => fontSize ? fontSize : '16px'};
-  font-weight: ${({ fontWeight }: any) => fontWeight ? fontWeight : '700'};
+  font-family: ${({ theme }) => theme.fonts.AdobeClean.regular};
+  font-size: ${({ fontSize }: any) => (fontSize ? fontSize : '16px')};
+  font-weight: ${({ fontWeight }: any) => (fontWeight ? fontWeight : '700')};
 `;
 
 const Button = ({ icon, loading, color, children, font, ...props }: any) => {
-  const { size: fontSize, weight: fontWeight } = font || {}
+  const { size: fontSize, weight: fontWeight } = font || {};
   return (
     <StyledButton disabled={loading} color={color} {...props}>
-      {loading
-        ? <ActivityIndicator size='small' color={'#FFF'} />
-        : icon ? (
-          <StyledView single={!(children && icon)}>
-            <Icon icon={icon.icon} color={icon.color} size={icon.size} />
-            <StyledText fontWeight={fontWeight} fontSize={fontSize}>{children}</StyledText>
-          </StyledView>
-        ) : (
-            <StyledText fontWeight={fontWeight} fontSize={fontSize}>{children}</StyledText>
-          )}
+      {loading ? (
+        <ActivityIndicator size="small" color={'#FFF'} />
+      ) : icon ? (
+        <StyledView single={!(children && icon)}>
+          <Icon icon={icon.icon} color={icon.color} size={icon.size} />
+          <StyledText fontWeight={fontWeight} fontSize={fontSize}>
+            {children}
+          </StyledText>
+        </StyledView>
+      ) : (
+        <StyledText fontWeight={fontWeight} fontSize={fontSize}>
+          {children}
+        </StyledText>
+      )}
     </StyledButton>
   );
 };

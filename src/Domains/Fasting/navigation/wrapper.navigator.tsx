@@ -2,12 +2,12 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { StackScreenProps } from '@react-navigation/stack';
 import { withNavigationFocus } from '@react-navigation/compat';
+import { ImageBackground, SafeAreaView, StatusBar } from 'react-native';
 
 import TopBar from './top.navigator';
 import BottomBar from './bottom.navigator';
 import * as ASSETS from '@Config/assets';
 
-import { ImageBackground } from 'react-native';
 import { PageContainer } from './navigation.styles';
 import { LoggedStackParamList } from './logged.navigator';
 import { UnloogedStackParamList } from './unlogged.navigator';
@@ -60,9 +60,7 @@ class Wrapper extends React.PureComponent<
       Page: PageComponent,
       bottomBarType = null,
     } = this.props;
-
     const { setPageConfigs } = PageComponent.WrappedComponent || {};
-
     const {
       bottomBarConfig = { color: '#FFF' },
       topBarConfig = {
@@ -108,15 +106,23 @@ class Wrapper extends React.PureComponent<
     bottomBarConfig: any,
   ) {
     return (
-      <>
-        {topBarType ? <TopBar {...this.props} {...topBarConfig} /> : null}
+      <SafeAreaView style={{ flex: 1 }}>
+        <StatusBar
+          hidden={false}
+          animated={true}
+          barStyle={'dark-content'}
+          showHideTransition={'slide'}
+        />
+        <>
+          {topBarType ? <TopBar {...this.props} {...topBarConfig} /> : null}
 
-        <Page {...this.props} />
+          <Page {...this.props} />
 
-        {bottomBarType ? (
-          <BottomBar {...this.props} {...bottomBarConfig} />
-        ) : null}
-      </>
+          {bottomBarType ? (
+            <BottomBar {...this.props} {...bottomBarConfig} />
+          ) : null}
+        </>
+      </SafeAreaView>
     );
   }
 }

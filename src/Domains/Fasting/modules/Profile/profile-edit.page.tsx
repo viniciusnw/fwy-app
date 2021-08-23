@@ -1,21 +1,23 @@
 import React from 'react';
+import * as yup from 'yup';
 import { Formik } from 'formik';
 import { connect } from 'react-redux';
 import { StackScreenProps } from '@react-navigation/stack';
+import { withTranslation, WithTranslation } from 'react-i18next';
 import { View, ScrollView, TouchableOpacity, Image } from 'react-native';
 
+import { showSnackbar } from '@Config/graphql';
 import { LoggedStackParamList, PagePropsType } from '@Navigation';
-import { Icon, Button, Input, InputDate, DismissKeyboard } from '@Components';
 import { ReduxActions, ReduxPropsType, ReduxStateType } from '@Redux/Fasting';
+import { Icon, Button, Input, InputDate, DismissKeyboard } from '@Components';
 
 import FormCustomerUpdate, {
-  FormCustomerUpdateSchema,
   fields as FormFields,
 } from './components/profile-edit-form.component';
 
 type RoutePropsType = StackScreenProps<LoggedStackParamList, 'ProfileEdit'>;
 class ProfileEdit extends React.Component<
-  RoutePropsType & ReduxPropsType & PagePropsType,
+  RoutePropsType & ReduxPropsType & PagePropsType & WithTranslation,
   any
 > {
   static setPageConfigs = {
@@ -28,11 +30,23 @@ class ProfileEdit extends React.Component<
     super(props);
   }
 
-  componentDidMount() {
-    // console.log('ProfileEdit=>componentDidMount: ', this.props.useRedux.User);
+  componentDidUpdate(prevProps: ReduxPropsType) {
+    this.handleCustomerUpdate(prevProps);
   }
 
-  private handlerCustomerUpdate(customerForm) {
+  private handleCustomerUpdate(prevProps: ReduxPropsType) {
+    const {
+      update: { success },
+    } = this.props.useRedux.User;
+    const {
+      update: { success: prevSuccess },
+    } = prevProps.useRedux.User;
+
+    if (success && success != prevSuccess)
+      showSnackbar('Your profile was update ✅ ', 'success', 'i');
+  }
+
+  private customerUpdate(customerForm) {
     const customerFormClone = JSON.parse(JSON.stringify(customerForm));
 
     Object.keys(customerFormClone).map((key) => {
@@ -67,6 +81,25 @@ class ProfileEdit extends React.Component<
 
   render() {
     const User = this.User;
+    const tFormErros: any = this.t('formErros');
+
+    const FormCustomerUpdateSchema = yup.object().shape({
+      [FormFields.name]: yup.string().required(tFormErros.name),
+      [FormFields.email]: yup
+        .string()
+        .email(tFormErros.email)
+        .required(tFormErros.emailNull),
+      [FormFields.birthday]: yup.date().required(tFormErros.date),
+      [FormFields.gender]: yup.string().required(tFormErros.gender),
+      [FormFields.weight]: yup
+        .number()
+        .required(tFormErros.weightNull)
+        .min(1, tFormErros.weight),
+      [FormFields.height]: yup
+        .number()
+        .required(tFormErros.height)
+        .min(1, tFormErros.heightNull),
+    });
 
     const FormInitialValues = {
       [FormFields.avatar]: User?.avatar || null,
@@ -90,7 +123,7 @@ class ProfileEdit extends React.Component<
             enableReinitialize
             initialValues={FormInitialValues}
             validationSchema={FormCustomerUpdateSchema}
-            onSubmit={this.handlerCustomerUpdate.bind(this)}>
+            onSubmit={this.customerUpdate.bind(this)}>
             {({
               values,
               errors,
@@ -120,6 +153,9 @@ class ProfileEdit extends React.Component<
     if (!data) return;
     return data;
   }
+
+  private t = (value: string, variables?: any) =>
+    this.props.t && this.props.t(value, variables);
 }
 
 function mapStateToProps({ User }: ReduxStateType) {
@@ -138,4 +174,6 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(ProfileEdit);
+export default withTranslation('ProfileEdit')(
+  connect(mapStateToProps, mapDispatchToProps)(ProfileEdit),
+);

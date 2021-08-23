@@ -14,6 +14,7 @@ import Asset11 from './svg/Asset11.svg';
 import Asset12 from './svg/Asset12.svg';
 import Asset13 from './svg/Asset13.svg';
 import Bagde from './svg/bagde.svg';
+import BagdeWhite from './svg/bagde-white.svg';
 import BagdeLocked from './svg/bagde-locked.svg';
 import Ribbon from './svg/ribbon.svg';
 import RibbonFull from './svg/ribbon_full.svg';
@@ -29,6 +30,7 @@ const svgs = {
   LogoWhite,
   Bagde,
   BagdeLocked,
+  BagdeWhite,
   Ribbon,
   RibbonFull,
   Emotes: {

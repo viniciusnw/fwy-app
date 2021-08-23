@@ -1,0 +1,1 @@
+export { LastUserReduxType } from './state';

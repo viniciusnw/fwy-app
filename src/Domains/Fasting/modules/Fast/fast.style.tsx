@@ -1,21 +1,20 @@
 import React from 'react';
 import { Button, Icon } from '@Components';
 import styled from 'styled-components/native';
-import { View, TextInput, Text } from 'react-native';
+import { useTranslation } from 'react-i18next';
+import { View, TextInput, Text, ScrollView } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
-export const Container = styled(View)`
+export const Container = styled(ScrollView)`
   flex: 1;
-  align-items: center;
-  justify-content: flex-start;
   margin: 0 40px;
 `;
 
 export const TimerContainer = styled(View)`
   flex: 1;
   padding-top: 60px;
-  padding-bottom: 40px;
   align-items: center;
+  padding-bottom: 40px;
   justify-content: space-around;
 `;
 
@@ -35,7 +34,6 @@ export const StyledTextInput = styled(TextInput)`
 export const StyledH1 = styled(Text)`
   font-size: 22px;
   padding-bottom: 8px;
-  margin-bottom: -7px;
   font-weight: bold;
   color: ${({ theme }) => theme.color.white};
   font-family: ${({ theme }) => theme.fonts.AdobeClean.bold};
@@ -45,7 +43,6 @@ export const StyledH2 = styled(Text)`
   width: 70px;
   font-size: 22px;
   font-weight: bold;
-  margin-bottom: -7px;
   color: ${({ theme }) => theme.color.white};
   font-family: ${({ theme }) => theme.fonts.AdobeClean.bold};
 `;
@@ -53,7 +50,7 @@ export const StyledH2 = styled(Text)`
 export const StyledH3 = styled(Text)`
   font-size: 22px;
   font-weight: bold;
-  margin-bottom: -7px;
+  text-align: center;
   color: ${({ theme }) => theme.color.white};
   font-family: ${({ theme }) => theme.fonts.AdobeClean.bold};
 `;
@@ -61,13 +58,11 @@ export const StyledH3 = styled(Text)`
 export const StyledText = styled(Text)`
   font-size: 14px;
   font-weight: bold;
-  margin-bottom: -4px;
   color: ${({ theme }) => theme.color.white};
   font-family: ${({ theme }) => theme.fonts.AdobeClean.bold};
 `;
 
 export const StyledText2 = styled(Text)`
-  margin-bottom: -7px;
   color: ${({ theme }) => theme.color.white};
   font-family: ${({ theme }) => theme.fonts.AdobeClean.regular};
 `;
@@ -76,9 +71,7 @@ export const StyledText3 = styled(Text)`
   font-size: 25px;
   font-weight: bold;
   text-align: center;
-  margin-bottom: -4px;
   color: ${({ theme }) => theme.color.white};
-  font-family: ${({ theme }) => theme.fonts.AdobeClean.bold};
 `;
 
 export const StyledText4 = styled(Text)`
@@ -188,7 +181,6 @@ export const StyledText19 = styled(Text)`
   font-size: 16px;
   margin-right: 12px;
   font-weight: bold;
-  margin-bottom: -7px;
   color: ${({ theme }) => theme.color.white};
   font-family: ${({ theme }) => theme.fonts.AdobeClean.bold};
 `;
@@ -196,7 +188,6 @@ export const StyledText19 = styled(Text)`
 export const StyledText20 = styled(Text)`
   font-size: 15px;
   margin-left: 12px;
-  margin-bottom: -6px;
   font-weight: bold;
   text-align: center;
   color: ${({ theme }) => theme.color.white};
@@ -206,6 +197,7 @@ export const StyledText20 = styled(Text)`
 export const StyledText21 = styled(Text)`
   font-size: 15px;
   font-weight: bold;
+  margin-bottom: 4px;
   color: ${({ theme }) => theme.color.primary};
   font-family: ${({ theme }) => theme.fonts.AdobeClean.bold};
 `;
@@ -219,7 +211,6 @@ export const StyledText22 = styled(Text)`
 
 export const StyledText23 = styled(Text)`
   font-weight: bold;
-  margin-bottom: -4px;
   color: ${({ theme }) => theme.color.white};
   font-family: ${({ theme }) => theme.fonts.AdobeClean.bold};
 `;
@@ -248,11 +239,11 @@ export const FormHeader = styled(View)`
 `;
 
 export const Footer = styled(View)`
-  /* height: 230px; */
-  height: 124px;
-  bottom: -62px;
-  right: 0px;
   left: 0;
+  right: 0px;
+  bottom: -96px;
+  height: 124px;
+  /* height: 230px; */
 `;
 
 export const ContainerButtons = styled(View)<any>`
@@ -270,18 +261,22 @@ export const StyledField = styled(View)`
 `;
 
 export const Divider = (props) => (
-  <View style={{ width: '100%', height: 42, bottom: -62, marginTop: -62 }} />
+  <View style={{ width: '100%', height: 42, bottom: -96, marginTop: -62 }} />
 );
 
-export const CustomPlanTag = (props) => (
-  <View
-    style={{
-      flex: 1,
-      marginBottom: 12,
-      flexDirection: 'row',
-      alignItems: 'center',
-    }}>
-    <StyledText>Custom Plan</StyledText>
-    <Icon size={12} icon="info" color={'#FFF'} style={{ marginLeft: 4 }} />
-  </View>
-);
+export const CustomPlanTag = (props) => {
+  const { t } = useTranslation('Fasting');
+
+  return (
+    <View
+      style={{
+        flex: 1,
+        marginBottom: 12,
+        flexDirection: 'row',
+        alignItems: 'center',
+      }}>
+      <StyledText>{t('customPlan')}</StyledText>
+      <Icon size={12} icon="info" color={'#FFF'} style={{ marginLeft: 4 }} />
+    </View>
+  );
+};

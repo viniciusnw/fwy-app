@@ -11,7 +11,7 @@ import { Store } from '@Redux/Store';
 import { Root as Fasting } from '@Navigation';
 import { Root as FastingAdm } from '@ADMNavigation';
 
-import { SafeAreaView, ActivityIndicator } from 'react-native';
+import { ActivityIndicator, View } from 'react-native';
 
 import '@Config/locales';
 
@@ -20,26 +20,17 @@ export default class App extends React.Component {
     super(props);
   }
 
-  loadApp = () => {
-    const { APP_NAME } = Config;
-    switch (APP_NAME) {
-      case APP_NAME_TYPE.FASTING:
-        return <Fasting />;
-      case APP_NAME_TYPE.FASTING_ADM:
-        return <FastingAdm />;
-    }
-  };
-
   render() {
     const { APP_NAME } = Config;
     const { store, persistor } = Store[APP_NAME];
+
     return (
       <Provider store={store}>
         <PersistGate persistor={persistor}>
           <ThemeProvider theme={THEME[APP_NAME]}>
             <Suspense
               fallback={<ActivityIndicator size="small" color={'#FFF'} />}>
-              <SafeAreaView style={{ flex: 1 }}>{this.loadApp()}</SafeAreaView>
+              <RootApp />
             </Suspense>
           </ThemeProvider>
         </PersistGate>
@@ -47,3 +38,15 @@ export default class App extends React.Component {
     );
   }
 }
+
+const RootApp: React.FC<any> = () => {
+  const { APP_NAME } = Config;
+  switch (APP_NAME) {
+    case APP_NAME_TYPE.FASTING:
+      return <Fasting />;
+    case APP_NAME_TYPE.FASTING_ADM:
+      return <FastingAdm />;
+    default:
+      return <View />;
+  }
+};

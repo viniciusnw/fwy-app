@@ -19,11 +19,16 @@ const StyledItem = styled(TouchableOpacity)`
 export const Navbar = ({ color, items, ...props }) => {
   return (
     <StyledContainer {...props}>
-      {items.map(({ size, icon, ...props }, index) =>
+      {items.map(({ size, icon, ...props }, index) => (
         <StyledItem key={index} {...props}>
-          <Icon icon={icon} color={color} size={size ? size : 28} />
+          <Icon
+            icon={icon}
+            color={color}
+            size={size ? size : 28}
+            style={{ opacity: props.disabled ? 0.4 : 1 }}
+          />
         </StyledItem>
-      )}
+      ))}
     </StyledContainer>
   );
 };

@@ -1,26 +1,46 @@
 import 'react-native-gesture-handler';
+
 import React from 'react';
 import { connect } from 'react-redux';
+import SplashScreen from 'react-native-splash-screen';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
+
+import { ChatConnectProvider, ChatQueueProvider } from '@ADMModules';
+import { APP_NAME_TYPE } from '@Config/types';
+import { configureApolloClient } from '@Config/graphql';
+import { ReduxStateType, ReduxPropsType } from '@Redux/FastingAdm';
 
 import Logged from './logged.navigator';
 import UnLogged from './unlogged.navigator';
 
-class Root extends React.Component<any, any> {
+class Root extends React.Component<ReduxPropsType, any> {
   constructor(props: any) {
     super(props);
   }
 
+  componentDidMount = async () => {
+    await configureApolloClient(APP_NAME_TYPE.FASTING_ADM);
+    SplashScreen.hide();
+  };
+
   render() {
-    const { login } = this.props.user;
-    const { data } = login;
+    const {
+      User: { login },
+    } = this.props.useRedux;
+
+    const { success: loginSuccess } = login;
+
     const Stack = createStackNavigator();
     return (
       <>
+        {/* Providers */}
+        <ChatConnectProvider />
+        <ChatQueueProvider />
+
         <NavigationContainer>
           <Stack.Navigator>
-            {data.logged ? (
+            {loginSuccess ? (
               <Stack.Screen
                 name="Logged"
                 component={Logged}
@@ -40,9 +60,11 @@ class Root extends React.Component<any, any> {
   }
 }
 
-function mapStateToProps({ user }) {
+function mapStateToProps({ User }: ReduxStateType) {
   return {
-    user,
+    useRedux: {
+      User,
+    },
   };
 }
 

@@ -10,12 +10,12 @@
             ActionType = "Xcode.IDEStandardExecutionActionsCore.ExecutionActionType.ShellScriptAction">
             <ActionContent
                title = "Run Script"
-               scriptText = "echo $ENV_FILE &gt; /tmp/envfile&#10;&#10;">
+               scriptText = "echo $ENV_FILE &gt; /tmp/envfile&#10;">
                <EnvironmentBuildable>
                   <BuildableReference
                      BuildableIdentifier = "primary"
                      BlueprintIdentifier = "8111B7B4247C45A30075DF0C"
-                     BuildableName = "Adm.app"
+                     BuildableName = "FWYAdm.app"
                      BlueprintName = "FastingAdm"
                      ReferencedContainer = "container:App.xcodeproj">
                   </BuildableReference>
@@ -33,7 +33,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "8111B7B4247C45A30075DF0C"
-               BuildableName = "Adm.app"
+               BuildableName = "FWYAdm.app"
                BlueprintName = "FastingAdm"
                ReferencedContainer = "container:App.xcodeproj">
             </BuildableReference>
@@ -63,12 +63,12 @@
             ActionType = "Xcode.IDEStandardExecutionActionsCore.ExecutionActionType.ShellScriptAction">
             <ActionContent
                title = "Run Script"
-               scriptText = "echo $ENV_FILE &gt; /tmp/envfile&#10;&#10;">
+               scriptText = "echo $ENV_FILE &gt; /tmp/envfile&#10;">
                <EnvironmentBuildable>
                   <BuildableReference
                      BuildableIdentifier = "primary"
                      BlueprintIdentifier = "8111B7B4247C45A30075DF0C"
-                     BuildableName = "Adm.app"
+                     BuildableName = "FWYAdm.app"
                      BlueprintName = "FastingAdm"
                      ReferencedContainer = "container:App.xcodeproj">
                   </BuildableReference>
@@ -81,7 +81,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "8111B7B4247C45A30075DF0C"
-            BuildableName = "Adm.app"
+            BuildableName = "FWYAdm.app"
             BlueprintName = "FastingAdm"
             ReferencedContainer = "container:App.xcodeproj">
          </BuildableReference>
@@ -93,16 +93,6 @@
       savedToolIdentifier = ""
       useCustomWorkingDirectory = "NO"
       debugDocumentVersioning = "YES">
-      <BuildableProductRunnable
-         runnableDebuggingMode = "0">
-         <BuildableReference
-            BuildableIdentifier = "primary"
-            BlueprintIdentifier = "8111B7B4247C45A30075DF0C"
-            BuildableName = "Adm.app"
-            BlueprintName = "FastingAdm"
-            ReferencedContainer = "container:App.xcodeproj">
-         </BuildableReference>
-      </BuildableProductRunnable>
    </ProfileAction>
    <AnalyzeAction
       buildConfiguration = "Debug">

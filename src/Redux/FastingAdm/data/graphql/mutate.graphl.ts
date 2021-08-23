@@ -1,26 +1,41 @@
 import { Service } from 'typedi';
-import { Store } from '@Redux/Store';
-import { APP_NAME_TYPE } from '@Config/types';
-import { GraphqlApi } from '@Config/graphql'
+import {
+  GraphqlApi,
+  sendChatMessageVariables,
+  customerUpdateVariables,
+  customerLoginVariables
+} from '@Config/graphql'
 
-// import customerLogin from './docs/customerLogin.mutate.graphql'
+import customerLoginMutate from './../../../Fasting/data/graphql/docs/customerLogin.mutate.graphql'
+import sendChatMessageMutate from './../../../Fasting/data/graphql/docs/sendChatMessage.mutate.graphql'
+import customerUpdateMutate from './../../../Fasting/data/graphql/docs/customerUpdate.mutate.graphql'
 
 @Service()
 export class Mutate extends GraphqlApi {
 
-  public login = (params) => {
-    const { store } = Store[APP_NAME_TYPE.FASTING];
+  public login = (params: customerLoginVariables) => {
+    return this.ApolloClient.mutate({
+      mutation: customerLoginMutate,
+      variables: params,
+    }).then(response => ({
+      lastUser: params,
+      response: this.mapResponse(response, 'customerLogin')
+    })).catch(err => this.mapError(err))
+  }
 
-    console.log(params)
-    // console.log(customerLogin)
-    console.log(store.getState())
-    console.log(this.ApolloClient)
+  public sendChatMessage = (params: sendChatMessageVariables) => {
+    return this.ApolloClient.mutate({
+      mutation: sendChatMessageMutate,
+      variables: params,
+    }).then(response => this.mapResponse(response, 'sendChatMessage'))
+      .catch(err => this.mapError(err))
+  }
 
-    // this.ApolloClient.mutate({
-    //   mutation: customerLogin,
-    //   variables: params,
-    // }).then(response => console.log(response)).catch(err => console.log(err))
-
-    // return new Promise((res) => setTimeout(() => res({ name: 'teste' }), 1500))
+  public update = (params: customerUpdateVariables) => {
+    return this.ApolloClient.mutate({
+      mutation: customerUpdateMutate,
+      variables: params,
+    }).then(response => this.mapResponse(response, 'customerUpdate'))
+      .catch(err => this.mapError(err))
   }
 }

@@ -105,20 +105,24 @@ const SignUpForm: React.FC<any> = ({
 
   const signUpForm = {
     name: {
+      returnKeyType: 'done',
       placeholder: tForm.name,
       autoCompleteType: 'name',
       value: formik.values.name,
+      clearButtonMode: 'while-editing',
       placeholderTextColor: '#FFF',
       onFocus: () => setKeyboardOffset(-150),
       onBlur: formik.handleBlur(registerFields.name),
-      onChangeText: (value) => formik.setFieldValue(registerFields.name, value),
       error: formik.touched.name && formik.errors.name,
+      onChangeText: (value) => formik.setFieldValue(registerFields.name, value),
     },
     email: {
+      returnKeyType: 'done',
       placeholder: tForm.email,
       autoCompleteType: 'email',
       value: formik.values.email,
       placeholderTextColor: '#FFF',
+      clearButtonMode: 'while-editing',
       onFocus: () => setKeyboardOffset(-150),
       onBlur: formik.handleBlur(registerFields.email),
       onChangeText: (value) =>
@@ -172,9 +176,11 @@ const SignUpForm: React.FC<any> = ({
     },
     password: {
       secureTextEntry: true,
+      returnKeyType: 'done',
       placeholder: tForm.password,
       value: formik.values.password,
       placeholderTextColor: '#FFF',
+      clearButtonMode: 'while-editing',
       onFocus: () => setKeyboardOffset(0),
       onBlur: formik.handleBlur(registerFields.password),
       error: formik.touched.password && formik.errors.password,

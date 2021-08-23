@@ -11,6 +11,8 @@ const InputDate: React.FC<any> = (props) => {
   const [value, setValue] = useState('');
   const [visible, setVisible] = useState(false);
 
+  const locale = i18n.language.replace('-', '_');
+
   const setStyledTextInputValue = () => {
     const StringLocaleDate = new Date(props.value).toLocaleDateString(
       i18n.language,
@@ -35,7 +37,7 @@ const InputDate: React.FC<any> = (props) => {
       {visible && (
         <DateTimePickerModal
           mode="date"
-          locale="en_GB"
+          locale={locale}
           isVisible={true}
           onCancel={() => setVisible(false)}
           date={props.value ? new Date(props.value) : new Date()}

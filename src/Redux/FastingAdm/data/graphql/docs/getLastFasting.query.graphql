@@ -1,0 +1,11 @@
+query getLastFasting($customerId: String!) {
+  getLastFasting(customerId: $customerId) {
+    _id
+    name
+    startDate
+    endDate
+    color
+    finished
+    initialTotalHours
+  }
+}

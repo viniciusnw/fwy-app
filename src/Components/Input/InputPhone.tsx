@@ -17,6 +17,7 @@ const InputPhone = (props) => {
           type={'custom'}
           value={props.value}
           onBlur={props.onBlur}
+          returnKeyType="done"
           onFocus={props.onFocus}
           placeholder={props.placeholder}
           onChangeText={(value, rawValue) => props.onChangeText(value)}
@@ -28,6 +29,7 @@ const InputPhone = (props) => {
         <StyledInput
           type={'cel-phone'}
           value={props.value}
+          returnKeyType="done"
           onBlur={props.onBlur}
           onFocus={props.onFocus}
           placeholder={props.placeholder}

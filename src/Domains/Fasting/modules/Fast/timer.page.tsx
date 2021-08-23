@@ -1,10 +1,12 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { StackScreenProps } from '@react-navigation/stack';
+import { withTranslation, WithTranslation } from 'react-i18next';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import { View, TouchableOpacity, ActivityIndicator } from 'react-native';
 
 import { Button } from '@Components';
+import { FASTING } from '@Config/constants';
 import { LoggedStackParamList, PagePropsType } from '@Navigation';
 import { ReduxActions, ReduxPropsType, ReduxStateType } from '@Redux/Fasting';
 
@@ -22,13 +24,13 @@ import {
 
 type RoutePropsType = StackScreenProps<LoggedStackParamList, 'Timer'>;
 class Timer extends React.PureComponent<
-  RoutePropsType & ReduxPropsType & PagePropsType,
+  RoutePropsType & ReduxPropsType & PagePropsType & WithTranslation,
   any
 > {
   static setPageConfigs = {
-    topBarConfig: { title: null, menu: true, back: true, color: '#FFF' },
-    pageConfig: { backgroundImage: 'secondary' },
     bottomBarConfig: { color: '#FFF' },
+    pageConfig: { backgroundImage: 'secondary' },
+    topBarConfig: { title: null, menu: true, back: true, color: '#FFF' },
   };
 
   constructor(props) {
@@ -171,16 +173,20 @@ class Timer extends React.PureComponent<
       editFasting: { loading: loadingEditFasting },
     } = this.props.useRedux.Fastings;
 
+    const phoneLanguage = this.props.i18n.language.replace('-', '_');
+
     return (
-      <Container>
+      <Container
+        showsVerticalScrollIndicator={false}
+        showsHorizontalScrollIndicator={false}>
         <View style={{ marginBottom: 70 }}>
           <StyledH3>
-            {!startFasting ? 'Get ready to fast' : 'You’re Fasting!'}
+            {!startFasting ? this.t('title') : this.t('titleStart')}
           </StyledH3>
         </View>
 
         {/* === */}
-        <View style={{ marginBottom: 60 }}>
+        <View style={{ marginBottom: 60, alignItems: 'center' }}>
           <CirgularTimer startFasting={startFasting}>
             <FastTimer
               onFinish={() => this.setFinishFast(true)}
@@ -192,18 +198,25 @@ class Timer extends React.PureComponent<
         {/* === */}
         {!startFasting ? (
           <>
-            <View style={{ marginBottom: 80 }}>
+            <View
+              style={{
+                justifyContent: 'center',
+                flexDirection: 'row',
+                marginBottom: 80,
+              }}>
               <Button onPress={this.handlerStartFasting}>
-                Start your {this.DifferenceInHours}h Fast
+                {this.t('btnStart', { HOURS: this.DifferenceInHours })}
               </Button>
             </View>
 
             <ContainerButtons marginBottom={20}>
               <Button onPress={goBack} color="primary">
-                CHANGE FAST
+                {this.t('btnChange')}
               </Button>
 
-              <Button color="primary">SET REMINDER</Button>
+              <Button onPress={() => null} color="primary">
+                {this.t('btnRemider')}
+              </Button>
             </ContainerButtons>
           </>
         ) : (
@@ -220,30 +233,30 @@ class Timer extends React.PureComponent<
                   </View>
                 ) : (
                   <>
-                    <StyledText13>STARTED FASTING</StyledText13>
+                    <StyledText13>{this.t('start')}</StyledText13>
                     <StyledText14>{this.StartDateFormated}</StyledText14>
-                    <StyledText15>Edit Start.</StyledText15>
+                    <StyledText15>{this.t('edit')}</StyledText15>
                   </>
                 )}
               </TouchableOpacity>
 
               <View style={{ alignItems: 'center' }}>
-                <StyledText13>FAST ENDING</StyledText13>
+                <StyledText13>{this.t('end')}</StyledText13>
                 <StyledText14>{this.EndDateFormated}</StyledText14>
               </View>
             </ContainerButtons>
 
             <View style={{ width: '40%', alignSelf: 'center' }}>
-              <Button onPress={this.goToEndFast}>End Fast</Button>
+              <Button onPress={this.goToEndFast}>{this.t('btnEnd')}</Button>
             </View>
           </>
         )}
 
         {visibleDateTimePickerModal && (
           <DateTimePickerModal
-            locale="en_GB"
             mode="datetime"
             isVisible={true}
+            locale={phoneLanguage}
             maximumDate={new Date()}
             date={this.InitialDateTimePickerModal}
             onConfirm={this.onConfirmEditStartDate}
@@ -280,21 +293,31 @@ class Timer extends React.PureComponent<
   private get StartDateFormated() {
     const { fasting } = this.props.useRedux.Fastings;
     if (!fasting) return;
-    const time = fasting.startDate.toTimeString().split('G')[0].split(':');
-    const date = fasting.startDate.toDateString().split(' ');
+    const phoneLanguage = this.props.i18n.language;
+    const time = fasting.startDate.toLocaleTimeString(phoneLanguage).split(':');
+    const timeAux = time[2].split(' ')[1] || '';
+    const date = fasting.startDate.toLocaleDateString(phoneLanguage, {
+      weekday: 'short',
+      month: 'short',
+      day: 'numeric',
+    });
 
-    // return -> Today, 12:59 PM
-    return `${date[0]} ${date[1]} ${date[2]}, ${time[0]}:${time[1]}`;
+    return `${date} ${time[0]}:${time[1]} ${timeAux}`;
   }
 
   private get EndDateFormated() {
     const { fasting } = this.props.useRedux.Fastings;
     if (!fasting) return;
-    const time = fasting.endDate.toTimeString().split('G')[0].split(':');
-    const date = fasting.endDate.toDateString().split(' ');
+    const phoneLanguage = this.props.i18n.language;
+    const time = fasting.endDate.toLocaleTimeString(phoneLanguage).split(':');
+    const timeAux = time[2].split(' ')[1] || '';
+    const date = fasting.endDate.toLocaleDateString(phoneLanguage, {
+      weekday: 'short',
+      month: 'short',
+      day: 'numeric',
+    });
 
-    // return -> Today, 12:59 AM
-    return `${date[0]} ${date[1]} ${date[2]}, ${time[0]}:${time[1]}`;
+    return `${date} ${time[0]}:${time[1]} ${timeAux}`;
   }
 
   private get FastingId() {
@@ -318,6 +341,9 @@ class Timer extends React.PureComponent<
     const differenceInHours = differenceInTime / 1000 / 3600;
     return differenceInHours;
   }
+
+  private t = (value: string, variables?: any) =>
+    this.props.t && this.props.t(value, variables);
 }
 
 function mapStateToProps({ Fastings }: ReduxStateType) {
@@ -338,4 +364,6 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Timer);
+export default withTranslation('Timer')(
+  connect(mapStateToProps, mapDispatchToProps)(Timer),
+);

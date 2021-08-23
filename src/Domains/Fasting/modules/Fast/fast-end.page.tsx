@@ -1,9 +1,10 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import styled, { css } from 'styled-components/native';
-import { launchCamera, ImagePickerResponse } from 'react-native-image-picker';
 import { StackScreenProps } from '@react-navigation/stack';
+import { withTranslation, WithTranslation } from 'react-i18next';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
+import { launchCamera, ImagePickerResponse } from 'react-native-image-picker';
 
 import * as ASSETS from '@Config/assets';
 import { showSnackbar } from '@Config/graphql';
@@ -45,7 +46,7 @@ type FastEndState = {
 
 type RoutePropsType = StackScreenProps<LoggedStackParamList, 'FastEnd'>;
 class FastEnd extends React.Component<
-  RoutePropsType & ReduxPropsType & PagePropsType,
+  RoutePropsType & ReduxPropsType & PagePropsType & WithTranslation,
   FastEndState
 > {
   static setPageConfigs = {
@@ -151,16 +152,11 @@ class FastEnd extends React.Component<
         url: 'https://www.fastingwithyara.com/',
         message: `You completed a fast for a total ${this.Duration}`,
       });
-
       if (result.action === Share.sharedAction) {
-        if (result.activityType) {
-          // shared with activity type of result.activityType
-        } else {
-          // shared
-        }
-      } else if (result.action === Share.dismissedAction) {
-        // dismissed
-      }
+        // shared with activity type of result.activityType
+        if (result.activityType) return;
+        else return; // shared
+      } else if (result.action === Share.dismissedAction) return; // dismissed
     } catch (error) {
       console.log(error.message);
     }
@@ -203,6 +199,8 @@ class FastEnd extends React.Component<
   };
 
   render() {
+    const phoneLanguage = this.props.i18n.language.replace('-', '_');
+
     const { backgrounds } = ASSETS.FASTING;
 
     const howFelling = [
@@ -230,11 +228,11 @@ class FastEnd extends React.Component<
 
     const endFastItens = [
       {
-        title: 'STARTERED FASTING',
+        title: this.t('start'),
         subtitle: this.StartDate,
       },
       {
-        title: 'GOAL REACHED',
+        title: this.t('end'),
         subtitle: this.CurrentDate,
       },
     ];
@@ -278,10 +276,11 @@ class FastEnd extends React.Component<
                 </TouchableOpacity>
 
                 <View>
-                  <StyledText16>Nice effort! </StyledText16>
-                  <StyledText17>You completed a fast for </StyledText17>
+                  <StyledText16>{this.t('title')}</StyledText16>
+                  <StyledText17>{this.t('description')}</StyledText17>
                   <StyledText17>
-                    a total <StyledText18>{this.Duration}</StyledText18>
+                    {this.t('descriptionLine2')}{' '}
+                    <StyledText18>{this.Duration}</StyledText18>
                   </StyledText17>
                 </View>
 
@@ -293,7 +292,7 @@ class FastEnd extends React.Component<
                     alignItems: 'center',
                     alignSelf: 'flex-end',
                   }}>
-                  <StyledText19>Share fast</StyledText19>
+                  <StyledText19>{this.t('btnShare')}</StyledText19>
                   <Icon size={25} color={'#FFF'} icon="upload" />
                 </TouchableOpacity>
               </ImageBackground>
@@ -325,12 +324,12 @@ class FastEnd extends React.Component<
                   {pictureUpload ? (
                     <>
                       <Icon size={25} color={'#FFF'} icon="close" />
-                      <StyledText20>Delete picture</StyledText20>
+                      <StyledText20>{this.t('btnDeletePhoto')}</StyledText20>
                     </>
                   ) : (
                     <>
                       <Icon size={25} color={'#FFF'} icon="camera" />
-                      <StyledText20>Share your fast breaker</StyledText20>
+                      <StyledText20>{this.t('btnAddPhoto')}</StyledText20>
                     </>
                   )}
                 </TouchableOpacity>
@@ -346,7 +345,8 @@ class FastEnd extends React.Component<
                     }}>
                     <View>
                       <StyledText21> {item.title} </StyledText21>
-                      <StyledText22> {item.subtitle} </StyledText22>
+                      <StyledText22> {item.subtitle && item.subtitle[0]} </StyledText22>
+                      <StyledText22> {item.subtitle && item.subtitle[1]} </StyledText22>
                     </View>
 
                     <TouchableOpacity
@@ -362,7 +362,7 @@ class FastEnd extends React.Component<
                         justifyContent: 'center',
                         backgroundColor: 'rgba(255, 255, 255, .4)',
                       }}>
-                      <StyledText23>EDIT</StyledText23>
+                      <StyledText23>{this.t('edit')}</StyledText23>
                     </TouchableOpacity>
                   </View>
                 ))}
@@ -370,7 +370,7 @@ class FastEnd extends React.Component<
 
               <View style={{ marginTop: 40, width: '100%' }}>
                 <View style={{ alignItems: 'center', marginBottom: 20 }}>
-                  <StyledText9>How are you feealing?</StyledText9>
+                  <StyledText9>{this.t('feel')}</StyledText9>
                   <View
                     style={{
                       marginTop: 12,
@@ -401,7 +401,7 @@ class FastEnd extends React.Component<
                 <StyledTextInput
                   editable={!disabled}
                   multiline={true}
-                  placeholder="Add a Note"
+                  placeholder={this.t('textAreaPlaceholder')}
                   placeholderTextColor="#FFF"
                   value={this.state.fastingNotes}
                   onChangeText={(value) =>
@@ -416,7 +416,7 @@ class FastEnd extends React.Component<
                     loading={saved && loading}
                     style={{ flex: 1, marginRight: 8 }}
                     onPress={() => this.endFasting(true)}>
-                    Save
+                    {this.t('save')}
                   </Button>
                   <Button
                     color={'transparent'}
@@ -424,7 +424,7 @@ class FastEnd extends React.Component<
                     loading={!saved && loading}
                     style={{ flex: 1, marginLeft: 8 }}
                     onPress={() => this.endFasting(false)}>
-                    Delete
+                    {this.t('delete')}
                   </Button>
                 </View>
               </View>
@@ -434,8 +434,8 @@ class FastEnd extends React.Component<
           {visibleStartDateTimePickerModal && (
             <DateTimePickerModal
               mode="datetime"
-              locale="en_GB"
               isVisible={true}
+              locale={phoneLanguage}
               maximumDate={new Date()}
               onConfirm={this.handlerEditStartDate}
               date={this.InitialStartDateTimePickerModal}
@@ -446,8 +446,8 @@ class FastEnd extends React.Component<
           {visibleEndDateTimePickerModal && (
             <DateTimePickerModal
               mode="datetime"
-              locale="en_GB"
               isVisible={true}
+              locale={phoneLanguage}
               maximumDate={new Date()}
               date={this.state.customEndDate}
               onConfirm={this.handlerEditEndDate}
@@ -483,16 +483,38 @@ class FastEnd extends React.Component<
   private get StartDate() {
     const { fasting } = this.props.useRedux.Fastings;
     if (!fasting) return;
-    const time = fasting.startDate.toTimeString().split('G')[0].split(':');
+    const phoneLanguage = this.props.i18n.language;
+    const time = fasting.startDate.toLocaleTimeString(phoneLanguage).split(':');
+    const timeAux = time[2].split(' ')[1] || '';
+    const date = fasting.startDate.toLocaleDateString(phoneLanguage, {
+      weekday: 'short',
+      month: 'short',
+      day: 'numeric',
+      year: 'numeric',
+    });
 
-    return `${fasting.startDate.toDateString()}, ${time[0]}:${time[1]}`;
+    return [
+      `${date}`,
+      `${time[0]}:${time[1]}${timeAux}`
+    ]
   }
 
   private get CurrentDate() {
+    const phoneLanguage = this.props.i18n.language;
     const endDate = this.state.customEndDate;
-    const time = endDate.toTimeString().split('G')[0].split(':');
+    const time = endDate.toLocaleTimeString(phoneLanguage).split(':');
+    const timeAux = time[2].split(' ')[1] || '';
+    const date = endDate.toLocaleDateString(phoneLanguage, {
+      weekday: 'short',
+      month: 'short',
+      day: 'numeric',
+      year: 'numeric',
+    });
 
-    return `${endDate.toDateString()}, ${time[0]}:${time[1]}`;
+    return [
+      `${date}`,
+      `${time[0]}:${time[1]}${timeAux}`
+    ]
   }
 
   private get Duration() {
@@ -505,10 +527,13 @@ class FastEnd extends React.Component<
     const differenceInHours = differenceInTime / 1000 / 3600;
     const differenceInMinutes = differenceInTime / 1000 / 60;
 
-    if (differenceInHours >= 1) return `${differenceInHours.toFixed()} hours.`;
+    if (differenceInHours >= 1)
+      return this.t('timeH', { count: parseInt(differenceInHours.toFixed()) });
     else if (differenceInMinutes >= 1)
-      return `${differenceInMinutes.toFixed()} minutes.`;
-    else return `1 minute.`;
+      return this.t('timeM', {
+        count: parseInt(differenceInMinutes.toFixed()),
+      });
+    else return this.t('timeM', { count: 1 });
   }
 
   private get FastingId() {
@@ -516,7 +541,25 @@ class FastEnd extends React.Component<
     if (!fasting) return false;
     return fasting._id;
   }
+
+  private t = (value: string, variables?: any) =>
+    this.props.t && this.props.t(value, variables);
 }
+
+const EmojiTouchable = styled(TouchableOpacity)`
+  padding: 0 4px;
+  align-items: center;
+  justify-content: center;
+`;
+
+const Emoji = styled(Text)<{ selected: boolean }>`
+  font-size: 30px;
+  ${(props) =>
+    props.selected &&
+    css`
+      font-size: 40px;
+    `}
+`;
 
 function mapStateToProps({ Fastings }: ReduxStateType) {
   return {
@@ -535,19 +578,6 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(FastEnd);
-
-const EmojiTouchable = styled(TouchableOpacity)`
-  padding: 0 4px;
-  align-items: center;
-  justify-content: center;
-`;
-
-const Emoji = styled(Text)<{ selected: boolean }>`
-  font-size: 30px;
-  ${(props) =>
-    props.selected &&
-    css`
-      font-size: 40px;
-    `}
-`;
+export default withTranslation('EndFasting')(
+  connect(mapStateToProps, mapDispatchToProps)(FastEnd),
+);

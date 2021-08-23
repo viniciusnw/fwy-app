@@ -1,0 +1,25 @@
+query listCustomers($pagination: Pagination!, $term: String) {
+  listCustomers(pagination: $pagination, term: $term) {
+    customers {
+      _id
+      name
+      email
+      phone
+      birthday
+      country
+      state
+      gender
+      weight
+      height
+      avatar {
+        type
+        data
+      }
+    }
+    nextPagination {
+      pageNumber
+      nPerPage
+      nextPageNumber
+    }
+  }
+}
