@@ -44,8 +44,10 @@ const FastStartForm: React.FC<any> = ({
       editable: editable,
       value: values.name,
       placeholder: tForm.name,
+      returnKeyType: 'done',
       placeholderTextColor: '#FFF',
       onBlur: handleBlur(fields.name),
+      clearButtonMode: 'while-editing',
       error: touched.name && errors.name ? errors.name : null,
       onChangeText: (value) => setFieldValue(fields.name, value),
     },
@@ -57,9 +59,9 @@ const FastStartForm: React.FC<any> = ({
   };
 
   scrollViewRef.current?.scrollTo({
-    x: getWidthToScroll() * values.hours - 100,
     y: 0,
     animated: true,
+    x: getWidthToScroll() * values.hours - 100,
   });
 
   return (
@@ -122,9 +124,11 @@ const FastStartForm: React.FC<any> = ({
                 style={[
                   {
                     width: 45,
+                    height: 45,
                     borderWidth: 1,
                     borderRadius: 8,
                     paddingVertical: 6,
+                    justifyContent: 'center',
                     borderColor: 'transparent',
                   },
                   h == values.hours && {

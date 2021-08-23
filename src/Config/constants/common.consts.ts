@@ -1,8 +1,10 @@
 
 
 enum languagesEnum {
+  PT_US = 'pt-US',
   PT_BR = 'pt-BR',
-  EN_US = 'en-US'
+  EN_US = 'en-US',
+  EN_BR = 'en-BR'
 }
 
 enum registerFieldsEnum {

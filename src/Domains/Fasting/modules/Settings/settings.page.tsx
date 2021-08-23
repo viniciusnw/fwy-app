@@ -13,6 +13,7 @@ import {
   Linking,
   ScrollView,
   TouchableOpacity,
+  Alert,
 } from 'react-native';
 import * as StoreReview from 'react-native-store-review';
 import { ReduxActions, ReduxPropsType, ReduxStateType } from '@Redux/Fasting';
@@ -53,6 +54,7 @@ class Settings extends React.Component<
 
   private handleStoreReview = () => {
     if (StoreReview.isAvailable) StoreReview.requestReview();
+    else Alert.alert('Store Review', 'Temporarily unavailable');
   };
 
   private handleOpenLink = async (url) => {

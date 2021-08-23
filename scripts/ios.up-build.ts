@@ -15,19 +15,21 @@ if (schemeArgs == 'fas') data = plist.readFileSync(plistPatch);
 else data = plist.readFileSync(plistPatch);
 
 // ===
-console.log(`[SCRIPTS][EDIT-PLIST-BUILD][${schemeName}]`);
+console.log(`[SCRIPTS][EDIT-PLIST-BUILD]`);
+console.log(`[SCRIPTS][SCHEME-NAME][${schemeName}]`);
 console.log(util.inspect(data, false, null, true));
 
 if (data) {
-  console.log(`[SCRIPTS][EDIT-PLIST-BUILD][${schemeName}]:[CURRENT-BUILD]`, data.CFBundleVersion);
-  
+  console.log(`[SCRIPTS][SCHEME-NAME][${schemeName}][CURRENT-VERSION]`, data.CFBundleShortVersionString);
+  console.log(`[SCRIPTS][SCHEME-NAME][${schemeName}]:[CURRENT-BUILD]`, data.CFBundleVersion);
+
   // Change version Number
   data.CFBundleVersion = `${parseInt(data.CFBundleVersion) + 1}`;
 
   // Set new Values
   plist.writeFile(plistPatch, data, err => {
     if (err) throw err;
-    console.log(`[SCRIPTS][EDIT-PLIST-BUILD][${schemeName}]:[NEXT-BUILD]`, data.CFBundleVersion);
+    console.log(`[SCRIPTS][SCHEME-NAME][${schemeName}]:[NEXT-BUILD]`, data.CFBundleVersion);
   })
 }
 

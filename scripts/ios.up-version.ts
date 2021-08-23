@@ -20,11 +20,12 @@ if (schemeArgs == 'fas') data = plist.readFileSync(plistPatch);
 else data = plist.readFileSync(plistPatch);
 
 // ===
-console.log(`[SCRIPTS][EDIT-PLIST-VERSION][${schemeName}]`);
+console.log(`[SCRIPTS][EDIT-PLIST-VERSION]`);
+console.log(`[SCRIPTS][SCHEME-NAME][${schemeName}]`);
 console.log(util.inspect(data, false, null, true));
 
 if (data) {
-  console.log(`[SCRIPTS][EDIT-PLIST-VERSION][${schemeName}][CURRENT-VERSION]`, data.CFBundleShortVersionString);
+  console.log(`[SCRIPTS][SCHEME-NAME][${schemeName}][CURRENT-VERSION]`, data.CFBundleShortVersionString);
 
   let versionNumberArrayIndex;
   switch (argv[versionNumberArgsIndex]) {
@@ -51,7 +52,7 @@ if (data) {
   jsonFile.set("version", `${nextVersion}`);
   plist.writeFile(plistPatch, data, err => {
     if (err) throw err;
-    console.log(`[SCRIPTS][EDIT-PLIST-VERSION][${schemeName}][NEXT-VERSION]`, data.CFBundleShortVersionString);
+    console.log(`[SCRIPTS][SCHEME-NAME][${schemeName}][NEXT-VERSION]`, data.CFBundleShortVersionString);
   })
 }
 

@@ -34,7 +34,6 @@ export const StyledTextInput = styled(TextInput)`
 export const StyledH1 = styled(Text)`
   font-size: 22px;
   padding-bottom: 8px;
-  margin-bottom: -7px;
   font-weight: bold;
   color: ${({ theme }) => theme.color.white};
   font-family: ${({ theme }) => theme.fonts.AdobeClean.bold};
@@ -44,7 +43,6 @@ export const StyledH2 = styled(Text)`
   width: 70px;
   font-size: 22px;
   font-weight: bold;
-  margin-bottom: -7px;
   color: ${({ theme }) => theme.color.white};
   font-family: ${({ theme }) => theme.fonts.AdobeClean.bold};
 `;
@@ -52,7 +50,6 @@ export const StyledH2 = styled(Text)`
 export const StyledH3 = styled(Text)`
   font-size: 22px;
   font-weight: bold;
-  margin-bottom: -7px;
   text-align: center;
   color: ${({ theme }) => theme.color.white};
   font-family: ${({ theme }) => theme.fonts.AdobeClean.bold};
@@ -61,13 +58,11 @@ export const StyledH3 = styled(Text)`
 export const StyledText = styled(Text)`
   font-size: 14px;
   font-weight: bold;
-  margin-bottom: -4px;
   color: ${({ theme }) => theme.color.white};
   font-family: ${({ theme }) => theme.fonts.AdobeClean.bold};
 `;
 
 export const StyledText2 = styled(Text)`
-  margin-bottom: -7px;
   color: ${({ theme }) => theme.color.white};
   font-family: ${({ theme }) => theme.fonts.AdobeClean.regular};
 `;
@@ -76,9 +71,7 @@ export const StyledText3 = styled(Text)`
   font-size: 25px;
   font-weight: bold;
   text-align: center;
-  margin-bottom: -4px;
   color: ${({ theme }) => theme.color.white};
-  font-family: ${({ theme }) => theme.fonts.AdobeClean.bold};
 `;
 
 export const StyledText4 = styled(Text)`
@@ -188,7 +181,6 @@ export const StyledText19 = styled(Text)`
   font-size: 16px;
   margin-right: 12px;
   font-weight: bold;
-  margin-bottom: -7px;
   color: ${({ theme }) => theme.color.white};
   font-family: ${({ theme }) => theme.fonts.AdobeClean.bold};
 `;
@@ -196,7 +188,6 @@ export const StyledText19 = styled(Text)`
 export const StyledText20 = styled(Text)`
   font-size: 15px;
   margin-left: 12px;
-  margin-bottom: -6px;
   font-weight: bold;
   text-align: center;
   color: ${({ theme }) => theme.color.white};
@@ -219,7 +210,6 @@ export const StyledText22 = styled(Text)`
 
 export const StyledText23 = styled(Text)`
   font-weight: bold;
-  margin-bottom: -4px;
   color: ${({ theme }) => theme.color.white};
   font-family: ${({ theme }) => theme.fonts.AdobeClean.bold};
 `;

@@ -65,7 +65,9 @@ const FormCustomerUpdate: React.FC<any> = ({
   const profileEdit = {
     name: {
       value: values.name,
+      returnKeyType: 'done',
       placeholder: tForm.name,
+      clearButtonMode: 'while-editing',
       placeholderTextColor: '#FFF',
       onBlur: handleBlur(fields.name),
       onFocus: () => setKeyboardOffset(-200),
@@ -74,8 +76,10 @@ const FormCustomerUpdate: React.FC<any> = ({
     },
     email: {
       value: values.email,
+      returnKeyType: 'done',
       placeholder: tForm.email,
       autoCompleteType: 'email',
+      clearButtonMode: 'while-editing',
       placeholderTextColor: '#FFF',
       onBlur: handleBlur(fields.email),
       onFocus: () => setKeyboardOffset(-200),
@@ -103,23 +107,29 @@ const FormCustomerUpdate: React.FC<any> = ({
       tag: tForm.weight_uom,
       placeholder: tForm.weight,
       keyboardType: 'numeric',
+      returnKeyType: 'done',
       value: `${values.weight}`,
+      clearButtonMode: 'while-editing',
       placeholderTextColor: '#FFF',
       onBlur: handleBlur(fields.weight),
       onFocus: () => setKeyboardOffset(-50),
       error: touched.weight && errors.weight ? errors.weight : null,
-      onChangeText: (value) => setFieldValue(fields.weight, value),
+      onChangeText: (value) =>
+        setFieldValue(fields.weight, value.replace(',', '.')),
     },
     height: {
       tag: tForm.height_uom,
-      placeholder: tForm.height,
+      returnKeyType: 'done',
       keyboardType: 'numeric',
+      placeholder: tForm.height,
       value: `${values.height}`,
       placeholderTextColor: '#FFF',
+      clearButtonMode: 'while-editing',
       onBlur: handleBlur(fields.height),
       onFocus: () => setKeyboardOffset(25),
       error: touched.height && errors.height ? errors.height : null,
-      onChangeText: (value) => setFieldValue(fields.height, value),
+      onChangeText: (value) =>
+        setFieldValue(fields.height, value.replace(',', '.')),
     },
   };
 
