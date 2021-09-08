@@ -48,7 +48,7 @@ class Settings extends React.Component<
         else return null; // shared
       } else if (result.action === Share.dismissedAction) return null; // dismissed
     } catch (error) {
-      console.log(error.message);
+      Alert.alert('Shared', error.message);
     }
   };
 
