@@ -32,7 +32,7 @@ const CustomerItem: React.FC<CustomerItemProps> = ({
     <Container onPress={handleClick}>
       {customer.avatar ? (
         <AvatarContent>
-          <CustomerItemAvatar width={100} height={100} />
+          <CustomerItemAvatar width="100%" height={100} />
           <Avatar
             resizeMode="cover"
             source={{
@@ -41,7 +41,7 @@ const CustomerItem: React.FC<CustomerItemProps> = ({
           />
         </AvatarContent>
       ) : (
-        <CustomerItem width={100} height={100} />
+        <CustomerItem width="100%" height={100} />
       )}
 
       <NameContainer>
@@ -54,7 +54,8 @@ const CustomerItem: React.FC<CustomerItemProps> = ({
 const { BagdeWhite } = ASSETS.FASTING_ADM.svgs;
 
 const Container = styled(TouchableOpacity)`
-  width: 110px;
+  width: 33%;
+  padding: 8px;
   height: 150px;
   position: relative;
   align-items: center;

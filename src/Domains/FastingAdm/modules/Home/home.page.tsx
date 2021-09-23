@@ -30,7 +30,7 @@ class Home extends React.Component<
   any
 > {
   static setPageConfigs = {
-    topBarConfig: { title: null, menu: true, color: '#FFF' },
+    topBarConfig: { title: null, menu: false, color: '#FFF' },
   };
 
   constructor(props) {

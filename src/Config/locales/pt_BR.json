@@ -14,6 +14,7 @@
   },
   "ProfileEdit": {
     "form": {
+      "language": "Selecione o idioma",
       "avatar": "Mudar a foto do perfil",
       "name": "Nome",
       "email": "E-mail",
@@ -41,6 +42,11 @@
       "height": "Preencha sua altura.",
       "heightNull": "Altura inválido."
     },
+    "UOM":{
+      "weight_uom": "Kg",
+      "height_uom": "m"
+    },
+    "hello": "Olá, ",
     "privateInfo": "Informações privadas"
   },
   "EndFasting": {
@@ -107,6 +113,7 @@
   },
   "SignUp": {
     "form": {
+      "language": "Selecione o idioma",
       "avatar": "Carregar foto",
       "avatarRemove": "Trocar Foto",
       "name": "Nome",
@@ -128,6 +135,10 @@
       "state": "Preencha seu estado.",
       "birthday": "Preencha sua data de nascimento.",
       "password": "Preencha sua senha."
+    },
+    "UOM":{
+      "weight_uom": "Kg",
+      "height_uom": "m"
     }
   },
   "Login": {
@@ -142,6 +153,14 @@
       "password": "Preencha sua senha."
     },
     "signup": "Cadastre-se"
+  },
+  "Customer":{
+    "weight_uom": "Kg",
+    "height_uom": "m"
+  },
+  "UOM":{
+    "weight_uom": "Kg",
+    "height_uom": "m"
   },
   "language": {
     "english": "Inglês",

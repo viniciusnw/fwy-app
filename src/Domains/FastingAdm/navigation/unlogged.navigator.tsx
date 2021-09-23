@@ -35,6 +35,7 @@ export default class UnLogged extends React.Component<RoutePropsType, any> {
           <Stack.Screen
             key={index}
             name={StackItem.name}
+            // @ts-ignore
             component={(props) => <Wrapper {...props} {...StackItem} />}
             options={{ header: (_) => null }}
           />

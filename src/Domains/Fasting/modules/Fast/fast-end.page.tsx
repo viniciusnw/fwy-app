@@ -158,6 +158,7 @@ class FastEnd extends React.Component<
         else return; // shared
       } else if (result.action === Share.dismissedAction) return; // dismissed
     } catch (error) {
+      // @ts-ignore
       console.log(error.message);
     }
   };

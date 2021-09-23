@@ -1,13 +1,13 @@
 
 
-enum languagesEnum {
+export enum languagesEnum {
   PT_US = 'pt-US',
   PT_BR = 'pt-BR',
   EN_US = 'en-US',
   EN_BR = 'en-BR'
 }
 
-enum registerFieldsEnum {
+export enum registerFieldsEnum {
   name = 'name',
   email = 'email',
   phone = 'phone',
@@ -17,12 +17,22 @@ enum registerFieldsEnum {
   password = 'password',
 }
 
-enum loginFieldsEnum {
+export enum editProfileFieldsEnum {
+  name = 'name',
+  email = 'email',
+  birthday = 'birthday',
+  gender = 'gender',
+  weight = 'weight',
+  height = 'height',
+  avatar = 'avatar',
+}
+
+export enum loginFieldsEnum {
   email = "email",
   password = "password",
 }
 
-enum SaveOrUpdateEnum {
+export enum SaveOrUpdateEnum {
   Update = 'Update',
   Save = 'Save'
 }

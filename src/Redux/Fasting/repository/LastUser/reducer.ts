@@ -11,6 +11,7 @@ export default function reducer(
 
   switch (actionName) {
     case lastUser.actionName: return lastUser.reducer(state, action)
+    case lastUser.actionName2: return lastUser.reducer(state, action)
     default: return state
   }
 

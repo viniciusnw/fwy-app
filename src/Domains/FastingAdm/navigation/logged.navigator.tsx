@@ -12,6 +12,7 @@ export type LoggedStackParamList = {
   Wrapper: undefined;
   Logged: undefined;
   Home: undefined;
+  Chat: undefined;
   Customer: {
     customerId: string;
   };
@@ -27,6 +28,12 @@ const LoggedStackList = [
   {
     name: 'Customer',
     Page: Pages.Customer,
+    topBarType: 'primary',
+    bottomBarType: 'primary',
+  },
+  {
+    name: 'Chat',
+    Page: Pages.Chat,
     topBarType: 'primary',
     bottomBarType: 'primary',
   },
@@ -48,6 +55,7 @@ export default class Logged extends React.Component<RoutePropsType, any> {
               key={index}
               name={StackItem.name}
               options={{ header: (_) => null }}
+              // @ts-ignore
               component={(props) => <Wrapper {...props} {...StackItem} />}
             />
           ))}

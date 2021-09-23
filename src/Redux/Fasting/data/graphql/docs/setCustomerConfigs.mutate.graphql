@@ -1,0 +1,11 @@
+mutation setCustomerConfigs(
+  $customerId: String
+  $configs: CustomerConfigsInput
+) {
+  setCustomerConfigs(customerId: $customerId, configs: $configs) {
+    chat
+    weight
+    height
+    language
+  }
+}

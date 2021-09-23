@@ -1,13 +1,11 @@
 import React from 'react';
-// import { createDrawerNavigator } from '@react-navigation/drawer';
 import {
   createStackNavigator,
   StackScreenProps,
 } from '@react-navigation/stack';
 
-import Wrapper from './wrapper.navigator';
-// import Sidebar from './sidebar.navigator'
 
+import Wrapper from './wrapper.navigator';
 import * as Pages from '@Modules';
 
 export type LoggedStackParamList = {
@@ -134,6 +132,7 @@ export default class Logged extends React.Component<RoutePropsType, any> {
               key={index}
               name={StackItem.name}
               options={{ header: (_) => null }}
+              // @ts-ignore
               component={(props) => <Wrapper {...props} {...StackItem} />}
             />
           ))}

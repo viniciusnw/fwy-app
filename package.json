@@ -64,7 +64,6 @@
     "redux-promise-middleware": "6.1.2",
     "reflect-metadata": "0.1.13",
     "styled-components": "5.2.1",
-    "switch-button-react-native": "1.0.3",
     "typedi": "0.10.0",
     "yarn": "^1.22.10",
     "yup": "^0.32.9"

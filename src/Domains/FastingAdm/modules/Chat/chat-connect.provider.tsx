@@ -96,11 +96,12 @@ class ChatConnectProvider extends React.Component<ReduxPropsType, any> {
   }
 }
 
-function mapStateToProps({ User, Chat, General }: ReduxStateType) {
+function mapStateToProps({ User, Chat, General, Customer }: ReduxStateType) {
   return {
     useRedux: {
       Chat,
       User,
+      Customer,
       General,
     },
   };

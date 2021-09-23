@@ -14,17 +14,10 @@ import {
   StyledH1,
   StyledText1,
   StyledText2,
+  FieldTitle,
+  StyledText,
 } from './../profile.style';
-
-export const fields = {
-  name: 'name',
-  email: 'email',
-  birthday: 'birthday',
-  gender: 'gender',
-  weight: 'weight',
-  height: 'height',
-  avatar: 'avatar',
-};
+import { languagesEnum, editProfileFieldsEnum } from '@Config/constants';
 
 const FormCustomerUpdate: React.FC<any> = ({
   setFieldValue,
@@ -35,7 +28,8 @@ const FormCustomerUpdate: React.FC<any> = ({
   touched,
   loading,
 }) => {
-  const { t } = useTranslation('ProfileEdit');
+  const { t, i18n } = useTranslation('ProfileEdit');
+  const tPage: any = t('page');
   const tForm: any = t('form');
 
   const [keyboardOffset, setKeyboardOffset] = useState<number>(-150);
@@ -49,7 +43,7 @@ const FormCustomerUpdate: React.FC<any> = ({
       },
       (res: any) => {
         const { base64 } = res;
-        if (base64) setFieldValue(fields.avatar, res);
+        if (base64) setFieldValue(editProfileFieldsEnum.avatar, res);
       },
     );
   };
@@ -61,16 +55,23 @@ const FormCustomerUpdate: React.FC<any> = ({
   ];
 
   const profileEdit = {
+    language: {
+      placeholder: tForm.language,
+      itens: [languagesEnum.EN_US, languagesEnum.PT_BR],
+      value: i18n.language,
+      placeholderTextColor: '#FFF',
+      onChangeValue: (value) => changeLanguage(value),
+    },
     name: {
       value: values.name,
       returnKeyType: 'done',
       placeholder: tForm.name,
       clearButtonMode: 'while-editing',
       placeholderTextColor: '#FFF',
-      onBlur: handleBlur(fields.name),
+      onBlur: handleBlur(editProfileFieldsEnum.name),
       onFocus: () => setKeyboardOffset(-200),
       error: touched.name && errors.name ? errors.name : null,
-      onChangeText: (value) => setFieldValue(fields.name, value),
+      onChangeText: (value) => setFieldValue(editProfileFieldsEnum.name, value),
     },
     email: {
       value: values.email,
@@ -79,17 +80,19 @@ const FormCustomerUpdate: React.FC<any> = ({
       autoCompleteType: 'email',
       clearButtonMode: 'while-editing',
       placeholderTextColor: '#FFF',
-      onBlur: handleBlur(fields.email),
+      onBlur: handleBlur(editProfileFieldsEnum.email),
       onFocus: () => setKeyboardOffset(-200),
       error: touched.email && errors.email ? errors.email : null,
-      onChangeText: (value) => setFieldValue(fields.email, value),
+      onChangeText: (value) =>
+        setFieldValue(editProfileFieldsEnum.email, value),
     },
     birthday: {
       value: values.birthday,
       placeholder: tForm.date,
       placeholderTextColor: '#FFF',
-      onBlur: handleBlur(fields.birthday),
-      onChangeValue: (value) => setFieldValue(fields.birthday, value),
+      onBlur: handleBlur(editProfileFieldsEnum.birthday),
+      onChangeValue: (value) =>
+        setFieldValue(editProfileFieldsEnum.birthday, value),
       error: touched.birthday && errors.birthday ? errors.birthday : null,
     },
     gender: {
@@ -97,8 +100,9 @@ const FormCustomerUpdate: React.FC<any> = ({
       value: values.gender,
       placeholder: tForm.gender,
       placeholderTextColor: '#FFF',
-      onBlur: handleBlur(fields.gender),
-      onChangeValue: (value) => setFieldValue(fields.gender, value),
+      onBlur: handleBlur(editProfileFieldsEnum.gender),
+      onChangeValue: (value) =>
+        setFieldValue(editProfileFieldsEnum.gender, value),
       error: touched.gender && errors.gender ? errors.gender : null,
     },
     weight: {
@@ -109,11 +113,11 @@ const FormCustomerUpdate: React.FC<any> = ({
       value: `${values.weight}`,
       clearButtonMode: 'while-editing',
       placeholderTextColor: '#FFF',
-      onBlur: handleBlur(fields.weight),
+      onBlur: handleBlur(editProfileFieldsEnum.weight),
       onFocus: () => setKeyboardOffset(-50),
       error: touched.weight && errors.weight ? errors.weight : null,
       onChangeText: (value) =>
-        setFieldValue(fields.weight, value.replace(',', '.')),
+        setFieldValue(editProfileFieldsEnum.weight, value.replace(',', '.')),
     },
     height: {
       tag: tForm.height_uom,
@@ -123,13 +127,16 @@ const FormCustomerUpdate: React.FC<any> = ({
       value: `${values.height}`,
       placeholderTextColor: '#FFF',
       clearButtonMode: 'while-editing',
-      onBlur: handleBlur(fields.height),
+      onBlur: handleBlur(editProfileFieldsEnum.height),
       onFocus: () => setKeyboardOffset(25),
       error: touched.height && errors.height ? errors.height : null,
       onChangeText: (value) =>
-        setFieldValue(fields.height, value.replace(',', '.')),
+        setFieldValue(editProfileFieldsEnum.height, value.replace(',', '.')),
     },
   };
+
+  const changeLanguage = (language: languagesEnum) =>
+    i18n.changeLanguage(language);
 
   return (
     <KeyboardAvoidingView
@@ -150,7 +157,15 @@ const FormCustomerUpdate: React.FC<any> = ({
             <Avatar avatar={values.avatar} />
           </View>
 
-          <View style={{ flex: 1, marginLeft: 24 }}>
+          <View
+            style={{
+              flex: 1,
+              marginLeft: 24,
+              height: '100%',
+              maxHeight: '70%',
+              justifyContent: 'space-around',
+            }}>
+            <StyledText>{t('hello')}</StyledText>
             <StyledH1>{values.name?.split(' ')[0]}</StyledH1>
           </View>
         </View>
@@ -169,9 +184,9 @@ const FormCustomerUpdate: React.FC<any> = ({
           <Input {...profileEdit.name} />
         </StyledField>
 
-        <View style={{ marginBottom: 15, paddingHorizontal: 15, opacity: 0.5 }}>
+        <FieldTitle>
           <StyledText2>{t('privateInfo')}</StyledText2>
-        </View>
+        </FieldTitle>
 
         <StyledField>
           <Input {...profileEdit.email} />
@@ -191,6 +206,14 @@ const FormCustomerUpdate: React.FC<any> = ({
 
         <StyledField>
           <Input {...profileEdit.height} />
+        </StyledField>
+
+        <FieldTitle>
+          <StyledText2>{tForm.language}</StyledText2>
+        </FieldTitle>
+
+        <StyledField>
+          <InputSelect {...profileEdit.language} />
         </StyledField>
 
         <View style={{ marginTop: 15, marginHorizontal: '33%' }}>

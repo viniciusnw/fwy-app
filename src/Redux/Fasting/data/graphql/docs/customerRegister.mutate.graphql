@@ -1,5 +1,8 @@
-mutation customerRegister($customer: CustomerRegisterInput!) {
-  customerRegister(customer: $customer) {
+mutation customerRegister(
+  $customer: CustomerRegisterInput!,
+  $configs: CustomerConfigsInput
+) {
+  customerRegister(customer: $customer, configs: $configs) {
     _id
     name
     email
@@ -13,6 +16,12 @@ mutation customerRegister($customer: CustomerRegisterInput!) {
     avatar {
       type
       data
+    }
+    configs{
+      chat
+      weight
+      height
+      language
     }
     token
     expirationTime

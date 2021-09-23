@@ -23,11 +23,11 @@ export default {
             success: true,
             loading: false,
             errorMessage: null,
-            data: {
+            data: action.payload[0] && {
               ...action.payload[0],
               endDate: new Date(action.payload[0].endDate),
               startDate: new Date(action.payload[0].startDate)
-            },
+            } || null,
           },
         };
       }

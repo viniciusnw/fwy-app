@@ -31,7 +31,7 @@ export const MessageItem = styled(View)<Message>`
   flex-direction: row;
   align-items: flex-end;
   align-self: ${({ sender }) =>
-    sender == 'customer' ? 'flex-end' : 'flex-start'};
+    sender == 'adm' ? 'flex-end' : 'flex-start'};
 `;
 
 export const MessageTextContainer = styled(View)<Message>`
@@ -39,7 +39,7 @@ export const MessageTextContainer = styled(View)<Message>`
   border-radius: 10px;
   background-color: rgba(255, 255, 255, 0.2);
   align-self: ${({ sender }) =>
-    sender == 'customer' ? 'flex-end' : 'flex-start'};
+    sender == 'adm' ? 'flex-end' : 'flex-start'};
 `;
 
 export const MessageText = styled(Text)`
@@ -58,7 +58,7 @@ export const MessageDate = styled(Text)`
 export const Divider = styled(View)`
   width: 100%;
   height: 42px;
-  bottom: -62px;
+  bottom: -96px;
   border-width: 1px;
   margin-top: -62px;
   margin-bottom: -42px;

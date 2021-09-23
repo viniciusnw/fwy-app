@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { View, ActivityIndicator } from 'react-native';
+import { withTranslation, WithTranslation } from 'react-i18next';
+import { Text, ActivityIndicator } from 'react-native';
 
 import { Icon, Input } from '@Components';
 import * as ASSETS from '@Config/assets';
@@ -21,17 +22,21 @@ import {
   Strike,
   CustomerContainer,
   LoadContent,
+  LastFastContent,
+  FastValue,
+  FastValueDesc,
+  LastFastTitle,
 } from './customer.style';
 
 import CustomerItem from './components/customer-item.component';
 
 type RoutePropsType = StackScreenProps<LoggedStackParamList, 'Customer'>;
 class Customer extends React.Component<
-  RoutePropsType & ReduxPropsType & PagePropsType,
+  RoutePropsType & ReduxPropsType & PagePropsType & WithTranslation,
   any
 > {
   static setPageConfigs = {
-    topBarConfig: { title: null, menu: true, color: '#FFF' },
+    topBarConfig: { title: null, menu: false, color: '#FFF', back: true },
   };
 
   constructor(props) {
@@ -59,13 +64,16 @@ class Customer extends React.Component<
     const menuItens = [
       {
         label: 'Chat',
-        callback: () => null,
+        callback: () => this.goChatPage(),
       },
       {
         label: 'Configurations',
         callback: () => null,
       },
     ];
+
+    const startDate = this.getDateTime('startDate');
+    const endDate = this.getDateTime('finished');
 
     return (
       <Container>
@@ -74,13 +82,27 @@ class Customer extends React.Component<
             <LoadContent>
               <ActivityIndicator size="large" color={'#FFF'} />
             </LoadContent>
-          )) || (
-            <CustomerItem
-              lastFasting={lastFasting.data}
-              customer={customer.data}
-            />
-          )}
+          )) || <CustomerItem customer={customer.data} />}
         </CustomerContainer>
+
+        <LastFastContent>
+          <LastFastTitle>Last fast</LastFastTitle>
+
+          <FastValue>
+            <FastValueDesc>Start time: </FastValueDesc>
+            {startDate[0]} {startDate[1]}
+          </FastValue>
+
+          <FastValue>
+            <FastValueDesc>End time: </FastValueDesc>
+            {endDate[0]} {endDate[1]}
+          </FastValue>
+
+          <FastValue>
+            <FastValueDesc>Initial time: </FastValueDesc>
+            {this.initialHours}h
+          </FastValue>
+        </LastFastContent>
 
         <ListMenu
           showsVerticalScrollIndicator={false}
@@ -97,12 +119,51 @@ class Customer extends React.Component<
     );
   }
 
+  private goChatPage = () => {
+    const { navigation } = this.props;
+    navigation.navigate('Chat');
+  };
+
+  getDateTime = (searchDate: 'startDate' | 'finished') => {
+    const {
+      last: { data: lastFasting },
+    } = this.props.useRedux.Fasting;
+    if (!lastFasting) return '-';
+    if (!lastFasting[searchDate]) return ['Em andamento', ''];
+
+    const phoneLanguage = this.props.i18n.language;
+    const time = lastFasting[searchDate]
+      .toLocaleTimeString(phoneLanguage)
+      .split(':');
+    const timeAux = time[2].split(' ')[1] || '';
+    const date = lastFasting[searchDate].toLocaleDateString(phoneLanguage, {
+      weekday: 'short',
+      month: 'short',
+      day: 'numeric',
+      year: 'numeric',
+    });
+
+    return [`${date}`, `${time[0]}:${time[1]}${timeAux}`];
+  };
+
+  private get initialHours() {
+    const {
+      last: { data: lastFasting },
+    } = this.props.useRedux.Fasting;
+
+    if (lastFasting?.initialTotalHours) return lastFasting.initialTotalHours;
+    else return '- ';
+  }
+
   private get customerId() {
     const {
       route: { params },
     } = this.props;
     return params.customerId;
   }
+
+  private t = (value: string, variables?: any) =>
+    this.props.t && this.props.t(value, variables);
 }
 
 function mapStateToProps({ Customer, Fasting }: ReduxStateType) {
@@ -123,4 +184,6 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Customer);
+export default withTranslation('Customer')(
+  connect(mapStateToProps, mapDispatchToProps)(Customer),
+);

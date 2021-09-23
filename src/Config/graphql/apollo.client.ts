@@ -30,6 +30,7 @@ export class GraphqlApi {
       return Promise.reject(err.message)
     }
     catch (e) {
+      // @ts-ignore
       return Promise.reject({ ...err, ...e })
     }
   }

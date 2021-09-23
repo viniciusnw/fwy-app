@@ -33,6 +33,7 @@ export class Query extends GraphqlApi {
   }
 
   public getChatMessages = (params: getChatMessagesVariables) => {
+    console.log('getChatMessages', params)
     return this.ApolloClient.query({
       query: getChatMessagesQuery,
       variables: params,

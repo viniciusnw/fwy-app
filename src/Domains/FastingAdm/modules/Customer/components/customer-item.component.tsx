@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components/native';
-
+import { useTranslation } from 'react-i18next';
 import {
   View,
   Image,
@@ -11,21 +11,18 @@ import {
 import { Icon } from '@Components';
 
 import * as ASSETS from '@Config/assets';
-import { listCustomers_listCustomers_customers, getLastFasting_getLastFasting } from '@Config/graphql';
+import { listCustomers_listCustomers_customers } from '@Config/graphql';
 
 type CustomerItemProps = {
   customer: listCustomers_listCustomers_customers | null;
-  lastFasting: getLastFasting_getLastFasting | null
 };
 
 const CustomerItem: React.FC<CustomerItemProps> = ({
   customer,
-  lastFasting
 }: CustomerItemProps) => {
-  const { Bagde: CustomerItem } = ASSETS.FASTING_ADM.svgs;
+  const { t, i18n } = useTranslation('Customer');
 
-  console.log('CustomerItem:customer: ', customer);
-  console.log('CustomerItem:lastFasting: ', lastFasting);
+  const { Bagde: CustomerItem } = ASSETS.FASTING_ADM.svgs;
 
   return (
     <Container>
@@ -45,11 +42,17 @@ const CustomerItem: React.FC<CustomerItemProps> = ({
         )}
       </AvatarContainer>
 
-      <LastFastContent>
-        {customer?.name}
-        {lastFasting?.startDate}
-        {lastFasting?.startDate}
-      </LastFastContent>
+      <InfosContent>
+        <CustomerName>{customer?.name}</CustomerName>
+        <CustomerValue>
+          <CustomerValueDesc>Altura: </CustomerValueDesc>
+          {customer?.height ? customer.height : '-'} {t('height_uom')}
+        </CustomerValue>
+        <CustomerValue>
+          <CustomerValueDesc>Peso: </CustomerValueDesc>
+          {customer?.weight ? customer.weight : '-'} {t('weight_uom')}
+        </CustomerValue>
+      </InfosContent>
     </Container>
   );
 };
@@ -57,6 +60,7 @@ const CustomerItem: React.FC<CustomerItemProps> = ({
 const { BagdeWhite } = ASSETS.FASTING_ADM.svgs;
 
 const Container = styled(View)`
+  flex: 1;
   flex-direction: row;
 `;
 
@@ -84,6 +88,29 @@ const Avatar = styled(Image)`
   border-radius: 95px;
 `;
 
-const LastFastContent = styled(View)``;
+const InfosContent = styled(View)`
+  display: flex;
+  padding-left: 16px;
+  justify-content: center;
+`;
+
+const CustomerName = styled(Text)`
+  font-size: 21px;
+  margin-bottom: 8px;
+  color: ${({ theme }) => theme.color.white};
+  font-family: ${({ theme }) => theme.fonts.AdobeClean.regular};
+`;
+
+const CustomerValueDesc = styled(Text)`
+  font-size: 18px;
+  color: ${({ theme }) => theme.color.darkBlue};
+  font-family: ${({ theme }) => theme.fonts.AdobeClean.regular};
+`;
+
+const CustomerValue = styled(Text)`
+  font-size: 18px;
+  color: ${({ theme }) => theme.color.white};
+  font-family: ${({ theme }) => theme.fonts.AdobeClean.regular};
+`;
 
 export default CustomerItem;

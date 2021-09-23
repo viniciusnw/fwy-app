@@ -22,7 +22,7 @@ const InputDate: React.FC<any> = (props) => {
 
   useEffect(() => {
     if (props.value) setStyledTextInputValue();
-  }, [props.value]);
+  }, [props.value, i18n.language]);
   return (
     <>
       <Container {...props}>

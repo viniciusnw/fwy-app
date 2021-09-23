@@ -24,16 +24,11 @@ export default class TopBar extends React.Component<RoutePropsType & TopBarProps
     const { goBack } = this.props.navigation
     goBack()
   }
-  
-  goSettings = () => {
-    const { navigate } = this.props.navigation;
-    navigate('Settings');
-  }
 
   render() {
     const { topBarType } = this.props;
 
-    if (topBarType == 'primary') return <Header goSettings={this.goSettings} goBack={this.goBack} {...this.props} />
+    if (topBarType == 'primary') return <Header goSettings={null} goBack={this.goBack} {...this.props} />
     else return null
   }
 }

@@ -1,6 +1,10 @@
 import React, { Fragment } from 'react';
 import { connect } from 'react-redux';
-import { ReduxActions, ReduxPropsType, ReduxStateType } from '@Redux/FastingAdm';
+import {
+  ReduxActions,
+  ReduxPropsType,
+  ReduxStateType,
+} from '@Redux/FastingAdm';
 
 class ChatQueueProvider extends React.Component<ReduxPropsType, any> {
   constructor(props) {
@@ -32,17 +36,25 @@ class ChatQueueProvider extends React.Component<ReduxPropsType, any> {
 
   private handlerSendChatMessage = () => {
     const {
-      chat: { messageQueue },
-    } = this.props.useRedux.Chat;
+      Chat: {
+        chat: { messageQueue },
+      },
+      Customer: {
+        customer: { data: customer },
+      },
+    } = this.props.useRedux;
+
     this.props.useDispatch.sendChatMessage({
+      customerId: customer?._id,
       text: messageQueue[0].text,
     });
   };
 }
 
-function mapStateToProps({ Chat }: ReduxStateType) {
+function mapStateToProps({ Chat, Customer }: ReduxStateType) {
   return {
     useRedux: {
+      Customer,
       Chat,
     },
   };

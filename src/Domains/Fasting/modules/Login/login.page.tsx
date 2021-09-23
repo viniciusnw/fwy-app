@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import styled from 'styled-components/native';
 import { View, TouchableOpacity } from 'react-native';
 import { StackScreenProps } from '@react-navigation/stack';
-
 import { withTranslation, WithTranslation } from 'react-i18next';
 
 import { StyledText } from './login.style';

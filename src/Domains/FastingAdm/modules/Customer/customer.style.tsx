@@ -48,3 +48,27 @@ export const Strike = styled(View)`
   position: absolute;
   background-color: rgba(255, 255, 255, 0.4);
 `;
+
+export const LastFastContent = styled(View)`
+  display: flex;
+  justify-content: center;
+`;
+
+export const FastValue = styled(Text)`
+  font-size: 16px;
+  margin-bottom: 4px;
+  color: ${({ theme }) => theme.color.white};
+  font-family: ${({ theme }) => theme.fonts.AdobeClean.regular};
+`;
+
+export const LastFastTitle = styled(Text)`
+  font-size: 21px;
+  margin-bottom: 8px;
+  color: ${({ theme }) => theme.color.white};
+  font-family: ${({ theme }) => theme.fonts.AdobeClean.regular};
+`
+
+export const FastValueDesc = styled(Text)`
+  color: ${({ theme }) => theme.color.darkBlue};
+  font-family: ${({ theme }) => theme.fonts.AdobeClean.regular};
+`;

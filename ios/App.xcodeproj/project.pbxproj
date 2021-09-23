@@ -64,8 +64,8 @@
 		7674B3D010AE4AC5BF914125 /* FontAwesome5_Brands.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome5_Brands.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome5_Brands.ttf"; sourceTree = "<group>"; };
 		8111B7B2247C42460075DF0C /* FWY.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FWY.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8111B7C4247C45A30075DF0C /* FWYAdm.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FWYAdm.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		81147BF82475F88000632D15 /* FastingAdm.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = FastingAdm.plist; path = /Users/vinicius/Develop/www/Fasting/App/ios/App/FastingAdm.plist; sourceTree = "<absolute>"; };
-		81147C07247680B300632D15 /* Fasting.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Fasting.plist; path = /Users/vinicius/Develop/www/Fasting/App/ios/App/Fasting.plist; sourceTree = "<absolute>"; };
+		81147BF82475F88000632D15 /* FastingAdm.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = FastingAdm.plist; path = /Volumes/SSD2/Develop/www/Fasting/App/ios/App/FastingAdm.plist; sourceTree = "<absolute>"; };
+		81147C07247680B300632D15 /* Fasting.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Fasting.plist; path = /Volumes/SSD2/Develop/www/Fasting/App/ios/App/Fasting.plist; sourceTree = "<absolute>"; };
 		811B3584247A1D6200DFD0AC /* Config.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = Config.xcconfig; path = App/Config.xcconfig; sourceTree = "<group>"; };
 		81228DBB3701894DA047CBC2 /* libPods-FastingAdm.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-FastingAdm.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		8137F791C95C49EEAF59B9E5 /* AdobeClean-Light.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "AdobeClean-Light.ttf"; path = "../src/Config/assets/fonts/AdobeClean-Light.ttf"; sourceTree = "<group>"; };
@@ -155,8 +155,8 @@
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
 				81147C07247680B300632D15 /* Fasting.plist */,
-				81147BF82475F88000632D15 /* FastingAdm.plist */,
 				13B07FB11A68108700A75B9A /* LaunchScreen.xib */,
+				81147BF82475F88000632D15 /* FastingAdm.plist */,
 				13B07FB71A68108700A75B9A /* main.m */,
 			);
 			name = App;

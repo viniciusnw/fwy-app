@@ -1,4 +1,3 @@
-
 import styled from 'styled-components/native';
 import { View, TextInput, Text } from 'react-native';
 
@@ -54,11 +53,18 @@ export const StyledText4 = styled(Text)`
   font-family: ${({ theme }) => theme.fonts.AdobeClean.regular};
 `;
 
+export const FieldTitle = styled(View)`
+  margin-bottom: 15px;
+  padding: 0 15px;
+  opacity: 0.5;
+`;
 
-{/* <Text style={{ color: '#FFF', fontSize: 30, fontWeight: 'bold' }}>0</Text>
+{
+  /* <Text style={{ color: '#FFF', fontSize: 30, fontWeight: 'bold' }}>0</Text>
 <Text style={{ color: '#FFF', fontSize: 30, fontWeight: 'bold' }}>
 <Text style={{ fontSize: 21 }}>h</Text>
 <Text style={{ color: '#FFF', fontSize: 30, fontWeight: 'bold' }}>
 <Text style={{ fontSize: 21 }}>h</Text>
 <Text style={{ color: '#FFF', fontSize: 30, fontWeight: 'bold' }}>0</Text>
-<Text style={{ color: '#FFF', fontSize: 30, fontWeight: 'bold' }}>0</Text> */}
+<Text style={{ color: '#FFF', fontSize: 30, fontWeight: 'bold' }}>0</Text> */
+}
