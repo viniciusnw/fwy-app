@@ -47,8 +47,15 @@ class BottomBar extends React.Component<
   };
 
   render() {
-    const { navigation, bottomBarType, name } = this.props;
+    const { navigation, bottomBarType, name, useRedux } = this.props;
     const { navigate } = navigation;
+    const {
+      User: { data: User },
+    } = useRedux;
+
+    const disabledChat = User?.configs?.chat
+      ? !User?.configs?.chat
+      : !!User?.configs?.chat;
 
     const menu = [
       {
@@ -66,7 +73,7 @@ class BottomBar extends React.Component<
         },
       },
       {
-        disabled: true,
+        disabled: disabledChat,
         icon: 'chat',
         size: 26,
         onPress: () => (name == 'Chat' ? null : navigate('Chat')),

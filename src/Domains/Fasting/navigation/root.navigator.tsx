@@ -5,7 +5,6 @@ import { connect } from 'react-redux';
 import SplashScreen from 'react-native-splash-screen';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import { withTranslation, WithTranslation } from 'react-i18next';
 
 import { ChatConnectProvider, ChatQueueProvider } from '@Modules';
 import { APP_NAME_TYPE } from '@Config/types';
@@ -15,7 +14,7 @@ import { ReduxStateType, ReduxPropsType } from '@Redux/Fasting';
 import Logged from './logged.navigator';
 import UnLogged from './unlogged.navigator';
 
-class Root extends React.Component<ReduxPropsType & WithTranslation, any> {
+class Root extends React.Component<ReduxPropsType, any> {
   constructor(props: any) {
     super(props);
   }

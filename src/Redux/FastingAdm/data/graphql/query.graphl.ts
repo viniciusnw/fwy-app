@@ -33,7 +33,6 @@ export class Query extends GraphqlApi {
   }
 
   public getChatMessages = (params: getChatMessagesVariables) => {
-    console.log('getChatMessages', params)
     return this.ApolloClient.query({
       query: getChatMessagesQuery,
       variables: params,
@@ -46,6 +45,7 @@ export class Query extends GraphqlApi {
     return this.ApolloClient.query({
       query: getCustomerQuery,
       variables: params,
+      fetchPolicy: 'network-only'
     }).then(response => this.mapResponse(response, 'getCustomer'))
       .catch(err => this.mapError(err))
   }

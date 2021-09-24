@@ -73,9 +73,9 @@ const AvatarContent = styled(View)`
 `;
 
 const Avatar = styled(Image)`
-  width: 95px;
-  height: 95px;
-  border-radius: 95px;
+  width: 90px;
+  height: 90px;
+  border-radius: 90px;
 `;
 
 const NameContainer = styled(View)`

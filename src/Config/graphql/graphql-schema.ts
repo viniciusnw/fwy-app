@@ -438,6 +438,14 @@ export interface updatePresetVariables {
 // GraphQL query operation: getCustomer
 // ====================================================
 
+export interface getCustomer_getCustomer_configs {
+  __typename: "CustomerConfigs";
+  chat: boolean | null;
+  weight: string | null;
+  height: string | null;
+  language: string | null;
+}
+
 export interface getCustomer_getCustomer_avatar {
   __typename: "Avatar";
   type: string;
@@ -456,6 +464,7 @@ export interface getCustomer_getCustomer {
   gender: string | null;
   weight: number | null;
   height: number | null;
+  configs: getCustomer_getCustomer_configs | null;
   avatar: getCustomer_getCustomer_avatar | null;
 }
 

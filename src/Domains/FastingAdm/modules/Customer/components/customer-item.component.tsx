@@ -11,10 +11,10 @@ import {
 import { Icon } from '@Components';
 
 import * as ASSETS from '@Config/assets';
-import { listCustomers_listCustomers_customers } from '@Config/graphql';
+import { getCustomer_getCustomer } from '@Config/graphql';
 
 type CustomerItemProps = {
-  customer: listCustomers_listCustomers_customers | null;
+  customer: getCustomer_getCustomer | null;
 };
 
 const CustomerItem: React.FC<CustomerItemProps> = ({
@@ -24,18 +24,17 @@ const CustomerItem: React.FC<CustomerItemProps> = ({
 
   const { Bagde: CustomerItem } = ASSETS.FASTING_ADM.svgs;
 
+  const configs = customer?.configs;
+
+  const imageUri = `data:${customer?.avatar?.type};base64,${customer?.avatar?.data}`;
+
   return (
     <Container>
       <AvatarContainer>
         {customer?.avatar ? (
           <AvatarContent>
             <CustomerItemAvatar width={100} height={100} />
-            <Avatar
-              resizeMode="cover"
-              source={{
-                uri: `data:${customer.avatar.type};base64,${customer.avatar.data}`,
-              }}
-            />
+            <Avatar resizeMode="cover" source={{ uri: imageUri }} />
           </AvatarContent>
         ) : (
           <CustomerItem width={100} height={100} />
@@ -46,11 +45,13 @@ const CustomerItem: React.FC<CustomerItemProps> = ({
         <CustomerName>{customer?.name}</CustomerName>
         <CustomerValue>
           <CustomerValueDesc>Altura: </CustomerValueDesc>
-          {customer?.height ? customer.height : '-'} {t('height_uom')}
+          {customer?.height ? customer.height : '-'}{' '}
+          {configs?.height ? configs?.height : '-'}
         </CustomerValue>
         <CustomerValue>
           <CustomerValueDesc>Peso: </CustomerValueDesc>
-          {customer?.weight ? customer.weight : '-'} {t('weight_uom')}
+          {customer?.weight ? customer.weight : '-'}{' '}
+          {configs?.weight ? configs?.weight : '-'}
         </CustomerValue>
       </InfosContent>
     </Container>

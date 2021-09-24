@@ -13,6 +13,7 @@ export type LoggedStackParamList = {
   Logged: undefined;
   Home: undefined;
   Chat: undefined;
+  CustomerConfigs: undefined;
   Customer: {
     customerId: string;
   };
@@ -28,6 +29,12 @@ const LoggedStackList = [
   {
     name: 'Customer',
     Page: Pages.Customer,
+    topBarType: 'primary',
+    bottomBarType: 'primary',
+  },
+  {
+    name: 'CustomerConfigs',
+    Page: Pages.CustomerConfigs,
     topBarType: 'primary',
     bottomBarType: 'primary',
   },

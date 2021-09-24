@@ -36,7 +36,7 @@ class Customer extends React.Component<
   any
 > {
   static setPageConfigs = {
-    topBarConfig: { title: null, menu: false, color: '#FFF', back: true },
+    topBarConfig: { title: 'Customer informations', menu: false, color: '#FFF', back: true },
   };
 
   constructor(props) {
@@ -68,7 +68,7 @@ class Customer extends React.Component<
       },
       {
         label: 'Configurations',
-        callback: () => null,
+        callback: () => this.goConfigsPage(),
       },
     ];
 
@@ -122,6 +122,11 @@ class Customer extends React.Component<
   private goChatPage = () => {
     const { navigation } = this.props;
     navigation.navigate('Chat');
+  };
+
+  private goConfigsPage = () => {
+    const { navigation } = this.props;
+    navigation.navigate('CustomerConfigs');
   };
 
   getDateTime = (searchDate: 'startDate' | 'finished') => {

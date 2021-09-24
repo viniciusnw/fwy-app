@@ -31,6 +31,7 @@ export const ListMenu = styled(ScrollView)`
 export const MenuItem = styled(TouchableOpacity)`
   padding: 20px 10px;
   flex-direction: row;
+  align-items: center;
   justify-content: space-between;
 `;
 

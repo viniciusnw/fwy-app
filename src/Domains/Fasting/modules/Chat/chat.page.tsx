@@ -137,7 +137,7 @@ class Chat extends React.Component<
         {/* == */}
         <View
           style={[
-            { height: 150, bottom: -62 },
+            { height: 150, bottom: -96 },
             openKeyboard && { height: 200 },
           ]}>
           <ImageBackground

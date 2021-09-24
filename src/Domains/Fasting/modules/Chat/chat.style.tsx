@@ -58,7 +58,7 @@ export const MessageDate = styled(Text)`
 export const Divider = styled(View)`
   width: 100%;
   height: 42px;
-  bottom: -62px;
+  bottom: -96px;
   border-width: 1px;
   margin-top: -62px;
   margin-bottom: -42px;

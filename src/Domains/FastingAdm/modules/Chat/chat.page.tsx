@@ -35,7 +35,7 @@ class Chat extends React.Component<
 
   static setPageConfigs = {
     pageConfig: { backgroundSolidColor: 'secondary' },
-    topBarConfig: { title: null, menu: false, color: '#FFF', back: true },
+    topBarConfig: { title: 'Chat', menu: false, color: '#FFF', back: true },
   };
 
   constructor(props) {

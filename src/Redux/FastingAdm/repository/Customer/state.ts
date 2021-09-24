@@ -1,6 +1,7 @@
 import {
   listCustomers_listCustomers,
-  getCustomer_getCustomer
+  getCustomer_getCustomer,
+  setCustomerConfigs_setCustomerConfigs
 } from '@Config/graphql'
 
 interface List {
@@ -19,8 +20,23 @@ interface Customer {
   data: getCustomer_getCustomer | null
 }
 
+interface Configs {
+  loading: boolean,
+  error: boolean,
+  success: boolean,
+  errorMessage: string | null,
+  data: setCustomerConfigs_setCustomerConfigs | null
+}
+
 export class CustomerReduxType {
   customer: Customer = {
+    loading: false,
+    success: false,
+    error: false,
+    errorMessage: null,
+    data: null
+  }
+  configs: Configs = {
     loading: false,
     success: false,
     error: false,
