@@ -8,7 +8,7 @@ import {
   KeyboardAvoidingView,
 } from 'react-native';
 
-import { Button, Input, InputDate, InputSelect, Icon } from '@Components';
+import { Button, Input, InputDate, InputSelect, Icon, InputPhone } from '@Components';
 import {
   StyledField,
   StyledH1,
@@ -29,7 +29,6 @@ const FormCustomerUpdate: React.FC<any> = ({
   loading,
 }) => {
   const { t, i18n } = useTranslation('ProfileEdit');
-  const tPage: any = t('page');
   const tForm: any = t('form');
 
   const [keyboardOffset, setKeyboardOffset] = useState<number>(-150);
@@ -72,6 +71,17 @@ const FormCustomerUpdate: React.FC<any> = ({
       onFocus: () => setKeyboardOffset(-200),
       error: touched.name && errors.name ? errors.name : null,
       onChangeText: (value) => setFieldValue(editProfileFieldsEnum.name, value),
+    },
+    phone: {
+      placeholder: tForm.phone,
+      autoCompleteType: 'tel',
+      value: values.phone,
+      placeholderTextColor: '#FFF',
+      onFocus: () => setKeyboardOffset(-150),
+      onBlur: handleBlur(editProfileFieldsEnum.phone),
+      onChangeText: (value) =>
+        setFieldValue(editProfileFieldsEnum.phone, value),
+      error: touched.phone && errors.phone,
     },
     email: {
       value: values.email,
@@ -190,6 +200,10 @@ const FormCustomerUpdate: React.FC<any> = ({
 
         <StyledField>
           <Input {...profileEdit.email} />
+        </StyledField>
+
+        <StyledField>
+          <InputPhone {...profileEdit.phone} />
         </StyledField>
 
         <StyledField>

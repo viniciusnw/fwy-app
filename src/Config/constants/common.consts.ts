@@ -19,6 +19,7 @@ export enum registerFieldsEnum {
 
 export enum editProfileFieldsEnum {
   name = 'name',
+  phone = 'phone',
   email = 'email',
   birthday = 'birthday',
   gender = 'gender',

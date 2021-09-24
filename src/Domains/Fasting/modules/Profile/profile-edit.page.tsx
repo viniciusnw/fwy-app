@@ -92,8 +92,10 @@ class ProfileEdit extends React.Component<
           ...customerFormClone,
         },
       });
-
-    if (configs.language != this.props.useRedux.User.configs.data?.language)
+    
+    if (
+      configs.language != this.props.useRedux.User.configs.data?.language
+    )
       this.props.useDispatch.updateConfig({ configs });
   }
 
@@ -123,6 +125,7 @@ class ProfileEdit extends React.Component<
       [editProfileFieldsEnum.avatar]: User?.avatar || null,
       [editProfileFieldsEnum.name]: User?.name || '',
       [editProfileFieldsEnum.email]: User?.email || '',
+      [editProfileFieldsEnum.phone]: User?.phone || '',
       [editProfileFieldsEnum.birthday]: User?.birthday || '',
       [editProfileFieldsEnum.gender]: User?.gender || '',
       [editProfileFieldsEnum.weight]: User?.weight || '',

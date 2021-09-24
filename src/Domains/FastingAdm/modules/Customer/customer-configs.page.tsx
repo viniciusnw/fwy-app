@@ -48,8 +48,6 @@ class CustomerConfigs extends React.Component<
     this.state = {
       chatValue: !!customer.data?.configs?.chat,
     };
-
-    console.log(customer)
   }
 
   render() {

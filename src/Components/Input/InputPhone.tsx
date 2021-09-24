@@ -27,7 +27,8 @@ const InputPhone = (props) => {
         />
       )) || (
         <StyledInput
-          type={'cel-phone'}
+          // type={'cel-phone'}
+          type={'custom'}
           value={props.value}
           returnKeyType="done"
           onBlur={props.onBlur}
@@ -35,10 +36,13 @@ const InputPhone = (props) => {
           placeholder={props.placeholder}
           onChangeText={(value, rawValue) => props.onChangeText(value)}
           options={{
-            withDDD: true,
-            maskType: 'BRL',
-            dddMask: '(99) ',
+            mask: '+55 (31) 99999-9999',
           }}
+          // options={{
+          //   withDDD: true,
+          //   maskType: 'BRL',
+          //   dddMask: '(99) ',
+          // }}
         />
       )}
 

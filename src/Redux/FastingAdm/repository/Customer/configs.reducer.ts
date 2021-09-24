@@ -16,7 +16,6 @@ export default {
       }
 
       case 'CUSTOMER-CONFIGS_FULFILLED': {
-        console.log('CUSTOMER-CONFIGS_FULFILLED', action.payload)
         return {
           ...state,
           configs: {

@@ -1,6 +1,7 @@
 {
   "name": "@fasting/app",
   "version": "2.7.5",
+  "admVersion": "1.0.0",
   "homepage": "https://www.fastingwithyara.com/",
   "private": true,
   "dependencies": {

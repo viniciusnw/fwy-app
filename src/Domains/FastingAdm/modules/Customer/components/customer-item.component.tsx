@@ -1,17 +1,12 @@
 import React from 'react';
 import styled from 'styled-components/native';
 import { useTranslation } from 'react-i18next';
-import {
-  View,
-  Image,
-  Text,
-  TouchableOpacity,
-  KeyboardAvoidingView,
-} from 'react-native';
+import { View, Image, Text, Linking } from 'react-native';
 import { Icon } from '@Components';
 
 import * as ASSETS from '@Config/assets';
 import { getCustomer_getCustomer } from '@Config/graphql';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 type CustomerItemProps = {
   customer: getCustomer_getCustomer | null;
@@ -27,6 +22,24 @@ const CustomerItem: React.FC<CustomerItemProps> = ({
   const configs = customer?.configs;
 
   const imageUri = `data:${customer?.avatar?.type};base64,${customer?.avatar?.data}`;
+
+  const handleOpenWhatsapp = async () => {
+    
+    const phone = customer?.phone || ''
+    const number = phone.replace(/\D/g, '');
+
+    const supported = await Linking.canOpenURL(
+      `whatsapp://send?text=Hello&phone=${number}`,
+      // 'https://api.whatsapp.com/send?phone=5531984065335&text=Hello'
+      // `https://wa.me/5531984065335`,
+    );
+    if (supported)
+      await Linking.openURL(`whatsapp://send?text=Hello&phone=${phone}`);
+    else
+      await Linking.openURL(
+        `https://api.whatsapp.com/send?phone=${number}&text=Hello`,
+      );
+  };
 
   return (
     <Container>
@@ -53,6 +66,16 @@ const CustomerItem: React.FC<CustomerItemProps> = ({
           {customer?.weight ? customer.weight : '-'}{' '}
           {configs?.weight ? configs?.weight : '-'}
         </CustomerValue>
+        <TouchableOpacity onPress={handleOpenWhatsapp}>
+          <CustomerValueSmall>
+            <CustomerValueDesc>Phone: </CustomerValueDesc>
+            {customer?.phone}
+          </CustomerValueSmall>
+        </TouchableOpacity>
+        <CustomerValueSmall>
+          <CustomerValueDesc>Email: </CustomerValueDesc>
+          {customer?.email}
+        </CustomerValueSmall>
       </InfosContent>
     </Container>
   );
@@ -92,7 +115,7 @@ const Avatar = styled(Image)`
 const InfosContent = styled(View)`
   display: flex;
   padding-left: 16px;
-  justify-content: center;
+  justify-content: space-around;
 `;
 
 const CustomerName = styled(Text)`
@@ -103,13 +126,19 @@ const CustomerName = styled(Text)`
 `;
 
 const CustomerValueDesc = styled(Text)`
-  font-size: 18px;
+  font-size: 16px;
   color: ${({ theme }) => theme.color.darkBlue};
   font-family: ${({ theme }) => theme.fonts.AdobeClean.regular};
 `;
 
 const CustomerValue = styled(Text)`
   font-size: 18px;
+  color: ${({ theme }) => theme.color.white};
+  font-family: ${({ theme }) => theme.fonts.AdobeClean.regular};
+`;
+
+const CustomerValueSmall = styled(Text)`
+  font-size: 14px;
   color: ${({ theme }) => theme.color.white};
   font-family: ${({ theme }) => theme.fonts.AdobeClean.regular};
 `;

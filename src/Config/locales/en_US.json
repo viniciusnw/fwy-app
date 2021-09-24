@@ -18,6 +18,7 @@
       "avatar": "Change profile picture",
       "name": "Name",
       "email": "E-mail",
+      "phone": "Phone",
       "date": "Birthday",
       "gender": "Gender",
       "genderOptions": {
@@ -35,6 +36,8 @@
       "name": "Fill in your name.",
       "email": "Invalid email.",
       "emailNull": "Fill your email.",
+      "phone": "Incomplete number.",
+      "phoneNull": "Fill your phone.",
       "date": "Fill in your date of birth.",
       "gender": "Fill your gender.",
       "weight": "Invalid weight.",
