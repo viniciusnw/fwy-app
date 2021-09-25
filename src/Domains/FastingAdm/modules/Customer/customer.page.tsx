@@ -36,7 +36,12 @@ class Customer extends React.Component<
   any
 > {
   static setPageConfigs = {
-    topBarConfig: { title: 'Customer informations', menu: false, color: '#FFF', back: true },
+    topBarConfig: {
+      title: 'Customer informations',
+      menu: false,
+      color: '#FFF',
+      back: true,
+    },
   };
 
   constructor(props) {
@@ -99,6 +104,11 @@ class Customer extends React.Component<
           </FastValue>
 
           <FastValue>
+            <FastValueDesc>Total fast: </FastValueDesc>
+            {this.total}
+          </FastValue>
+
+          <FastValue>
             <FastValueDesc>Initial time: </FastValueDesc>
             {this.initialHours}h
           </FastValue>
@@ -133,6 +143,7 @@ class Customer extends React.Component<
     const {
       last: { data: lastFasting },
     } = this.props.useRedux.Fasting;
+    console.log(searchDate, lastFasting);
     if (!lastFasting) return '-';
     if (!lastFasting[searchDate]) return ['Em andamento', ''];
 
@@ -165,6 +176,24 @@ class Customer extends React.Component<
       route: { params },
     } = this.props;
     return params.customerId;
+  }
+
+  private get total() {
+    const {
+      last: { data: lastFasting },
+    } = this.props.useRedux.Fasting;
+
+    if (!lastFasting?.finished) return '-';
+
+    const seconds =
+      (lastFasting?.finished.getTime() - lastFasting?.startDate.getTime()) /
+      1000;
+
+    if (seconds < 60) return `${seconds.toFixed()}s`;
+    const minutes = seconds / 60;
+    if (minutes < 60) return `${minutes.toFixed()}m`;
+    const hours = minutes / 60;
+    return `${hours.toFixed()}h`;
   }
 
   private t = (value: string, variables?: any) =>

@@ -55,6 +55,7 @@ class Home extends React.Component<
       pageNumber: 1,
       nPerPage: nextPagination.nPerPage,
     };
+
     this.props.useDispatch.listCustomer({ pagination });
   };
 
@@ -89,6 +90,7 @@ class Home extends React.Component<
       pageNumber: 1,
       nPerPage: nextPagination.nPerPage,
     };
+
     this.props.useDispatch.searchCustomer({
       pagination,
       term: this.state.searchTerm,

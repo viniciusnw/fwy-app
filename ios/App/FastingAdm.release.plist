@@ -5,7 +5,7 @@
     <key>provisioningProfiles</key>
     <dict>
         <key>com.fwy.adm</key>
-        <string>adm.appstore.profile</string>
+        <string>admin.appstore.profile</string>
     </dict>
     <key>method</key>
     <string>app-store</string>

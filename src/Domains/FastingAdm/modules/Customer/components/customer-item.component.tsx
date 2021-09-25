@@ -2,7 +2,6 @@ import React from 'react';
 import styled from 'styled-components/native';
 import { useTranslation } from 'react-i18next';
 import { View, Image, Text, Linking } from 'react-native';
-import { Icon } from '@Components';
 
 import * as ASSETS from '@Config/assets';
 import { getCustomer_getCustomer } from '@Config/graphql';
@@ -24,20 +23,41 @@ const CustomerItem: React.FC<CustomerItemProps> = ({
   const imageUri = `data:${customer?.avatar?.type};base64,${customer?.avatar?.data}`;
 
   const handleOpenWhatsapp = async () => {
-    
-    const phone = customer?.phone || ''
+    const phone = customer?.phone || '';
     const number = phone.replace(/\D/g, '');
+    const message = 'Hello!';
 
+    // 'https://api.whatsapp.com/send?phone=5531984065335&text=Hello'
+    // `https://wa.me/5531984065335`,
     const supported = await Linking.canOpenURL(
-      `whatsapp://send?text=Hello&phone=${number}`,
-      // 'https://api.whatsapp.com/send?phone=5531984065335&text=Hello'
-      // `https://wa.me/5531984065335`,
+      `whatsapp://send?text=${message}&phone=${number}`,
     );
     if (supported)
-      await Linking.openURL(`whatsapp://send?text=Hello&phone=${phone}`);
+      await Linking.openURL(`whatsapp://send?text=${message}&phone=${phone}`);
     else
       await Linking.openURL(
-        `https://api.whatsapp.com/send?phone=${number}&text=Hello`,
+        `https://api.whatsapp.com/send?phone=${number}&text=${message}`,
+      );
+  };
+
+  const CustomerNameSplit = (name?: string) => {
+    if (!name) return <CustomerNameText>-</CustomerNameText>;
+    const splited = name.split(' ');
+
+    if (splited?.length >= 3)
+      return (
+        <>
+          <CustomerNameText>{splited[0]}</CustomerNameText>
+          <CustomerNameText>
+            {splited[1]} {splited[2]}
+          </CustomerNameText>
+        </>
+      );
+    else
+      return (
+        <CustomerNameText>
+          {splited[0]} {splited[1]}
+        </CustomerNameText>
       );
   };
 
@@ -55,7 +75,7 @@ const CustomerItem: React.FC<CustomerItemProps> = ({
       </AvatarContainer>
 
       <InfosContent>
-        <CustomerName>{customer?.name}</CustomerName>
+        {CustomerNameSplit(customer?.name)}
         <CustomerValue>
           <CustomerValueDesc>Altura: </CustomerValueDesc>
           {customer?.height ? customer.height : '-'}{' '}
@@ -118,7 +138,7 @@ const InfosContent = styled(View)`
   justify-content: space-around;
 `;
 
-const CustomerName = styled(Text)`
+const CustomerNameText = styled(Text)`
   font-size: 21px;
   margin-bottom: 8px;
   color: ${({ theme }) => theme.color.white};

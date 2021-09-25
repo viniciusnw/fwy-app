@@ -26,7 +26,8 @@ export default {
             data: action.payload[0] && {
               ...action.payload[0],
               endDate: new Date(action.payload[0].endDate),
-              startDate: new Date(action.payload[0].startDate)
+              startDate: new Date(action.payload[0].startDate),
+              finished: action.payload[0].finished ? new Date(action.payload[0].finished) : null
             } || null,
           },
         };

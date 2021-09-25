@@ -50,7 +50,7 @@ export class CustomerReduxType {
     errorMessage: null,
     data: {
       __typename: 'CustomerList',
-      customers: null,
+      customers: [],
       nextPagination: {
         __typename: 'NextPagination',
         nPerPage: 15,
@@ -66,7 +66,7 @@ export class CustomerReduxType {
     errorMessage: null,
     data: {
       __typename: 'CustomerList',
-      customers: null,
+      customers: [],
       nextPagination: {
         __typename: 'NextPagination',
         nPerPage: 15,
