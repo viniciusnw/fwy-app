@@ -68,14 +68,15 @@ const CustomerItemAvatar = styled(BagdeWhite)`
 `;
 
 const AvatarContent = styled(View)`
+  position: relative;
   align-items: center;
   justify-content: center;
 `;
 
 const Avatar = styled(Image)`
-  width: 90px;
-  height: 90px;
-  border-radius: 90px;
+  width: 92px;
+  height: 92px;
+  border-radius: 92px;
 `;
 
 const NameContainer = styled(View)`
