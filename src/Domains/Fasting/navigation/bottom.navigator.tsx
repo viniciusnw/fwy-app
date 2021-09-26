@@ -53,9 +53,7 @@ class BottomBar extends React.Component<
       User: { data: User },
     } = useRedux;
 
-    const disabledChat = User?.configs?.chat
-      ? !User?.configs?.chat
-      : !!User?.configs?.chat;
+    const disabledChat = User?.configs?.chat ? false : true;
 
     const menu = [
       {

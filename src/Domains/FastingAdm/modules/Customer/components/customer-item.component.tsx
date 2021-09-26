@@ -51,6 +51,11 @@ const CustomerItem: React.FC<CustomerItemProps> = ({
           <CustomerNameText>
             {splited[1]} {splited[2]}
           </CustomerNameText>
+          {splited[3] && (
+            <CustomerNameText>
+              {splited[3]} {splited[4]}
+            </CustomerNameText>
+          )}
         </>
       );
     else
@@ -127,9 +132,9 @@ const AvatarContent = styled(View)`
 `;
 
 const Avatar = styled(Image)`
-  width: 95px;
-  height: 95px;
-  border-radius: 95px;
+  width: 93px;
+  height: 93px;
+  border-radius: 93px;
 `;
 
 const InfosContent = styled(View)`
