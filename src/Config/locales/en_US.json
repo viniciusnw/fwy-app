@@ -14,9 +14,11 @@
   },
   "ProfileEdit": {
     "form": {
+      "language": "Select language",
       "avatar": "Change profile picture",
       "name": "Name",
       "email": "E-mail",
+      "phone": "Phone",
       "date": "Birthday",
       "gender": "Gender",
       "genderOptions": {
@@ -34,6 +36,8 @@
       "name": "Fill in your name.",
       "email": "Invalid email.",
       "emailNull": "Fill your email.",
+      "phone": "Incomplete number.",
+      "phoneNull": "Fill your phone.",
       "date": "Fill in your date of birth.",
       "gender": "Fill your gender.",
       "weight": "Invalid weight.",
@@ -41,6 +45,11 @@
       "height": "Fill your height.",
       "heightNull": "Invalid height."
     },
+    "UOM":{
+      "weight_uom": "lb",
+      "height_uom": "In"
+    },
+    "hello": "Hello, ",
     "privateInfo": "Private informations"
   },
   "EndFasting": {
@@ -107,6 +116,7 @@
   },
   "SignUp": {
     "form": {
+      "language": "Select language",
       "avatar": "Load picture",
       "avatarRemove": "Change picture",
       "name": "Name",
@@ -128,6 +138,10 @@
       "state": "Fill in your status.",
       "birthday": "Fill in your birthday date.",
       "password": "Fill in your password."
+    },
+    "UOM":{
+      "weight_uom": "lb",
+      "height_uom": "In"
     }
   },
   "Login": {
@@ -142,6 +156,14 @@
       "password": "Fill in your password."
     },
     "signup": "Register"
+  },
+  "Customer":{
+    "weight_uom": "lb",
+    "height_uom": "In"
+  },
+  "UOM":{
+    "weight_uom": "lb",
+    "height_uom": "In"
   },
   "language": {
     "english": "English",

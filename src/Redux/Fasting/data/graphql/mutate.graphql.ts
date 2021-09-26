@@ -13,11 +13,13 @@ import {
   customerUpdateVariables,
   sendChatMessageVariables,
   customerRegisterVariables,
+  setCustomerConfigsVariables
 } from '@Config/graphql'
 
 import customerLoginMutate from './docs/customerLogin.mutate.graphql'
 import customerRegisterMutate from './docs/customerRegister.mutate.graphql'
 import customerUpdateMutate from './docs/customerUpdate.mutate.graphql'
+import setCustomerConfigs from './docs/setCustomerConfigs.mutate.graphql'
 import sendChatMessageMutate from './docs/sendChatMessage.mutate.graphql'
 import createFastingMutate from './docs/createFasting.mutate.graphql'
 import endFastingMutate from './docs/endFasting.mutate.graphql'
@@ -49,6 +51,7 @@ export class Mutate extends GraphqlApi {
     return this.ApolloClient.mutate({
       mutation: customerLoginMutate,
       variables: params,
+      fetchPolicy: 'no-cache',
     }).then(response => ({
       lastUser: params,
       response: this.mapResponse(response, 'customerLogin')
@@ -60,6 +63,14 @@ export class Mutate extends GraphqlApi {
       mutation: customerUpdateMutate,
       variables: params,
     }).then(response => this.mapResponse(response, 'customerUpdate'))
+      .catch(err => this.mapError(err))
+  }
+
+  public updateConfig = (params: setCustomerConfigsVariables) => {
+    return this.ApolloClient.mutate({
+      mutation: setCustomerConfigs,
+      variables: params,
+    }).then(response => this.mapResponse(response, 'setCustomerConfigs'))
       .catch(err => this.mapError(err))
   }
 

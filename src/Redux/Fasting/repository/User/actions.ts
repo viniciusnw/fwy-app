@@ -1,7 +1,7 @@
 import { Container } from 'typedi';
 import { Mutate } from '@Redux/Fasting/data/graphql'
 
-import { customerLoginVariables, customerRegisterVariables, customerUpdateVariables } from '@Config/graphql'
+import { customerLoginVariables, customerRegisterVariables, customerUpdateVariables, setCustomerConfigsVariables } from '@Config/graphql'
 
 export default {
 
@@ -23,6 +23,13 @@ export default {
     return {
       type: 'UPDATE',
       payload: () => Container.get(Mutate).update(params)
+    };
+  },
+
+  updateConfig: (params: setCustomerConfigsVariables) => {
+    return {
+      type: 'UPDATE-CONFIG',
+      payload: () => Container.get(Mutate).updateConfig(params)
     };
   },
 

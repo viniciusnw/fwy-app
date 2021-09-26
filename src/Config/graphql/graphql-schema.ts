@@ -64,6 +64,14 @@ export interface customerLogin_customerLogin_avatar {
   data: string;
 }
 
+export interface customerLogin_customerLogin_configs {
+  __typename: "CustomerConfigs";
+  chat: boolean | null;
+  weight: string | null;
+  height: string | null;
+  language: string | null;
+}
+
 export interface customerLogin_customerLogin {
   __typename: "CustomerLogin";
   _id: string;
@@ -77,6 +85,7 @@ export interface customerLogin_customerLogin {
   country: string;
   state: string;
   avatar: customerLogin_customerLogin_avatar | null;
+  configs: customerLogin_customerLogin_configs | null;
   token: string;
   expirationTime: number;
   role: string;
@@ -107,6 +116,14 @@ export interface customerRegister_customerRegister_avatar {
   data: string;
 }
 
+export interface customerRegister_customerRegister_configs {
+  __typename: "CustomerConfigs";
+  chat: boolean | null;
+  weight: string | null;
+  height: string | null;
+  language: string | null;
+}
+
 export interface customerRegister_customerRegister {
   __typename: "CustomerRegister";
   _id: string;
@@ -120,6 +137,7 @@ export interface customerRegister_customerRegister {
   country: string;
   state: string;
   avatar: customerRegister_customerRegister_avatar | null;
+  configs: customerRegister_customerRegister_configs | null;
   token: string;
   expirationTime: number;
   role: string;
@@ -131,6 +149,7 @@ export interface customerRegister {
 
 export interface customerRegisterVariables {
   customer: CustomerRegisterInput;
+  configs?: CustomerConfigsInput | null;
 }
 
 /* tslint:disable */
@@ -148,6 +167,14 @@ export interface customerUpdate_customerUpdate_avatar {
   data: string;
 }
 
+export interface customerUpdate_customerUpdate_configs {
+  __typename: "CustomerConfigs";
+  chat: boolean | null;
+  weight: string | null;
+  height: string | null;
+  language: string | null;
+}
+
 export interface customerUpdate_customerUpdate {
   __typename: "CustomerUpdate";
   _id: string;
@@ -161,6 +188,7 @@ export interface customerUpdate_customerUpdate {
   country: string;
   state: string;
   avatar: customerUpdate_customerUpdate_avatar | null;
+  configs: customerUpdate_customerUpdate_configs | null;
   token: string;
   expirationTime: number;
   role: string;
@@ -285,6 +313,7 @@ export interface getChatMessages {
 
 export interface getChatMessagesVariables {
   pagination: Pagination;
+  customerId?: string | null;
 }
 
 /* tslint:disable */
@@ -363,6 +392,32 @@ export interface sendChatMessageVariables {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
+// GraphQL mutation operation: setCustomerConfigs
+// ====================================================
+
+export interface setCustomerConfigs_setCustomerConfigs {
+  __typename: "CustomerConfigs";
+  chat: boolean | null;
+  weight: string | null;
+  height: string | null;
+  language: string | null;
+}
+
+export interface setCustomerConfigs {
+  setCustomerConfigs: setCustomerConfigs_setCustomerConfigs;
+}
+
+export interface setCustomerConfigsVariables {
+  customerId?: string | null;
+  configs?: CustomerConfigsInput | null;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
 // GraphQL mutation operation: updatePreset
 // ====================================================
 
@@ -383,6 +438,14 @@ export interface updatePresetVariables {
 // GraphQL query operation: getCustomer
 // ====================================================
 
+export interface getCustomer_getCustomer_configs {
+  __typename: "CustomerConfigs";
+  chat: boolean | null;
+  weight: string | null;
+  height: string | null;
+  language: string | null;
+}
+
 export interface getCustomer_getCustomer_avatar {
   __typename: "Avatar";
   type: string;
@@ -401,6 +464,7 @@ export interface getCustomer_getCustomer {
   gender: string | null;
   weight: number | null;
   height: number | null;
+  configs: getCustomer_getCustomer_configs | null;
   avatar: getCustomer_getCustomer_avatar | null;
 }
 
@@ -509,6 +573,13 @@ export interface AvatarInput {
 export interface AvatarUpdate {
   type: string;
   data: string;
+}
+
+export interface CustomerConfigsInput {
+  chat?: boolean | null;
+  weight?: string | null;
+  height?: string | null;
+  language?: string | null;
 }
 
 export interface CustomerRegisterInput {

@@ -1,21 +1,20 @@
 import React from 'react';
 import { Icon } from '@Components';
 import { connect } from 'react-redux';
-import styled, { css } from 'styled-components/native';
-import { StyledH1, StyledText } from './settings.style';
 import { StackScreenProps } from '@react-navigation/stack';
 import { withTranslation, WithTranslation } from 'react-i18next';
-import { LoggedStackParamList, PagePropsType } from '@Navigation';
 import {
   View,
   Text,
   Share,
   Linking,
   ScrollView,
-  TouchableOpacity,
   Alert,
 } from 'react-native';
 import * as StoreReview from 'react-native-store-review';
+
+import { LoggedStackParamList, PagePropsType } from '@Navigation';
+import { StyledH1, StyledText, MenuItem, Strike } from './settings.style';
 import { ReduxActions, ReduxPropsType, ReduxStateType } from '@Redux/Fasting';
 
 const packageJson = require('../../../../../package.json');
@@ -48,7 +47,8 @@ class Settings extends React.Component<
         else return null; // shared
       } else if (result.action === Share.dismissedAction) return null; // dismissed
     } catch (error) {
-      console.log(error.message);
+      // @ts-ignore
+      Alert.alert('Shared', error.message);
     }
   };
 
@@ -185,20 +185,7 @@ class Settings extends React.Component<
     this.props.t && this.props.t(value, variables);
 }
 
-const MenuItem = styled(TouchableOpacity)`
-  padding: 20px 10px;
-  flex-direction: row;
-  justify-content: space-between;
-`;
 
-const Strike = styled(View)`
-  left: 0;
-  right: 0;
-  bottom: 0;
-  height: 1px;
-  position: absolute;
-  background-color: rgba(255, 255, 255, 0.4);
-`;
 
 function mapStateToProps({}: ReduxStateType) {
   return {

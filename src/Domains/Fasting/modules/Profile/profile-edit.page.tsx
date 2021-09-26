@@ -6,14 +6,13 @@ import { StackScreenProps } from '@react-navigation/stack';
 import { withTranslation, WithTranslation } from 'react-i18next';
 import { View, ScrollView, TouchableOpacity, Image } from 'react-native';
 
-import { showSnackbar } from '@Config/graphql';
+import { editProfileFieldsEnum } from '@Config/constants';
+import { showSnackbar, customerRegisterVariables } from '@Config/graphql';
 import { LoggedStackParamList, PagePropsType } from '@Navigation';
 import { ReduxActions, ReduxPropsType, ReduxStateType } from '@Redux/Fasting';
-import { Icon, Button, Input, InputDate, DismissKeyboard } from '@Components';
+import { DismissKeyboard } from '@Components';
 
-import FormCustomerUpdate, {
-  fields as FormFields,
-} from './components/profile-edit-form.component';
+import FormCustomerUpdate from './components/profile-edit-form.component';
 
 type RoutePropsType = StackScreenProps<LoggedStackParamList, 'ProfileEdit'>;
 class ProfileEdit extends React.Component<
@@ -42,12 +41,28 @@ class ProfileEdit extends React.Component<
       update: { success: prevSuccess },
     } = prevProps.useRedux.User;
 
+    const {
+      configs: { success: configSuccess },
+    } = this.props.useRedux.User;
+    const {
+      configs: { success: prevconfigSuccess },
+    } = prevProps.useRedux.User;
+
     if (success && success != prevSuccess)
       showSnackbar('Your profile was update ✅ ', 'success', 'i');
+
+    if (configSuccess && configSuccess != prevconfigSuccess)
+      showSnackbar('Your configs was update ✅ ', 'success', 'i');
   }
 
   private customerUpdate(customerForm) {
     const customerFormClone = JSON.parse(JSON.stringify(customerForm));
+
+    const configs: customerRegisterVariables['configs'] = {
+      height: this.t('UOM')['height_uom'],
+      weight: this.t('UOM')['weight_uom'],
+      language: this.props.i18n.language,
+    };
 
     Object.keys(customerFormClone).map((key) => {
       if (this.User && customerForm[key] == this.User[key])
@@ -77,6 +92,11 @@ class ProfileEdit extends React.Component<
           ...customerFormClone,
         },
       });
+    
+    if (
+      configs.language != this.props.useRedux.User.configs.data?.language
+    )
+      this.props.useDispatch.updateConfig({ configs });
   }
 
   render() {
@@ -84,31 +104,32 @@ class ProfileEdit extends React.Component<
     const tFormErros: any = this.t('formErros');
 
     const FormCustomerUpdateSchema = yup.object().shape({
-      [FormFields.name]: yup.string().required(tFormErros.name),
-      [FormFields.email]: yup
+      [editProfileFieldsEnum.name]: yup.string().required(tFormErros.name),
+      [editProfileFieldsEnum.email]: yup
         .string()
         .email(tFormErros.email)
         .required(tFormErros.emailNull),
-      [FormFields.birthday]: yup.date().required(tFormErros.date),
-      [FormFields.gender]: yup.string().required(tFormErros.gender),
-      [FormFields.weight]: yup
+      [editProfileFieldsEnum.birthday]: yup.date().required(tFormErros.date),
+      [editProfileFieldsEnum.gender]: yup.string().required(tFormErros.gender),
+      [editProfileFieldsEnum.weight]: yup
         .number()
         .required(tFormErros.weightNull)
         .min(1, tFormErros.weight),
-      [FormFields.height]: yup
+      [editProfileFieldsEnum.height]: yup
         .number()
         .required(tFormErros.height)
         .min(1, tFormErros.heightNull),
     });
 
     const FormInitialValues = {
-      [FormFields.avatar]: User?.avatar || null,
-      [FormFields.name]: User?.name || '',
-      [FormFields.email]: User?.email || '',
-      [FormFields.birthday]: User?.birthday || '',
-      [FormFields.gender]: User?.gender || '',
-      [FormFields.weight]: User?.weight || '',
-      [FormFields.height]: User?.height || '',
+      [editProfileFieldsEnum.avatar]: User?.avatar || null,
+      [editProfileFieldsEnum.name]: User?.name || '',
+      [editProfileFieldsEnum.email]: User?.email || '',
+      [editProfileFieldsEnum.phone]: User?.phone || '',
+      [editProfileFieldsEnum.birthday]: User?.birthday || '',
+      [editProfileFieldsEnum.gender]: User?.gender || '',
+      [editProfileFieldsEnum.weight]: User?.weight || '',
+      [editProfileFieldsEnum.height]: User?.height || '',
     };
 
     const { loading } = this.props.useRedux.User.update;
@@ -170,6 +191,7 @@ function mapDispatchToProps(dispatch) {
   return {
     useDispatch: {
       update: (_) => dispatch(ReduxActions.update(_)),
+      updateConfig: (_) => dispatch(ReduxActions.updateConfig(_)),
     },
   };
 }

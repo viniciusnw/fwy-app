@@ -23,7 +23,13 @@ export default {
             success: true,
             loading: false,
             errorMessage: null,
-            data: action.payload,
+            data: {
+              ...action.payload,
+              customers: [
+                ...(action.payload.nextPagination.pageNumber != 1 ? state.list.data.customers : []),
+                ...action.payload.customers
+              ]
+            }
           },
         };
       }

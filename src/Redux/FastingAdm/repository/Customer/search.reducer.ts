@@ -10,7 +10,7 @@ export default {
             error: false,
             success: false,
             errorMessage: null,
-            data: state.list.data,
+            data: [],
           }
         };
       }
@@ -23,7 +23,13 @@ export default {
             success: true,
             loading: false,
             errorMessage: null,
-            data: action.payload,
+            data: {
+              ...action.payload,
+              customers: [
+                ...(action.payload.nextPagination.pageNumber != 1 ? state.search.data.customers : []),
+                ...action.payload.customers
+              ]
+            }
           },
         };
       }

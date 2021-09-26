@@ -1,8 +1,16 @@
 import {
   customerLogin_customerLogin,
   customerRegister_customerRegister,
-  customerUpdate_customerUpdate
+  customerUpdate_customerUpdate,
+  setCustomerConfigs_setCustomerConfigs
 } from '@Config/graphql'
+
+type Config = {
+  loading: boolean,
+  success: boolean,
+  error: boolean,
+  data: setCustomerConfigs_setCustomerConfigs | null
+}
 
 export class UserReduxType {
   login = {
@@ -19,6 +27,12 @@ export class UserReduxType {
     loading: false,
     success: false,
     error: false,
+  }
+  configs: Config = {
+    loading: false,
+    success: false,
+    error: false,
+    data: null
   }
   errorMessage = null
   data: customerLogin_customerLogin | customerRegister_customerRegister | customerUpdate_customerUpdate | null = null

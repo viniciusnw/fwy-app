@@ -11,12 +11,12 @@ import { StyledH1, StyledText, StyledText2 } from './badge.style';
 
 type RoutePropsType = StackScreenProps<LoggedStackParamList, 'BadgeNew'>;
 class BadgeNew extends React.Component<RoutePropsType & ReduxPropsType & PagePropsType, any> {
+  static setPageConfigs = {
+    topBarConfig: { title: null, menu: true, color: '#FFF', back: true }
+  };
 
   constructor(props) {
     super(props)
-    this.props.setPageConfigs({
-      topBarConfig: { title: null, menu: true, color: '#FFF', back: true }
-    })
   }
 
   goBadgeList = () => {

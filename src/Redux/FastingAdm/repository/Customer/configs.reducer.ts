@@ -1,42 +1,44 @@
 export default {
-  actionName: 'LAST-FASTING',
+  actionName: 'CUSTOMER-CONFIGS',
   reducer: (state, action) => {
     switch (action.type) {
-      case 'LAST-FASTING_PENDING': {
+      case 'CUSTOMER-CONFIGS_PENDING': {
         return {
           ...state,
-          last: {
+          configs: {
             loading: true,
             error: false,
             success: false,
             errorMessage: null,
-            data: null,
+            data: null
           }
         };
       }
 
-      case 'LAST-FASTING_FULFILLED': {
+      case 'CUSTOMER-CONFIGS_FULFILLED': {
         return {
           ...state,
-          last: {
+          configs: {
             error: false,
             success: true,
             loading: false,
             errorMessage: null,
-            data: action.payload[0] && {
-              ...action.payload[0],
-              endDate: new Date(action.payload[0].endDate),
-              startDate: new Date(action.payload[0].startDate),
-              finished: action.payload[0].finished ? new Date(action.payload[0].finished) : null
-            } || null,
+            data: action.payload,
           },
+          customer: {
+            ...state.customer,
+            data: {
+              ...state.customer.data,
+              configs: action.payload
+            }
+          }
         };
       }
 
-      case 'LAST-FASTING_REJECTED': {
+      case 'CUSTOMER-CONFIGS_REJECTED': {
         return {
           ...state,
-          last: {
+          search: {
             loading: false,
             success: false,
             error: true,

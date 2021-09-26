@@ -30,7 +30,6 @@ const StyledBack = styled(TouchableOpacity)``;
 const StyledMenu = styled(TouchableOpacity)``;
 
 const Header = ({ back, menu, title, color, goSettings, goBack }) => {
-
   return (
     <StyledContainer>
       {back ? (

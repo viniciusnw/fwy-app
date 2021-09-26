@@ -6,7 +6,7 @@ import * as ASSETS from '@Config/assets';
 import { Icon, Button } from '@Components';
 import { Message } from '@Redux/Fasting/repository/Chat/state';
 import { LoggedStackParamList, PagePropsType } from '@Navigation';
-import { ReduxActions, ReduxPropsType, ReduxStateType } from '@Redux/Fasting';
+import { ReduxActions, ReduxPropsType, ReduxStateType } from '@Redux/FastingAdm';
 import {
   InputSendChatMessage,
   MessageContainer,
@@ -35,7 +35,7 @@ class Chat extends React.Component<
 
   static setPageConfigs = {
     pageConfig: { backgroundSolidColor: 'secondary' },
-    topBarConfig: { title: null, menu: true, color: '#FFF', back: true },
+    topBarConfig: { title: 'Chat', menu: false, color: '#FFF', back: true },
   };
 
   constructor(props) {
@@ -90,7 +90,12 @@ class Chat extends React.Component<
       pageNumber: 1,
       nPerPage: 15,
     };
-    this.props.useDispatch.getChatMessages({ pagination });
+    const {
+      Customer: {
+        customer: { data: customer },
+      },
+    } = this.props.useRedux;
+    this.props.useDispatch.getChatMessages({ pagination, customerId: customer?._id });
   };
 
   private loadMoreMessages = () => {
@@ -137,7 +142,7 @@ class Chat extends React.Component<
         {/* == */}
         <View
           style={[
-            { height: 150, bottom: -62 },
+            { height: 200, bottom: -96 },
             openKeyboard && { height: 200 },
           ]}>
           <ImageBackground
@@ -227,9 +232,10 @@ class Chat extends React.Component<
   private _keyboardWillHide = () => this.setState({ openKeyboard: false });
 }
 
-function mapStateToProps({ Chat }: ReduxStateType) {
+function mapStateToProps({ Chat, Customer }: ReduxStateType) {
   return {
     useRedux: {
+      Customer,
       Chat,
     },
   };
@@ -238,7 +244,6 @@ function mapStateToProps({ Chat }: ReduxStateType) {
 function mapDispatchToProps(dispatch) {
   return {
     useDispatch: {
-      logout: (_) => dispatch(ReduxActions.logout()),
       getChatMessages: (_) => dispatch(ReduxActions.getChatMessages(_)),
       addQueueChatMessage: (_) => dispatch(ReduxActions.addQueueChatMessage(_)),
       getMoreChatMessages: (_) => dispatch(ReduxActions.getMoreChatMessages(_)),

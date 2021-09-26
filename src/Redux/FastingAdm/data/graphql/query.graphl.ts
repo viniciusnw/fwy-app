@@ -53,7 +53,6 @@ export class Query extends GraphqlApi {
     return this.ApolloClient.query({
       query: getLastFasting,
       variables: params,
-      fetchPolicy: 'network-only'
     }).then(response => this.mapResponse(response, 'getLastFasting'))
       .catch(err => this.mapError(err))
   }

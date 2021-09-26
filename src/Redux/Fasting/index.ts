@@ -12,6 +12,7 @@ class ReduxActionsType {
   login = User.actions.login
   logout = User.actions.logout
   update = User.actions.update
+  updateConfig = User.actions.updateConfig
   register = User.actions.register
 
   newChatMessage = Chat.actions.newChatMessage

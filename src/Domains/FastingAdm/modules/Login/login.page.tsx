@@ -1,12 +1,9 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import styled from 'styled-components/native';
-import { View, TouchableOpacity } from 'react-native';
 import { StackScreenProps } from '@react-navigation/stack';
-
 import { withTranslation, WithTranslation } from 'react-i18next';
 
-import { StyledText } from './login.style';
+import { Container } from './login.style';
 import { Logo, DismissKeyboard } from '@Components';
 import { UnloogedStackParamList, PagePropsType } from '@ADMNavigation';
 import {
@@ -74,10 +71,3 @@ function mapDispatchToProps(dispatch) {
 export default withTranslation('Login')(
   connect(mapStateToProps, mapDispatchToProps)(Login),
 );
-
-const Container = styled(View)`
-  flex: 1;
-  padding: 0 40px;
-  align-items: center;
-  justify-content: center;
-`;

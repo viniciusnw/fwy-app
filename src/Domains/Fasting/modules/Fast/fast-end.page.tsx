@@ -158,6 +158,7 @@ class FastEnd extends React.Component<
         else return; // shared
       } else if (result.action === Share.dismissedAction) return; // dismissed
     } catch (error) {
+      // @ts-ignore
       console.log(error.message);
     }
   };
@@ -275,7 +276,7 @@ class FastEnd extends React.Component<
                   <Icon size={25} color={'#FFF'} icon="close" />
                 </TouchableOpacity>
 
-                <View>
+                <View style={{ marginBottom: 8 }}>
                   <StyledText16>{this.t('title')}</StyledText16>
                   <StyledText17>{this.t('description')}</StyledText17>
                   <StyledText17>

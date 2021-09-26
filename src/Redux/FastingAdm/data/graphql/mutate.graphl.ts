@@ -3,12 +3,14 @@ import {
   GraphqlApi,
   sendChatMessageVariables,
   customerUpdateVariables,
-  customerLoginVariables
+  customerLoginVariables,
+  setCustomerConfigsVariables
 } from '@Config/graphql'
 
-import customerLoginMutate from './../../../Fasting/data/graphql/docs/customerLogin.mutate.graphql'
-import sendChatMessageMutate from './../../../Fasting/data/graphql/docs/sendChatMessage.mutate.graphql'
-import customerUpdateMutate from './../../../Fasting/data/graphql/docs/customerUpdate.mutate.graphql'
+import customerLoginMutate from '@Redux/Fasting/data/graphql/docs/customerLogin.mutate.graphql'
+import sendChatMessageMutate from '@Redux/Fasting/data/graphql/docs/sendChatMessage.mutate.graphql'
+import customerUpdateMutate from '@Redux/Fasting/data/graphql/docs/customerUpdate.mutate.graphql'
+import setCustomerConfigs from '@Redux/Fasting/data/graphql/docs/setCustomerConfigs.mutate.graphql'
 
 @Service()
 export class Mutate extends GraphqlApi {
@@ -36,6 +38,14 @@ export class Mutate extends GraphqlApi {
       mutation: customerUpdateMutate,
       variables: params,
     }).then(response => this.mapResponse(response, 'customerUpdate'))
+      .catch(err => this.mapError(err))
+  }
+
+  public customerConfigs = (params: setCustomerConfigsVariables) => {
+    return this.ApolloClient.mutate({
+      mutation: setCustomerConfigs,
+      variables: params,
+    }).then(response => this.mapResponse(response, 'setCustomerConfigs'))
       .catch(err => this.mapError(err))
   }
 }

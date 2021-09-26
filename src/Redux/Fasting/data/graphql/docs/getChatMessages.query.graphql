@@ -1,5 +1,5 @@
-query getChatMessages($pagination: Pagination!) {
-  getChatMessages(pagination: $pagination){
+query getChatMessages($pagination: Pagination!, $customerId: String) {
+  getChatMessages(pagination: $pagination, customerId: $customerId){
     messages{
       _id
       text

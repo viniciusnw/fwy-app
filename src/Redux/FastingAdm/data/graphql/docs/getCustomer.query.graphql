@@ -10,6 +10,12 @@ query getCustomer($customerId: String!) {
     gender
     weight
     height
+    configs {
+      chat
+      weight
+      height
+      language
+    }
     avatar {
       type
       data

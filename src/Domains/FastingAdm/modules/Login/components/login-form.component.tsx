@@ -42,20 +42,24 @@ const LoginForm: React.FC<any> = ({
 
   const loginForm = {
     email: {
+      returnKeyType: 'done',
       placeholder: tForm.email,
       autoCompleteType: 'email',
       value: formik.values.email,
       placeholderTextColor: '#FFF',
+      clearButtonMode: 'while-editing',
       onBlur: formik.handleBlur(loginFields.email),
       onChangeText: (value) => formik.setFieldValue(loginFields.email, value),
       error: formik.touched.email && formik.errors.email,
     },
     password: {
-      placeholder: tForm.password,
+      returnKeyType: 'done',
       secureTextEntry: true,
+      placeholder: tForm.password,
       autoCompleteType: 'password',
       value: formik.values.password,
       placeholderTextColor: '#FFF',
+      clearButtonMode: 'while-editing',
       onBlur: formik.handleBlur(loginFields.password),
       onChangeText: (value) =>
         formik.setFieldValue(loginFields.password, value),

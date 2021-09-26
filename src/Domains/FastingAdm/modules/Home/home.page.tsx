@@ -30,7 +30,7 @@ class Home extends React.Component<
   any
 > {
   static setPageConfigs = {
-    topBarConfig: { title: null, menu: true, color: '#FFF' },
+    topBarConfig: { title: null, menu: false, color: '#FFF' },
   };
 
   constructor(props) {
@@ -55,6 +55,7 @@ class Home extends React.Component<
       pageNumber: 1,
       nPerPage: nextPagination.nPerPage,
     };
+
     this.props.useDispatch.listCustomer({ pagination });
   };
 
@@ -89,6 +90,7 @@ class Home extends React.Component<
       pageNumber: 1,
       nPerPage: nextPagination.nPerPage,
     };
+
     this.props.useDispatch.searchCustomer({
       pagination,
       term: this.state.searchTerm,

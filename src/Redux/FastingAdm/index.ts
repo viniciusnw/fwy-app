@@ -14,6 +14,7 @@ class ReduxActionsType {
   listCustomer = Customer.actions.list
   searchCustomer = Customer.actions.search
   getCustomer = Customer.actions.get
+  setConfigs = Customer.actions.configs
 
   getLastFasting = Fasting.actions.getLast
 
