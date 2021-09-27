@@ -143,7 +143,6 @@ class Customer extends React.Component<
     const {
       last: { data: lastFasting },
     } = this.props.useRedux.Fasting;
-    console.log(searchDate, lastFasting);
     if (!lastFasting) return '-';
     if (!lastFasting[searchDate]) return ['Em andamento', ''];
 

@@ -24,9 +24,7 @@ const CustomerItem: React.FC<CustomerItemProps> = ({
 }: CustomerItemProps) => {
   const { Bagde: CustomerItem } = ASSETS.FASTING_ADM.svgs;
 
-  const handleClick = () => {
-    onClick && onClick(customer._id);
-  };
+  const handleClick = () => onClick && onClick(customer._id);
 
   return (
     <Container onPress={handleClick}>

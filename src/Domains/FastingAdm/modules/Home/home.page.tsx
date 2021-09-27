@@ -1,12 +1,13 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { View, ActivityIndicator } from 'react-native';
+import {
+  NativeSyntheticEvent,
+  NativeScrollEvent,
+  ActivityIndicator,
+} from 'react-native';
 
-import { Icon, Input } from '@Components';
 import CustomerItem from './components/customer-item.component';
 import SearchInput from './components/search-input.component';
-import * as ASSETS from '@Config/assets';
-import { FASTING_ADM } from '@Config/constants';
 import { StackScreenProps } from '@react-navigation/stack';
 import { LoggedStackParamList, PagePropsType } from '@ADMNavigation';
 import {
@@ -29,8 +30,9 @@ class Home extends React.Component<
   RoutePropsType & ReduxPropsType & PagePropsType,
   any
 > {
+  public _flatList;
   static setPageConfigs = {
-    topBarConfig: { title: null, menu: false, color: '#FFF' },
+    topBarConfig: { title: 'List customers', menu: false, color: '#FFF' },
   };
 
   constructor(props) {
@@ -118,6 +120,10 @@ class Home extends React.Component<
     });
   }
 
+  private onScrollCustomers(event: NativeSyntheticEvent<NativeScrollEvent>) {
+    // this.setState({ scrollPosition: event.nativeEvent.contentOffset.y });
+  }
+
   render() {
     const { list } = this.props.useRedux.Customer;
     const { search } = this.props.useRedux.Customer;
@@ -138,6 +144,7 @@ class Home extends React.Component<
         <CustomerContainer>
           <ScrollCustomers
             numColumns={3}
+            onScroll={this.onScrollCustomers}
             onEndReachedThreshold={0}
             data={
               this.state.searchTerm

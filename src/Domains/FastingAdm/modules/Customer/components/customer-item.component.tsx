@@ -51,11 +51,11 @@ const CustomerItem: React.FC<CustomerItemProps> = ({
           <CustomerNameText>
             {splited[1]} {splited[2]}
           </CustomerNameText>
-          {splited[3] && (
+          {/* {splited[3] && (
             <CustomerNameText>
               {splited[3]} {splited[4]}
             </CustomerNameText>
-          )}
+          )} */}
         </>
       );
     else
