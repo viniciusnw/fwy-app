@@ -884,7 +884,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 0BCBD50E025BAC70B5E3641C /* Pods-FastingAdm.debug.xcconfig */;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-adm";
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = Admin.entitlements;
 				CODE_SIGN_STYLE = Manual;
@@ -916,7 +916,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = E0F0AFC25FD2F7BA1F6ABE41 /* Pods-FastingAdm.release.xcconfig */;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-adm";
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = AdminRelease.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";

@@ -1,55 +1,55 @@
 {
   "images" : [
     {
-      "filename" : "Icons-FWY40x40.png",
+      "filename" : "Icons-FWY-adm40x40.png",
       "idiom" : "iphone",
       "scale" : "2x",
       "size" : "20x20"
     },
     {
-      "filename" : "Icons-FWY60x60.png",
+      "filename" : "Icons-FWY-adm60x60.png",
       "idiom" : "iphone",
       "scale" : "3x",
       "size" : "20x20"
     },
     {
-      "filename" : "Icons-FWY58x58.png",
+      "filename" : "Icons-FWY-adm58x58.png",
       "idiom" : "iphone",
       "scale" : "2x",
       "size" : "29x29"
     },
     {
-      "filename" : "Icons-FWY87x87.png",
+      "filename" : "Icons-FWY-adm87x87.png",
       "idiom" : "iphone",
       "scale" : "3x",
       "size" : "29x29"
     },
     {
-      "filename" : "Icons-FWY80x80.png",
+      "filename" : "Icons-FWY-adm80x80.png",
       "idiom" : "iphone",
       "scale" : "2x",
       "size" : "40x40"
     },
     {
-      "filename" : "Icons-FWY120x120.png",
+      "filename" : "Icons-FWY-adm120x120.png",
       "idiom" : "iphone",
       "scale" : "3x",
       "size" : "40x40"
     },
     {
-      "filename" : "Icons-FWY120x120-1.png",
+      "filename" : "Icons-FWY-adm120x120-1.png",
       "idiom" : "iphone",
       "scale" : "2x",
       "size" : "60x60"
     },
     {
-      "filename" : "Icons-FWY180x180.png",
+      "filename" : "Icons-FWY-adm180x180.png",
       "idiom" : "iphone",
       "scale" : "3x",
       "size" : "60x60"
     },
     {
-      "filename" : "Icons-FWY1024x1024.png",
+      "filename" : "Icons-FWY-adm1024x1024.png",
       "idiom" : "ios-marketing",
       "scale" : "1x",
       "size" : "1024x1024"
