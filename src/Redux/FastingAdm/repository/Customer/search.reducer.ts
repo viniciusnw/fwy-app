@@ -10,7 +10,7 @@ export default {
             error: false,
             success: false,
             errorMessage: null,
-            data: [],
+            data: state.search.data,
           }
         };
       }
@@ -41,7 +41,7 @@ export default {
             loading: false,
             success: false,
             error: true,
-            data: state.list.data,
+            data: state.search.data,
             errorMessage: action.payload,
           },
         };

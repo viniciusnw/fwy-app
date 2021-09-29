@@ -6,13 +6,12 @@ import SplashScreen from 'react-native-splash-screen';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 
-import { ChatConnectProvider, ChatQueueProvider } from '@Modules';
-import { APP_NAME_TYPE } from '@Config/types';
-import { configureApolloClient } from '@Config/graphql';
-import { ReduxStateType, ReduxPropsType } from '@Redux/Fasting';
-
 import Logged from './logged.navigator';
 import UnLogged from './unlogged.navigator';
+import { APP_NAME_TYPE } from '@Config/types';
+import { configureApolloClient } from '@Config/graphql';
+import { ChatConnectProvider, ChatQueueProvider } from '@Modules';
+import { ReduxStateType, ReduxPropsType } from '@Redux/Fasting';
 
 class Root extends React.Component<ReduxPropsType, any> {
   constructor(props: any) {

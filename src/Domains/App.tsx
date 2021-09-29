@@ -2,18 +2,16 @@ import React, { Suspense } from 'react';
 import { Provider } from 'react-redux';
 import Config from 'react-native-config';
 import { ThemeProvider } from 'styled-components';
+import { ActivityIndicator, View } from 'react-native';
 import { PersistGate } from 'redux-persist/lib/integration/react';
 
 import * as THEME from '@Config/theme';
 import { APP_NAME_TYPE } from '@Config/types';
-
 import { Store } from '@Redux/Store';
 import { Root as Fasting } from '@Navigation';
 import { Root as FastingAdm } from '@ADMNavigation';
-
-import { ActivityIndicator, View } from 'react-native';
-
 import '@Config/locales';
+
 
 export default class App extends React.Component {
   constructor(props: any) {
