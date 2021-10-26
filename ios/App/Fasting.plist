@@ -17,7 +17,7 @@
     <key>CFBundlePackageType</key>
     <string>APPL</string>
     <key>CFBundleShortVersionString</key>
-    <string>2.8.6</string>
+    <string>2.9.6</string>
     <key>CFBundleSignature</key>
     <string>????</string>
     <key>CFBundleVersion</key>
@@ -40,15 +40,15 @@
       </dict>
     </dict>
     <key>NSCameraUsageDescription</key>
-    <string>Ative o uso da sua camera para ter uma experiência completa</string>
+    <string>Ative o uso da sua camera para poder enviar uma foto de seus resultados!</string>
     <key>NSLocationAlwaysUsageDescription</key>
     <string>Ative o uso da localização para ter uma experiência completa no aplicativo Fasting.</string>
     <key>NSLocationWhenInUseUsageDescription</key>
     <string>Ative o uso da localização para ter uma experiência completa no aplicativo Fasting.</string>
     <key>NSMicrophoneUsageDescription</key>
-    <string>Ative o uso do seu microfone para ter uma experiência completa</string>
+    <string>Ative o uso do seu microfone para ter uma experiência completa.</string>
     <key>NSPhotoLibraryUsageDescription</key>
-    <string>Ative o uso da sua biblioteca para ter uma experiência completa</string>
+    <string>Ative o uso da sua biblioteca para ter uma experiência completa.</string>
     <key>UIAppFonts</key>
     <array>
       <string>AntDesign.ttf</string>

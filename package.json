@@ -1,6 +1,6 @@
 {
   "name": "@fasting/app",
-  "version": "2.8.6",
+  "version": "2.9.6",
   "admVersion": "1.0.1",
   "homepage": "https://www.fastingwithyara.com/",
   "private": true,
@@ -126,7 +126,7 @@
     "android:story": "react-native run-android --variant=storybookDebug",
     "ios:story": "react-native run-ios --scheme='Storybook' --configuration='Debug' --simulator='iPhone 11'",
     "======": "===IOS",
-    "start:ios:fas:dev": "react-native run-ios --scheme='Fasting' --configuration='Debug' --simulator='iPhone 4'",
+    "start:ios:fas:dev": "react-native run-ios --scheme='Fasting' --configuration='Debug' --simulator='iPhone 11'",
     "start:ios:fas:prod": "react-native run-ios --scheme='Fasting' --configuration='Release' --simulator='iPhone 11'",
     "start:ios:adm:dev": "react-native run-ios --scheme='FastingAdm' --configuration='Debug' --simulator='iPhone 11'",
     "start:ios:adm:prod": "react-native run-ios --scheme='FastingAdm' --configuration='Release' --simulator='iPhone 11'",

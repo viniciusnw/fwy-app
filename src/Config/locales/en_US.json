@@ -74,7 +74,8 @@
   "Timer": {
     "title": "Get ready to fast",
     "titleStart": "You’re Fasting!",
-    "remaining": "Remaining",
+    "remaining": "remaining time ",
+    "elapsed": "elapsed time",
     "upcoming": "Upcoming fast",
     "btnStart": "START YOUR {{HOURS}}H FAST",
     "btnChange": "CHANGE FAST",

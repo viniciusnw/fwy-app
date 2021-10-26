@@ -8,6 +8,7 @@ class ReduxActionsType {
   saveWs = General.actions.saveWs
   getStates = General.actions.getStates
   getCountries = General.actions.getCountries
+  changeTimerToDisplay = General.actions.changeTimerToDisplay
 
   login = User.actions.login
   logout = User.actions.logout
@@ -24,7 +25,6 @@ class ReduxActionsType {
 
   getPresets = Fastings.actions.getPresets
   createPreset = Fastings.actions.createPreset
-
   getFasting = Fastings.actions.getFasting
   endFasting = Fastings.actions.endFasting
   editFasting = Fastings.actions.editFasting

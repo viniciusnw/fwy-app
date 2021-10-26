@@ -6,7 +6,6 @@ import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import { View, TouchableOpacity, ActivityIndicator } from 'react-native';
 
 import { Button } from '@Components';
-import { FASTING } from '@Config/constants';
 import { LoggedStackParamList, PagePropsType } from '@Navigation';
 import { ReduxActions, ReduxPropsType, ReduxStateType } from '@Redux/Fasting';
 
@@ -27,6 +26,8 @@ class Timer extends React.PureComponent<
   RoutePropsType & ReduxPropsType & PagePropsType & WithTranslation,
   any
 > {
+  private timerInterval;
+
   static setPageConfigs = {
     bottomBarConfig: { color: '#FFF' },
     pageConfig: { backgroundImage: 'secondary' },
@@ -36,14 +37,20 @@ class Timer extends React.PureComponent<
   constructor(props) {
     super(props);
     this.state = {
-      finishFasting: false,
       startFasting: false,
+      finishFasting: false,
+      differenceInPercentage: 0,
       visibleDateTimePickerModal: false,
     };
   }
 
+  componentWillUnmount() {
+    clearInterval(this.timerInterval);
+  }
+
   componentDidMount() {
     this.handlerLoadFasting();
+    this.handlerUpdateFastingTimer();
   }
 
   componentDidUpdate(prevProps) {
@@ -51,19 +58,115 @@ class Timer extends React.PureComponent<
     this.handlerEditStartDate(prevProps);
   }
 
-  private onConfirmEditStartDate = (date: Date) => {
-    this.setVisibleDateTimePickerModal(false);
-    const fastingId = this.FastingId;
+  render() {
+    const {
+      startFasting,
+      visibleDateTimePickerModal,
+      differenceInPercentage,
+    } = this.state;
+    const { goBack } = this.props.navigation;
+    const {
+      editFasting: { loading: loadingEditFasting },
+    } = this.props.useRedux.Fastings;
 
-    if (fastingId) {
-      this.props.useDispatch.editFasting({
-        id: fastingId,
-        editStartEnd: true,
-        fasting: {
-          startDate: date,
-        },
-      });
-    }
+    const phoneLanguage = this.props.i18n.language.replace('-', '_');
+
+    return (
+      <Container
+        showsVerticalScrollIndicator={false}
+        showsHorizontalScrollIndicator={false}>
+        <View style={{ marginBottom: 70 }}>
+          <StyledH3>
+            {!startFasting ? this.t('title') : this.t('titleStart')}
+          </StyledH3>
+        </View>
+
+        {/* === */}
+        <View style={{ marginBottom: 60, alignItems: 'center' }}>
+          <CirgularTimer differenceInPercentage={differenceInPercentage}>
+            <FastTimer
+              startFasting={startFasting}
+              onFinish={() => this.setFinishFast(true)}
+              differenceInHours={this.DifferenceInHours}
+              differenceInPercentage={differenceInPercentage}
+            />
+          </CirgularTimer>
+        </View>
+
+        {/* === */}
+        {!startFasting ? (
+          <>
+            <View
+              style={{
+                justifyContent: 'center',
+                flexDirection: 'row',
+                marginBottom: 80,
+              }}>
+              <Button onPress={this.handlerStartFasting}>
+                {this.t('btnStart', { HOURS: this.DifferenceInHours })}
+              </Button>
+            </View>
+
+            <ContainerButtons marginBottom={20}>
+              <Button onPress={goBack} color="primary">
+                {this.t('btnChange')}
+              </Button>
+
+              <Button onPress={() => null} color="primary">
+                {this.t('btnRemider')}
+              </Button>
+            </ContainerButtons>
+          </>
+        ) : (
+          <>
+            <ContainerButtons marginBottom={80}>
+              <TouchableOpacity
+                style={{ alignItems: 'center' }}
+                onPress={() => this.setVisibleDateTimePickerModal(true)}>
+                {loadingEditFasting ? (
+                  <View style={{ justifyContent: 'center', width: 100 }}>
+                    <StyledText13 />
+                    <ActivityIndicator size="small" color={'#FFF'} />
+                    <StyledText13 />
+                  </View>
+                ) : (
+                  <>
+                    <StyledText13>{this.t('start')}</StyledText13>
+                    <StyledText14>{this.StartDateFormated}</StyledText14>
+                    <StyledText15>{this.t('edit')}</StyledText15>
+                  </>
+                )}
+              </TouchableOpacity>
+
+              <View style={{ alignItems: 'center' }}>
+                <StyledText13>{this.t('end')}</StyledText13>
+                <StyledText14>{this.EndDateFormated}</StyledText14>
+              </View>
+            </ContainerButtons>
+
+            <View style={{ width: '40%', alignSelf: 'center' }}>
+              <Button onPress={this.goToEndFast}>{this.t('btnEnd')}</Button>
+            </View>
+          </>
+        )}
+
+        {visibleDateTimePickerModal && (
+          <DateTimePickerModal
+            mode="datetime"
+            isVisible={true}
+            locale={phoneLanguage}
+            maximumDate={new Date()}
+            date={this.InitialDateTimePickerModal}
+            onConfirm={this.onConfirmEditStartDate}
+            onCancel={() => this.setVisibleDateTimePickerModal(false)}
+          />
+        )}
+      </Container>
+    );
+  }
+
+  private handlerUpdateFastingTimer = () => {
+    this.timerInterval = setInterval(() => this.setDifferenceInPercentage(), 1000);
   };
 
   private handlerLoadFasting = () => {
@@ -166,106 +269,20 @@ class Timer extends React.PureComponent<
     }
   };
 
-  render() {
-    const { startFasting, visibleDateTimePickerModal } = this.state;
-    const { goBack } = this.props.navigation;
-    const {
-      editFasting: { loading: loadingEditFasting },
-    } = this.props.useRedux.Fastings;
+  private onConfirmEditStartDate = (date: Date) => {
+    this.setVisibleDateTimePickerModal(false);
+    const fastingId = this.FastingId;
 
-    const phoneLanguage = this.props.i18n.language.replace('-', '_');
-
-    return (
-      <Container
-        showsVerticalScrollIndicator={false}
-        showsHorizontalScrollIndicator={false}>
-        <View style={{ marginBottom: 70 }}>
-          <StyledH3>
-            {!startFasting ? this.t('title') : this.t('titleStart')}
-          </StyledH3>
-        </View>
-
-        {/* === */}
-        <View style={{ marginBottom: 60, alignItems: 'center' }}>
-          <CirgularTimer startFasting={startFasting}>
-            <FastTimer
-              onFinish={() => this.setFinishFast(true)}
-              differenceInHours={this.DifferenceInHours}
-            />
-          </CirgularTimer>
-        </View>
-
-        {/* === */}
-        {!startFasting ? (
-          <>
-            <View
-              style={{
-                justifyContent: 'center',
-                flexDirection: 'row',
-                marginBottom: 80,
-              }}>
-              <Button onPress={this.handlerStartFasting}>
-                {this.t('btnStart', { HOURS: this.DifferenceInHours })}
-              </Button>
-            </View>
-
-            <ContainerButtons marginBottom={20}>
-              <Button onPress={goBack} color="primary">
-                {this.t('btnChange')}
-              </Button>
-
-              <Button onPress={() => null} color="primary">
-                {this.t('btnRemider')}
-              </Button>
-            </ContainerButtons>
-          </>
-        ) : (
-          <>
-            <ContainerButtons marginBottom={80}>
-              <TouchableOpacity
-                style={{ alignItems: 'center' }}
-                onPress={() => this.setVisibleDateTimePickerModal(true)}>
-                {loadingEditFasting ? (
-                  <View style={{ justifyContent: 'center', width: 100 }}>
-                    <StyledText13 />
-                    <ActivityIndicator size="small" color={'#FFF'} />
-                    <StyledText13 />
-                  </View>
-                ) : (
-                  <>
-                    <StyledText13>{this.t('start')}</StyledText13>
-                    <StyledText14>{this.StartDateFormated}</StyledText14>
-                    <StyledText15>{this.t('edit')}</StyledText15>
-                  </>
-                )}
-              </TouchableOpacity>
-
-              <View style={{ alignItems: 'center' }}>
-                <StyledText13>{this.t('end')}</StyledText13>
-                <StyledText14>{this.EndDateFormated}</StyledText14>
-              </View>
-            </ContainerButtons>
-
-            <View style={{ width: '40%', alignSelf: 'center' }}>
-              <Button onPress={this.goToEndFast}>{this.t('btnEnd')}</Button>
-            </View>
-          </>
-        )}
-
-        {visibleDateTimePickerModal && (
-          <DateTimePickerModal
-            mode="datetime"
-            isVisible={true}
-            locale={phoneLanguage}
-            maximumDate={new Date()}
-            date={this.InitialDateTimePickerModal}
-            onConfirm={this.onConfirmEditStartDate}
-            onCancel={() => this.setVisibleDateTimePickerModal(false)}
-          />
-        )}
-      </Container>
-    );
-  }
+    if (fastingId) {
+      this.props.useDispatch.editFasting({
+        id: fastingId,
+        editStartEnd: true,
+        fasting: {
+          startDate: date,
+        },
+      });
+    }
+  };
 
   private setFinishFast = (finish: boolean) => {
     this.setState({
@@ -282,6 +299,25 @@ class Timer extends React.PureComponent<
   private goToEndFast = () => {
     const { navigation } = this.props;
     navigation.navigate('FastEnd');
+  };
+
+  private setDifferenceInPercentage = () => {
+    const { fasting } = this.props.useRedux.Fastings;
+
+    if (!fasting) return;
+    if (!fasting.endDate) return;
+    const start = fasting.startDate.getTime();
+    const end = fasting.endDate.getTime();
+    const now = new Date().getTime();
+
+    const elapsed = now - start;
+    const differenceInPercentage = (elapsed / (end - start)) * 100;
+
+    this.setState({ differenceInPercentage }, () => {
+      const { differenceInPercentage } = this.state;
+      const remainingTime = 100 - differenceInPercentage;
+      if (remainingTime < 0) clearInterval(this.timerInterval);
+    });
   };
 
   private get InitialDateTimePickerModal() {
@@ -339,7 +375,7 @@ class Timer extends React.PureComponent<
 
     const differenceInTime = endDate.getTime() - new Date().getTime();
     const differenceInHours = differenceInTime / 1000 / 3600;
-    return differenceInHours;
+    return differenceInHours.toFixed();
   }
 
   private t = (value: string, variables?: any) =>

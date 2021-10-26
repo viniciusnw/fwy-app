@@ -1,10 +1,16 @@
 import { Container } from 'typedi';
 import ReconnectingWebSocket from 'reconnecting-websocket';
-import { Mutate, Query } from '@Redux/Fasting/data/graphql'
 
+import { Mutate, Query } from '@Redux/Fasting/data/graphql'
 import { countriesAndStatesVariables } from '@Config/graphql'
 
 export default {
+
+  changeTimerToDisplay: () => {
+    return {
+      type: 'TIMER-PAGE-TIMER-DISPLAY',
+    };
+  },
 
   saveWs: (params: ReconnectingWebSocket | null) => {
     return {

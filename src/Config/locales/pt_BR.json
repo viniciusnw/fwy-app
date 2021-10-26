@@ -74,7 +74,8 @@
   "Timer": {
     "title": "Prepare-se para o jejum",
     "titleStart": "Você está jejuando!",
-    "remaining": "Restante",
+    "remaining": "tempo restante",
+    "elapsed": "tempo decorrido",
     "upcoming": "Próximo jejum",
     "btnStart": "COMECE SEU JEJUM DE {{HOURS}}H",
     "btnChange": "ALTERAR JEJUM",

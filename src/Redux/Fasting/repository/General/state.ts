@@ -1,6 +1,9 @@
 import ReconnectingWebSocket from 'reconnecting-websocket';
+
+import { TimeToShowEnum } from '@Config/constants';
 export class GeneralReduxType {
   ws: ReconnectingWebSocket | null = null;
+  timerPage_TimeToDisplay: TimeToShowEnum = TimeToShowEnum.remaining;
   countries = {
     loading: false,
     success: false,

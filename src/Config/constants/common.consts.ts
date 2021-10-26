@@ -38,6 +38,11 @@ export enum SaveOrUpdateEnum {
   Save = 'Save'
 }
 
+export enum TimeToShowEnum {
+  remaining = 'remaining',
+  elapsed = 'elapsed'
+}
+
 export default {
   fullDays: [
     0,

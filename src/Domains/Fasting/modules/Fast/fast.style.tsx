@@ -120,10 +120,11 @@ export const StyledText10 = styled(Text)`
   font-family: ${({ theme }) => theme.fonts.AdobeClean.bold};
 `;
 
-export const StyledText11 = styled(Text)`
+export const StyledText11 = styled(Text)<any>`
   text-align: center;
+  font-size: ${({ size }) => size}px;
   color: ${({ theme }) => theme.color.white};
-  font-family: ${({ theme }) => theme.fonts.AdobeClean.regular};
+  font-family: ${({ theme }) => theme.fonts.AdobeClean.bold};
 `;
 
 export const StyledText12 = styled(Text)`
